@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glt.dev/schemas/v1alpha1/node.schema.json",
+  "title": "Node",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "const": "glt.dev/v1alpha1" },
+    "kind": { "const": "Node" },
+    "metadata": { "$ref": "#/$defs/identity" },
+    "spec": { "$ref": "#/$defs/declaration" }
+  },
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "revision", "namespace", "title"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
+        "revision": { "type": "integer", "minimum": 1 },
+        "namespace": { "type": "string", "minLength": 1 },
+        "aliases": {
+          "type": "array",
+          "description": "Unicode NFC. Glyphs are optional aliases, never the canonical address.",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "title": { "type": "string", "minLength": 1 }
+      }
+    },
+    "declaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "lifecycle", "owner", "criticality"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["domain", "service", "tool", "gate", "check", "infra"]
+        },
+        "lifecycle": {
+          "type": "string",
+          "enum": ["planned", "active", "deprecated"]
+        },
+        "owner": { "type": "string" },
+        "criticality": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "sensitivity": {
+          "type": "string",
+          "enum": ["public", "internal", "confidential", "personal"]
+        },
+        "sources": {
+          "type": "array",
+          "items": { "$ref": "source-ref.schema.json" }
+        },
+        "capabilities": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "signals": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "delivery": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "expectedFromStep": { "type": "string" },
+            "gate": { "type": "string" },
+            "status": {
+              "type": "string",
+              "enum": ["planned", "ready", "in_progress", "verified", "blocked"]
+            }
+          }
+        }
+      }
+    }
+  }
+}

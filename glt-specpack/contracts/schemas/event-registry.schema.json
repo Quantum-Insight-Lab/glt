@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glt.dev/schemas/v1alpha1/event-registry.schema.json",
+  "title": "EventRegistry",
+  "description": "Single source of truth for event names and payload schemas. Types and validators are generated from this file; a string literal event name in code is a build error (S-3).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "const": "glt.dev/events/v1" },
+    "kind": { "const": "EventRegistry" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "registry_version"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
+        "registry_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "review", "accepted", "deprecated"]
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["events"],
+      "properties": {
+        "events": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/event" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "schema_version",
+        "context",
+        "actor",
+        "subject",
+        "payload",
+        "idempotency_key",
+        "invariants",
+        "projections",
+        "owner",
+        "expected_from_step"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "^glt\\.[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)+$"
+        },
+        "schema_version": { "type": "integer", "minimum": 1 },
+        "context": {
+          "type": "string",
+          "description": "Bounded context from docs/PDA/03-domain-graph.md. Exactly one owner per context.",
+          "enum": [
+            "registry",
+            "compilation",
+            "collection",
+            "evaluation",
+            "impact",
+            "execution",
+            "presentation",
+            "trust"
+          ]
+        },
+        "actor": {
+          "type": "string",
+          "enum": [
+            "user",
+            "collector",
+            "compiler",
+            "engine",
+            "runner",
+            "policy",
+            "witness",
+            "system"
+          ]
+        },
+        "subject": { "type": "string", "minLength": 1 },
+        "payload": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "string",
+              "string[]",
+              "integer",
+              "boolean",
+              "timestamp",
+              "digest",
+              "semver"
+            ]
+          }
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Expression over payload fields. Does not prove the effect happened once; see runner reconciliation."
+        },
+        "invariants": {
+          "type": "array",
+          "minItems": 1,
+          "description": "An event with no invariant signals that the uncertainty it closes was never stated (PDA step 1).",
+          "items": { "type": "string", "pattern": "^(PROTO|INV|S)-\\d+$" }
+        },
+        "projections": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" }
+        },
+        "owner": { "type": "string", "minLength": 1 },
+        "expected_from_step": { "type": "string", "pattern": "^glt\\.dev\\.\\d+$" },
+        "deprecated": { "type": "boolean" },
+        "replacement_type": { "type": "string" }
+      }
+    }
+  }
+}

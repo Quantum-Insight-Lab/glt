@@ -1,0 +1,61 @@
+apiVersion: glt.dev/trust/v1
+kind: BootstrapManifest
+metadata:
+  id: glt.trust.bootstrap-manifest
+  version: 1
+  signed_by: external-release-identity
+spec:
+  description: >
+    Signed manifest for bootstrap verifier. Public keys in seed-public-keys/
+    are NOT embedded here — verifier loads T0 independently.
+
+  bootstrap_slice: glt.bootstrap-slice@1
+
+  trust_root:
+    key_id: glt-dev-only-2026
+    status: dev-only
+    note: >
+      Real working key with a published private half. Replaced at org setup;
+      rejected as a release trust root by trust/release-policy.yaml.
+
+  trusted_schemas:
+    - contracts/schemas/registry-bundle.schema.json
+    - contracts/schemas/registry-entry.schema.json
+    - contracts/schemas/node.schema.json
+    - contracts/schemas/edge.schema.json
+    - contracts/schemas/source-ref.schema.json
+    - contracts/schemas/snapshot.schema.json
+    - contracts/schemas/impact-report.schema.json
+    - contracts/schemas/propagation-matrix.schema.json
+    - contracts/schemas/event-registry.schema.json
+
+  trusted_registry:
+    path: registry/glt-controlplane.yaml
+    min_version: 0.2.0
+
+  trusted_propagation_matrix:
+    path: contracts/propagation/propagation-matrix.yaml
+    min_matrix_version: 1.0.0
+
+  trusted_event_registry:
+    path: contracts/events/event-registry.yaml
+    min_registry_version: 1.0.0
+
+  verifier:
+    min_version: 1.0.0
+    binary_digest: sha256:placeholder-replaced-at-release
+
+  golden_fixtures:
+    - contracts/examples/golden/bootstrap-snapshot.json
+    - contracts/examples/golden/impact-bootstrap.json
+
+  builder_identity: glt-bootstrap-builder@external
+  release_policy: trust/release-policy.yaml
+
+  witness:
+    required_after_dev: glt.dev.27
+    endpoint: https://witness.example.invalid/v1/anchor
+
+  notes:
+    - Verifier MUST NOT trust only keys present in this manifest
+    - Placeholder digests replaced at sealed release (DEV-35)

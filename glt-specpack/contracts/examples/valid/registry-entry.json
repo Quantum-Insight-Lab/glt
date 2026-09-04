@@ -1,0 +1,36 @@
+{
+  "apiVersion": "glt.dev/v1alpha1",
+  "kind": "RegistryEntry",
+  "metadata": {
+    "id": "glt.controlplane.registry.entry",
+    "revision": 1,
+    "namespace": "glt.controlplane",
+    "aliases": ["⟁REG", "registry-entry"],
+    "title": "Registry Entry"
+  },
+  "spec": {
+    "kind": "node",
+    "description": "Meta-node for registry entries in the bootstrap slice.",
+    "schema_ref": "https://glt.dev/schemas/v1alpha1/registry-entry.schema.json",
+    "node": {
+      "type": "domain",
+      "lifecycle": "planned",
+      "owner": "registry",
+      "criticality": "high",
+      "sensitivity": "internal",
+      "sources": [
+        {
+          "repository": "glt-controlplane",
+          "path": "glt-specpack/docs/SPEC/registry.md",
+          "authority": "glt-id-registry",
+          "role": "contract"
+        }
+      ],
+      "delivery": {
+        "expectedFromStep": "glt.dev.06",
+        "gate": "glt.controlplane.gate.bootstrap",
+        "status": "planned"
+      }
+    }
+  }
+}

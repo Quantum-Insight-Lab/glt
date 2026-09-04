@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glt.dev/schemas/v1alpha1/impact-report.schema.json",
+  "title": "ImpactReport",
+  "description": "Derived projection. Never normative: it must pin every input version it was computed from.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "report_id",
+    "snapshot_id",
+    "snapshot_digest",
+    "boundary_id",
+    "change",
+    "affected_nodes",
+    "known_unknowns"
+  ],
+  "properties": {
+    "report_id": { "type": "string", "minLength": 1 },
+    "snapshot_id": { "type": "string", "minLength": 1 },
+    "snapshot_digest": { "$ref": "snapshot.schema.json#/$defs/digest" },
+    "boundary_id": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*@\\d+$" },
+    "mode": {
+      "type": "string",
+      "enum": ["change", "incident"],
+      "default": "change"
+    },
+    "change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classifier_version", "matrix_version", "labels"],
+      "properties": {
+        "classifier_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "matrix_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "labels": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "propagation-matrix.schema.json#/$defs/changeClass" }
+        },
+        "sources": {
+          "type": "array",
+          "items": { "$ref": "source-ref.schema.json" }
+        }
+      }
+    },
+    "affected_nodes": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" }
+    },
+    "candidate_paths": {
+      "type": "array",
+      "description": "Paths of possible spread, not causal claims.",
+      "items": {
+        "type": "array",
+        "items": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" }
+      }
+    },
+    "required_checks": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" }
+    },
+    "known_unknowns": {
+      "type": "array",
+      "description": "Mandatory whenever the change touches anything outside the boundary or an uncovered relation.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "ref"],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "outside_boundary",
+              "uncovered_relation",
+              "stale_evidence",
+              "unowned_node",
+              "source_conflict",
+              "unmapped_source"
+            ]
+          },
+          "ref": { "type": "string", "minLength": 1 },
+          "detail": { "type": "string" }
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gate", "state"],
+      "properties": {
+        "gate": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
+        "state": {
+          "type": "string",
+          "enum": ["unknown", "open", "pending", "passed", "failed", "blocked"]
+        },
+        "reason": { "type": "string" }
+      }
+    },
+    "coverage_not_established": { "type": "boolean" }
+  }
+}

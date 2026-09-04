@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glt.dev/schemas/v1alpha1/propagation-matrix.schema.json",
+  "title": "PropagationMatrix",
+  "description": "Versioned traversal rules of the Impact Engine. One row per (mode, relation, changed_endpoint, class set). Relations absent from the matrix are reported as known_unknowns, never silently skipped.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "const": "glt.dev/propagation/v1" },
+    "kind": { "const": "PropagationMatrix" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "matrix_version"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
+        "matrix_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "review", "accepted", "deprecated"]
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["change_classes", "incident_classes", "rules", "uncovered_relations"],
+      "properties": {
+        "change_classes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/changeClass" }
+        },
+        "incident_classes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/incidentClass" }
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/rule" }
+        },
+        "uncovered_relations": {
+          "type": "array",
+          "description": "Relations deliberately not covered by this matrix version. An edge with such a relation yields a known_unknowns entry.",
+          "items": { "$ref": "edge.schema.json#/$defs/relation" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "changeClass": {
+      "type": "string",
+      "enum": [
+        "content",
+        "schema",
+        "interface",
+        "behavior",
+        "dependency",
+        "configuration",
+        "policy",
+        "infrastructure"
+      ]
+    },
+    "incidentClass": {
+      "type": "string",
+      "enum": ["availability", "latency", "correctness", "capacity", "security"]
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "mode",
+        "relation",
+        "changed_endpoint",
+        "direction",
+        "edge_filter",
+        "effects",
+        "stop"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
+        "mode": { "type": "string", "enum": ["change", "incident"] },
+        "relation": { "$ref": "edge.schema.json#/$defs/relation" },
+        "changed_endpoint": {
+          "type": "string",
+          "enum": ["from", "to", "either"],
+          "description": "Which endpoint of the edge the classified change or incident was attached to."
+        },
+        "change_classes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/changeClass" }
+        },
+        "incident_classes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/incidentClass" }
+        },
+        "planes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": ["intended", "materialized", "observed"]
+          }
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["with_edge", "against_edge", "none"],
+          "description": "none means the rule produces effects but does not continue the traversal."
+        },
+        "edge_filter": {
+          "type": "string",
+          "enum": ["propagation.change", "propagation.incident", "none"],
+          "description": "propagation.* requires the class to be declared on the edge itself."
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "mark_affected",
+              "require_check",
+              "gate_pending",
+              "conflict_check"
+            ]
+          }
+        },
+        "stop": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": ["max_depth", "visited", "boundary", "stale_evidence"]
+          }
+        },
+        "notes": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["mode"],
+            "properties": { "mode": { "const": "change" } }
+          },
+          "then": {
+            "required": ["change_classes"],
+            "properties": { "change_classes": true }
+          }
+        },
+        {
+          "if": {
+            "required": ["mode"],
+            "properties": { "mode": { "const": "incident" } }
+          },
+          "then": {
+            "required": ["incident_classes"],
+            "properties": { "incident_classes": true }
+          }
+        }
+      ]
+    }
+  }
+}

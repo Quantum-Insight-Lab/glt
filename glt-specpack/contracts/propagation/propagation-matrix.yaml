@@ -1,0 +1,160 @@
+apiVersion: glt.dev/propagation/v1
+kind: PropagationMatrix
+metadata:
+  id: glt.propagation.matrix
+  matrix_version: 1.0.0
+  status: accepted
+spec:
+  change_classes:
+    - content
+    - schema
+    - interface
+    - behavior
+    - dependency
+    - configuration
+    - policy
+    - infrastructure
+
+  incident_classes:
+    - availability
+    - latency
+    - correctness
+    - capacity
+    - security
+
+  rules:
+    # --- change impact -------------------------------------------------------
+    - id: glt.prop.change.dependent-contract
+      mode: change
+      relation: depends_on
+      changed_endpoint: to
+      change_classes:
+        [content, schema, interface, behavior, dependency, configuration, policy, infrastructure]
+      planes: [intended, materialized]
+      direction: against_edge
+      edge_filter: propagation.change
+      effects: [mark_affected]
+      stop: [max_depth, visited, boundary]
+      notes: >
+        A depends_on B — a change of B's contract affects A, so traversal runs
+        against the edge. The class must also be declared on the edge itself,
+        which is what keeps a content change out of an interface-only edge.
+
+    - id: glt.prop.change.caller
+      mode: change
+      relation: calls
+      changed_endpoint: to
+      change_classes: [schema, interface, behavior, dependency, policy]
+      planes: [intended, materialized]
+      direction: against_edge
+      edge_filter: propagation.change
+      effects: [mark_affected]
+      stop: [max_depth, visited, boundary]
+
+    - id: glt.prop.change.reader
+      mode: change
+      relation: reads
+      changed_endpoint: to
+      change_classes: [content, schema, interface, configuration]
+      planes: [intended, materialized]
+      direction: against_edge
+      edge_filter: propagation.change
+      effects: [mark_affected]
+      stop: [max_depth, visited, boundary]
+
+    - id: glt.prop.change.consumer
+      mode: change
+      relation: consumes
+      changed_endpoint: to
+      change_classes: [schema, interface, behavior]
+      planes: [intended, materialized]
+      direction: against_edge
+      edge_filter: propagation.change
+      effects: [mark_affected]
+      stop: [max_depth, visited, boundary]
+
+    - id: glt.prop.change.check-required
+      mode: change
+      relation: validates
+      changed_endpoint: to
+      change_classes:
+        [content, schema, interface, behavior, dependency, configuration, policy, infrastructure]
+      planes: [intended]
+      direction: none
+      edge_filter: propagation.change
+      effects: [require_check]
+      stop: [visited]
+      notes: >
+        CHECK validates TARGET — a change of TARGET requires the CHECK to run,
+        but does not mean the check itself changed. The check is emitted into
+        required_checks, never into affected_nodes.
+
+    - id: glt.prop.change.gate-pending
+      mode: change
+      relation: gates
+      changed_endpoint: to
+      change_classes:
+        [content, schema, interface, behavior, dependency, configuration, policy, infrastructure]
+      planes: [intended]
+      direction: none
+      edge_filter: none
+      effects: [gate_pending]
+      stop: [visited]
+      notes: >
+        GATE gates CHECK — a required or failed check moves the gate to pending
+        or blocked. The gate state is reported under release, not as an
+        affected node.
+
+    - id: glt.prop.change.conflict
+      mode: change
+      relation: conflicts_with
+      changed_endpoint: either
+      change_classes:
+        [content, schema, interface, behavior, dependency, configuration, policy, infrastructure]
+      planes: [intended, materialized]
+      direction: none
+      edge_filter: none
+      effects: [conflict_check]
+      stop: [visited]
+      notes: >
+        conflicts_with does not propagate impact. It raises a separate conflict
+        check instead.
+
+    # --- incident propagation ------------------------------------------------
+    - id: glt.prop.incident.dependent
+      mode: incident
+      relation: depends_on
+      changed_endpoint: to
+      incident_classes: [availability, latency, correctness, capacity, security]
+      planes: [observed, materialized]
+      direction: against_edge
+      edge_filter: propagation.incident
+      effects: [mark_affected]
+      stop: [max_depth, visited, boundary, stale_evidence]
+      notes: >
+        Incident traversal uses observed assertions and materialized links of
+        the actually deployed artifact. A materialized path is a candidate for
+        spread; only observed trace-parentage confirms it.
+
+    - id: glt.prop.incident.caller
+      mode: incident
+      relation: calls
+      changed_endpoint: to
+      incident_classes: [availability, latency, correctness, capacity]
+      planes: [observed, materialized]
+      direction: against_edge
+      edge_filter: propagation.incident
+      effects: [mark_affected]
+      stop: [max_depth, visited, boundary, stale_evidence]
+
+  # Relations with no row in this version. An edge carrying one of these is
+  # reported as a known_unknowns entry of kind uncovered_relation; it is never
+  # silently skipped.
+  uncovered_relations:
+    - writes
+    - emits
+    - builds
+    - observes
+    - deployed_as
+    - hosts
+    - owns

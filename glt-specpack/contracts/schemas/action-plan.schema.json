@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glt.dev/schemas/v1alpha1/action-plan.schema.json",
+  "title": "ActionPlan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["plan_id", "envelope_digest", "actions", "state"],
+  "properties": {
+    "plan_id": { "type": "string" },
+    "envelope_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "state": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "dry_run",
+        "awaiting_approval",
+        "approved",
+        "queued",
+        "running",
+        "succeeded",
+        "failed",
+        "canceled",
+        "expired",
+        "unknown_outcome",
+        "reconciling"
+      ]
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action_id", "depends_on"],
+        "properties": {
+          "action_id": { "type": "string" },
+          "depends_on": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "digests": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "registry_revision": { "type": "string" },
+        "topology_snapshot": { "type": "string" },
+        "policy": { "type": "string" },
+        "executor_image": { "type": "string" }
+      }
+    }
+  }
+}

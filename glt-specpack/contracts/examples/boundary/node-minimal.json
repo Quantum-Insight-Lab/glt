@@ -1,0 +1,16 @@
+{
+  "apiVersion": "glt.dev/v1alpha1",
+  "kind": "Node",
+  "metadata": {
+    "id": "glt.controlplane.compiler",
+    "revision": 1,
+    "namespace": "glt.controlplane",
+    "title": "Snapshot Compiler"
+  },
+  "spec": {
+    "type": "tool",
+    "lifecycle": "planned",
+    "owner": "engineering",
+    "criticality": "high"
+  }
+}

@@ -1,0 +1,14 @@
+apiVersion: glt.dev/parameters/v1
+kind: ParameterCard
+metadata:
+  id: glt.param.impact.max_traversal_depth
+  revision: 1
+  owner: engineering
+spec:
+  default: 8
+  range: { min: 3, max: 20 }
+  unit: hops
+  risk_if_low: Missed dependents in impact report
+  risk_if_high: Noisy oversized blast radius
+  calibration: Golden impact cases and false-positive rate
+  spec_ref: docs/SPEC/impact.md

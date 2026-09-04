@@ -1,0 +1,35 @@
+apiVersion: glt.dev/trust/v1
+kind: ReleasePolicy
+metadata:
+  id: glt.trust.release-policy
+  version: 2
+spec:
+  control_plane_release:
+    requires_external_approval: true
+    approver_groups: [glt-release-approvers]
+    forbidden_approvers: [glt-cp-runtime@internal]
+  executor_image_change:
+    requires_external_approval: true
+  policy_change:
+    requires_external_approval: true
+
+  release_trust_roots:
+    allowed: []
+    forbidden:
+      - key_id: glt-dev-only-2026
+        reason: >
+          Private half is derived from a published seed. Usable for CI and
+          DEV-02 tests, never as a release trust root.
+    rule: >
+      A release whose manifest chain terminates in a forbidden or empty trust
+      root fails. Sealed release (DEV-35) is blocked until a real T0 key is
+      added to allowed.
+
+  placeholders_forbidden_at_release:
+    fields:
+      - verifier.binary_digest
+      - witness.endpoint
+      - golden_fixture_digests
+    rule: >
+      Sealed release verifies that no artifact still carries a placeholder.
+      The all-zero digest is reserved and must fail the freeze check.

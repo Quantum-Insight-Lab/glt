@@ -1,0 +1,157 @@
+apiVersion: glt.dev/events/v1
+kind: EventRegistry
+metadata:
+  id: glt.events.registry
+  registry_version: 1.0.0
+  status: accepted
+spec:
+  events:
+    - type: glt.change.submitted
+      schema_version: 1
+      context: impact
+      actor: user
+      subject: Change
+      payload:
+        paths: string[]
+        digest: digest
+        author: string
+      idempotency_key: digest
+      invariants: [INV-12]
+      projections: [change_feed]
+      owner: engineering
+      expected_from_step: glt.dev.10
+
+    - type: glt.snapshot.compiled
+      schema_version: 1
+      context: compilation
+      actor: compiler
+      subject: TopologySnapshot
+      payload:
+        snapshot_id: string
+        digest: digest
+        boundary_id: string
+        registry_version: semver
+      idempotency_key: digest
+      invariants: [PROTO-03, PROTO-05, PROTO-10]
+      projections: [snapshot_index]
+      owner: snapshot-compiler
+      expected_from_step: glt.dev.08
+
+    - type: glt.impact.computed
+      schema_version: 1
+      context: impact
+      actor: engine
+      subject: ImpactReport
+      payload:
+        report_id: string
+        boundary_id: string
+        snapshot_digest: digest
+        coverage_not_established: boolean
+      idempotency_key: report_id
+      invariants: [INV-05]
+      projections: [impact_history]
+      owner: engineering
+      expected_from_step: glt.dev.10
+
+    - type: glt.gate.evaluated
+      schema_version: 1
+      context: execution
+      actor: engine
+      subject: Gate
+      payload:
+        gate_id: string
+        state: string
+        snapshot_digest: digest
+      idempotency_key: gate_id + snapshot_digest
+      invariants: [PROTO-12, INV-12]
+      projections: [gate_history]
+      owner: engineering
+      expected_from_step: glt.dev.15
+
+    - type: glt.plan.created
+      schema_version: 1
+      context: execution
+      actor: engine
+      subject: ActionPlan
+      payload:
+        plan_id: string
+        envelope_digest: digest
+      idempotency_key: envelope_digest
+      invariants: [PROTO-07, PROTO-14]
+      projections: [plan_log]
+      owner: engineering
+      expected_from_step: glt.dev.29
+
+    - type: glt.plan.approved
+      schema_version: 1
+      context: execution
+      actor: policy
+      subject: ActionPlan
+      payload:
+        plan_id: string
+        envelope_digest: digest
+        approver: string
+        signature: string
+      idempotency_key: envelope_digest + approver
+      invariants: [PROTO-15, INV-08, INV-09]
+      projections: [approval_log]
+      owner: policy-engine
+      expected_from_step: glt.dev.30
+
+    - type: glt.action.started
+      schema_version: 1
+      context: execution
+      actor: runner
+      subject: ActionAttempt
+      payload:
+        plan_id: string
+        action_id: string
+        attempt_id: string
+      idempotency_key: attempt_id
+      invariants: [PROTO-16, INV-06]
+      projections: [run_log]
+      owner: engineering
+      expected_from_step: glt.dev.31
+
+    - type: glt.action.completed
+      schema_version: 1
+      context: execution
+      actor: runner
+      subject: ActionAttempt
+      payload:
+        attempt_id: string
+        outcome: string
+      idempotency_key: attempt_id
+      invariants: [PROTO-16]
+      projections: [run_log]
+      owner: engineering
+      expected_from_step: glt.dev.32
+
+    - type: glt.audit.appended
+      schema_version: 1
+      context: trust
+      actor: system
+      subject: AuditRecord
+      payload:
+        record_id: string
+        prev_hash: digest
+      idempotency_key: record_id
+      invariants: [INV-07]
+      projections: [audit_chain]
+      owner: audit-store
+      expected_from_step: glt.dev.24
+
+    - type: glt.witness.anchored
+      schema_version: 1
+      context: trust
+      actor: witness
+      subject: WitnessReceipt
+      payload:
+        head_hash: digest
+        witness_id: string
+        anchored_at: timestamp
+      idempotency_key: head_hash + witness_id
+      invariants: [INV-07, INV-09]
+      projections: [audit_chain]
+      owner: audit-store
+      expected_from_step: glt.dev.28

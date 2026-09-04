@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glt.dev/schemas/v1alpha1/audit-record.schema.json",
+  "title": "AuditRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["record_id", "prev_hash", "record_hash", "timestamp", "event_type"],
+  "properties": {
+    "record_id": { "type": "string" },
+    "prev_hash": { "type": "string" },
+    "record_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "event_type": { "type": "string" },
+    "payload_digest": { "type": "string" },
+    "signature": { "type": "string" }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "report_id": "imp-invalid-001",
+  "snapshot_id": "snap-bootstrap-golden-001",
+  "boundary_id": "glt.bootstrap-slice@1"
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glt.dev/schemas/v1alpha1/action-spec.schema.json",
+  "title": "ActionSpec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "revision", "capabilities", "risk_class"],
+  "properties": {
+    "id": { "type": "string" },
+    "revision": { "type": "integer", "minimum": 1 },
+    "capabilities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "risk_class": {
+      "type": "string",
+      "enum": ["read", "read_build", "write", "external"]
+    },
+    "executor": { "type": "string" },
+    "input_schema_ref": { "type": "string" },
+    "output_schema_ref": { "type": "string" },
+    "timeout_seconds": { "type": "integer", "minimum": 1 }
+  }
+}

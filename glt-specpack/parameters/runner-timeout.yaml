@@ -1,0 +1,14 @@
+apiVersion: glt.dev/parameters/v1
+kind: ParameterCard
+metadata:
+  id: glt.param.runner.default_timeout_seconds
+  revision: 1
+  owner: reliability
+spec:
+  default: 600
+  range: { min: 60, max: 3600 }
+  unit: seconds
+  risk_if_low: Hung sandbox jobs
+  risk_if_high: Premature failure on slow test suites
+  calibration: p95 action duration + headroom
+  spec_ref: docs/SPEC/runner.md

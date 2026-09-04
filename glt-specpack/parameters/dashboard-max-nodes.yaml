@@ -1,0 +1,14 @@
+apiVersion: glt.dev/parameters/v1
+kind: ParameterCard
+metadata:
+  id: glt.param.dashboard.max_top_level_nodes
+  revision: 1
+  owner: product
+spec:
+  default: 16
+  range: { min: 8, max: 24 }
+  unit: nodes
+  risk_if_low: Cluttered map unreadable
+  risk_if_high: Missing context on main screen
+  calibration: B1/B4 UX task tests
+  spec_ref: docs/SPEC/dashboard.md

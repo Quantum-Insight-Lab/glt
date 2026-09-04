@@ -1,0 +1,14 @@
+apiVersion: glt.dev/parameters/v1
+kind: ParameterCard
+metadata:
+  id: glt.param.audit.retention_days
+  revision: 1
+  owner: reliability
+spec:
+  default: 365
+  range: { min: 90, max: 2555 }
+  unit: days
+  risk_if_low: Insufficient forensics and compliance
+  risk_if_high: Storage cost and deletion complexity
+  calibration: Legal/compliance requirements
+  spec_ref: docs/SPEC/audit.md

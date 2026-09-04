@@ -1,0 +1,19 @@
+# DEV-ONLY TRUST ROOT — NOT A PRODUCTION TRUST ANCHOR
+#
+# This is a real, working Ed25519 public key, so the bootstrap verifier can be
+# built and tested end to end (DEV-02). Its private half is derived from a
+# published seed and is therefore known to everyone:
+#
+#   seed = sha256("glt-dev-only-2026")
+#        = a315d1c30ece9a9df8e0ce22f070645b72291198020b610c9787c54b22fbc182
+#
+# A key whose private half is public is not a secret. That is deliberate: it is
+# impossible to mistake this for a trust anchor, unlike a placeholder that
+# merely looks unfinished.
+#
+# key_id: glt-dev-only-2026
+# Rejected by trust/release-policy.yaml as a release trust root.
+# Production setup replaces this file — see README.md.
+-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAp6spzeAZ0iCoagmNxxqxfOepLlMJaD1gjCtEJUA1xWg=
+-----END PUBLIC KEY-----

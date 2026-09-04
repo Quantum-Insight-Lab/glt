@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glt.dev/schemas/v1alpha1/edge.schema.json",
+  "title": "Edge",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "const": "glt.dev/v1alpha1" },
+    "kind": { "const": "Edge" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to", "relation", "assertions", "propagation"],
+      "properties": {
+        "from": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
+        "to": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
+        "relation": { "$ref": "#/$defs/relation" },
+        "assertions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["plane", "status", "evidence"],
+            "properties": {
+              "plane": {
+                "type": "string",
+                "enum": ["intended", "materialized", "observed"]
+              },
+              "status": {
+                "type": "string",
+                "enum": ["asserted", "discovered", "not_observed", "conflicted"]
+              },
+              "evidence": {
+                "oneOf": [{ "type": "null" }, { "$ref": "source-ref.schema.json" }]
+              }
+            }
+          }
+        },
+        "propagation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["change", "incident"],
+          "properties": {
+            "change": {
+              "type": "array",
+              "items": { "$ref": "propagation-matrix.schema.json#/$defs/changeClass" }
+            },
+            "incident": {
+              "type": "array",
+              "items": { "$ref": "propagation-matrix.schema.json#/$defs/incidentClass" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "relation": {
+      "type": "string",
+      "enum": [
+        "depends_on",
+        "reads",
+        "writes",
+        "calls",
+        "emits",
+        "consumes",
+        "builds",
+        "validates",
+        "observes",
+        "gates",
+        "deployed_as",
+        "conflicts_with",
+        "hosts",
+        "owns"
+      ]
+    }
+  }
+}

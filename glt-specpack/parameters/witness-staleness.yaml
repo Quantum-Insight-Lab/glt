@@ -1,0 +1,14 @@
+apiVersion: glt.dev/parameters/v1
+kind: ParameterCard
+metadata:
+  id: glt.param.witness.max_staleness_seconds
+  revision: 1
+  owner: reliability
+spec:
+  default: 7200
+  range: { min: 600, max: 86400 }
+  unit: seconds
+  risk_if_low: Trust stale audit anchor
+  risk_if_high: False stale alerts and read-only mode
+  calibration: Witness heartbeat interval × 2
+  spec_ref: docs/SECURITY/external-witness.md

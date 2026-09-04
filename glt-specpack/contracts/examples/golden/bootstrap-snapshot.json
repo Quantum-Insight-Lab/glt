@@ -1,0 +1,237 @@
+{
+  "apiVersion": "glt.dev/v1alpha1",
+  "kind": "TopologySnapshot",
+  "snapshot_id": "snap-bootstrap-golden-001",
+  "as_of": "2026-08-14T10:00:00Z",
+  "registry_version": "0.2.0",
+  "boundary_id": "glt.bootstrap-slice@1",
+  "config_profile": "bootstrap",
+  "matrix_version": "1.0.0",
+  "source_digests": {
+    "boundary": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "propagation_matrix": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "registry": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "collector_versions": {
+    "intent": "1.0.0",
+    "registry": "1.0.0"
+  },
+  "nodes": [
+    {
+      "apiVersion": "glt.dev/v1alpha1",
+      "kind": "Node",
+      "metadata": {
+        "id": "glt.controlplane.check",
+        "revision": 1,
+        "namespace": "glt.controlplane",
+        "aliases": ["⟁CHK"],
+        "title": "Bootstrap Invariant Check"
+      },
+      "spec": {
+        "type": "check",
+        "lifecycle": "planned",
+        "owner": "engineering",
+        "criticality": "high",
+        "sensitivity": "internal",
+        "sources": [
+          {
+            "repository": "glt-controlplane",
+            "path": "glt-specpack/docs/SPEC/invariants.md",
+            "authority": "engineering-contract",
+            "role": "contract"
+          }
+        ],
+        "capabilities": ["glt.check.invariants"],
+        "signals": [],
+        "delivery": {
+          "expectedFromStep": "glt.dev.02",
+          "gate": "glt.controlplane.gate.bootstrap",
+          "status": "planned"
+        }
+      }
+    },
+    {
+      "apiVersion": "glt.dev/v1alpha1",
+      "kind": "Node",
+      "metadata": {
+        "id": "glt.controlplane.compiler",
+        "revision": 1,
+        "namespace": "glt.controlplane",
+        "aliases": ["⟁COMP"],
+        "title": "Snapshot Compiler"
+      },
+      "spec": {
+        "type": "tool",
+        "lifecycle": "planned",
+        "owner": "engineering",
+        "criticality": "high",
+        "sensitivity": "internal",
+        "sources": [
+          {
+            "repository": "glt-controlplane",
+            "path": "glt-specpack/docs/SPEC/snapshots.md",
+            "authority": "engineering-contract",
+            "role": "contract"
+          }
+        ],
+        "capabilities": ["glt.snapshot.compile"],
+        "signals": [],
+        "delivery": {
+          "expectedFromStep": "glt.dev.08",
+          "gate": "glt.controlplane.gate.bootstrap",
+          "status": "planned"
+        }
+      }
+    },
+    {
+      "apiVersion": "glt.dev/v1alpha1",
+      "kind": "Node",
+      "metadata": {
+        "id": "glt.controlplane.gate.bootstrap",
+        "revision": 1,
+        "namespace": "glt.controlplane",
+        "aliases": ["⟁GATE"],
+        "title": "Bootstrap Pre-code Gate"
+      },
+      "spec": {
+        "type": "gate",
+        "lifecycle": "planned",
+        "owner": "governance",
+        "criticality": "critical",
+        "sensitivity": "internal",
+        "sources": [
+          {
+            "repository": "glt-controlplane",
+            "path": "glt-specpack/docs/00-governance/pre-code-gate.md",
+            "authority": "governance-normativity",
+            "role": "contract"
+          }
+        ],
+        "capabilities": [],
+        "signals": [],
+        "delivery": {
+          "expectedFromStep": "glt.dev.09",
+          "gate": "glt.controlplane.gate.bootstrap",
+          "status": "planned"
+        }
+      }
+    },
+    {
+      "apiVersion": "glt.dev/v1alpha1",
+      "kind": "Node",
+      "metadata": {
+        "id": "glt.controlplane.registry.entry",
+        "revision": 1,
+        "namespace": "glt.controlplane",
+        "aliases": ["⟁REG"],
+        "title": "Registry Entry"
+      },
+      "spec": {
+        "type": "domain",
+        "lifecycle": "planned",
+        "owner": "registry",
+        "criticality": "high",
+        "sensitivity": "internal",
+        "sources": [
+          {
+            "repository": "glt-controlplane",
+            "path": "glt-specpack/docs/SPEC/registry.md",
+            "authority": "glt-id-registry",
+            "role": "contract"
+          }
+        ],
+        "capabilities": [],
+        "signals": [],
+        "delivery": {
+          "expectedFromStep": "glt.dev.06",
+          "gate": "glt.controlplane.gate.bootstrap",
+          "status": "planned"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "apiVersion": "glt.dev/v1alpha1",
+      "kind": "Edge",
+      "metadata": { "id": "glt.edge.check-validates-compiler" },
+      "spec": {
+        "from": "glt.controlplane.check",
+        "to": "glt.controlplane.compiler",
+        "relation": "validates",
+        "assertions": [
+          {
+            "plane": "intended",
+            "status": "asserted",
+            "evidence": {
+              "repository": "glt-controlplane",
+              "path": "glt-specpack/docs/SPEC/gates.md",
+              "authority": "engineering-contract",
+              "role": "derived-from"
+            }
+          },
+          { "plane": "materialized", "status": "not_observed", "evidence": null },
+          { "plane": "observed", "status": "not_observed", "evidence": null }
+        ],
+        "propagation": {
+          "change": ["behavior", "content", "interface", "schema"],
+          "incident": []
+        }
+      }
+    },
+    {
+      "apiVersion": "glt.dev/v1alpha1",
+      "kind": "Edge",
+      "metadata": { "id": "glt.edge.compiler-depends-registry" },
+      "spec": {
+        "from": "glt.controlplane.compiler",
+        "to": "glt.controlplane.registry.entry",
+        "relation": "depends_on",
+        "assertions": [
+          {
+            "plane": "intended",
+            "status": "asserted",
+            "evidence": {
+              "repository": "glt-controlplane",
+              "path": "glt-specpack/docs/SPEC/snapshots.md",
+              "authority": "engineering-contract",
+              "role": "derived-from"
+            }
+          },
+          { "plane": "materialized", "status": "not_observed", "evidence": null },
+          { "plane": "observed", "status": "not_observed", "evidence": null }
+        ],
+        "propagation": {
+          "change": ["dependency", "interface", "schema"],
+          "incident": ["availability"]
+        }
+      }
+    },
+    {
+      "apiVersion": "glt.dev/v1alpha1",
+      "kind": "Edge",
+      "metadata": { "id": "glt.edge.gate-gates-check" },
+      "spec": {
+        "from": "glt.controlplane.gate.bootstrap",
+        "to": "glt.controlplane.check",
+        "relation": "gates",
+        "assertions": [
+          {
+            "plane": "intended",
+            "status": "asserted",
+            "evidence": {
+              "repository": "glt-controlplane",
+              "path": "glt-specpack/docs/00-governance/pre-code-gate.md",
+              "authority": "governance-normativity",
+              "role": "derived-from"
+            }
+          },
+          { "plane": "materialized", "status": "not_observed", "evidence": null },
+          { "plane": "observed", "status": "not_observed", "evidence": null }
+        ],
+        "propagation": { "change": [], "incident": [] }
+      }
+    }
+  ],
+  "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+}

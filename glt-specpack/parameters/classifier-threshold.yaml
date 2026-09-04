@@ -1,0 +1,14 @@
+apiVersion: glt.dev/parameters/v1
+kind: ParameterCard
+metadata:
+  id: glt.param.classifier.confidence_threshold
+  revision: 1
+  owner: engineering
+spec:
+  default: 0.85
+  range: { min: 0.5, max: 1.0 }
+  unit: ratio
+  risk_if_low: Wrong change class passes gate
+  risk_if_high: Excessive gate blocking
+  calibration: Labeled change set (>100 samples)
+  spec_ref: docs/SPEC/impact.md

@@ -1,0 +1,167 @@
+apiVersion: glt.dev/trust/v1
+kind: AuthorityMap
+metadata:
+  id: glt.trust.authority-map
+  version: 1
+  status: accepted
+spec:
+  description: >
+    Ровно один владелец на класс фактов. Dashboard, indexes, snapshots
+    и reports — всегда производные.
+
+  fact_classes:
+    - id: glt-id-registry
+      owner: registry
+      authoritative_paths:
+        - registry/
+        - docs/SPEC/registry.md
+      derived_never_authoritative:
+        - dashboard
+        - llm-output
+
+    - id: glyph-alias-visual
+      owner: registry
+      authoritative_paths:
+        - registry/
+      notes: Alias не меняет semantic id
+
+    - id: engineering-contract
+      owner: engineering
+      authoritative_paths:
+        - docs/SPEC/
+        - docs/DEV/
+      excludes:
+        - examples/
+
+    - id: product-scope
+      owner: product
+      authoritative_paths:
+        - docs/PRODUCT/
+
+    - id: methodology-pda
+      owner: product-architecture
+      authoritative_paths:
+        - docs/PDA/
+
+    - id: governance-normativity
+      owner: governance
+      authoritative_paths:
+        - docs/00-governance/
+        - trust/authority-map.yaml
+        - SPEC-PACK.md
+
+    - id: wire-schema
+      owner: contracts
+      authoritative_paths:
+        - contracts/schemas/
+      rule: TypeScript types generated, not duplicated
+
+    - id: impact-propagation-rules
+      owner: engineering
+      authoritative_paths:
+        - contracts/propagation/
+        - docs/SPEC/impact.md
+      rule: >
+        Traversal rules are versioned data, not code. A relation with no row is
+        reported as known_unknowns, never silently skipped.
+
+    - id: event-registry
+      owner: engineering
+      authoritative_paths:
+        - contracts/events/
+      rule: >
+        Single source of event names and payload schemas. Types are generated;
+        a string literal event name in code is a build error (S-3). docs/SPEC/events.md
+        is a projection and never defines a name.
+
+    - id: structural-invariants
+      owner: engineering
+      authoritative_paths:
+        - docs/SPEC/structural-invariants.md
+      rule: >
+        Laws of the codebase, separate from domain invariants. An entry is admitted
+        only together with a working check. AGENTS.md lowers violation frequency,
+        CI drives it to zero.
+
+    - id: policy-approval
+      owner: policy-engine
+      authoritative_paths:
+        - docs/SPEC/policy.md
+        - docs/SECURITY/approvals.md
+      rule: Runner cannot self-approve
+
+    - id: intended-topology
+      owner: snapshot-compiler
+      inputs:
+        - docs/SPEC/
+        - docs/DEV/
+        - registry/
+      outputs:
+        - snapshots/intended/
+      rule: DEV metadata machine-readable
+
+    - id: materialized-build
+      owner: git-collector
+      inputs:
+        - git tree
+        - ci attestations
+        - test reports
+      rule: Overrides registry declarations on conflict
+
+    - id: observed-runtime
+      owner: telemetry-collector
+      inputs:
+        - otel
+        - health checks
+        - deployment metadata
+      rule: Inference never displayed as observation
+
+    - id: audit-chain
+      owner: audit-store
+      authoritative_paths:
+        - docs/SPEC/audit.md
+      rule: Hash-chained, tamper-evident
+
+    - id: bootstrap-trust
+      owner: external-t0
+      authoritative_paths:
+        - trust/bootstrap-manifest.yaml
+        - trust/seed-public-keys/
+      rule: Verifier does not trust key from verified manifest
+
+    - id: parameter-values
+      owner: parameters
+      authoritative_paths:
+        - parameters/
+        - docs/SPEC/parameters.md
+
+    - id: experiment-rubric
+      owner: product-research
+      authoritative_paths:
+        - docs/EXPERIMENTS/
+      excludes:
+        - docs/EXPERIMENTS/safety-gate.md
+
+    - id: security-controls
+      owner: security
+      authoritative_paths:
+        - docs/SECURITY/
+        - docs/EXPERIMENTS/safety-gate.md
+      excludes:
+        - docs/SECURITY/approvals.md
+      notes: approvals.md belongs to policy-approval, owner policy-engine
+
+    - id: reliability-observability
+      owner: reliability
+      authoritative_paths:
+        - docs/OBSERVABILITY/
+
+  conflict_resolution:
+    same_class: mark conflicted, block actions above read
+    cross_class: both retained with plane separation
+    registry_vs_engineering: engineering wins for contract text; registry wins for id/alias
+
+  forbidden_normative_patterns:
+    - "aeon.*"
+    - generated snapshot as spec input
+    - dashboard state in depends_on

@@ -1,0 +1,12 @@
+{
+  "apiVersion": "glt.dev/v1alpha1",
+  "kind": "RegistryEntry",
+  "metadata": {
+    "id": "invalid id with spaces",
+    "revision": 0,
+    "namespace": "glt.controlplane"
+  },
+  "spec": {
+    "kind": "unknown_kind"
+  }
+}

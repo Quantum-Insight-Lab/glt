@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glt.dev/schemas/v1alpha1/source-ref.schema.json",
+  "title": "SourceRef",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["repository", "path", "authority"],
+  "properties": {
+    "repository": { "type": "string", "minLength": 1 },
+    "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+    "path": { "type": "string", "minLength": 1 },
+    "selector": { "type": "string" },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "authority": { "$ref": "#/$defs/factClass" },
+    "role": { "type": "string" }
+  },
+  "$defs": {
+    "factClass": {
+      "type": "string",
+      "description": "Fact class id from trust/authority-map.yaml. Exactly one owner per class.",
+      "enum": [
+        "glt-id-registry",
+        "glyph-alias-visual",
+        "engineering-contract",
+        "product-scope",
+        "methodology-pda",
+        "governance-normativity",
+        "wire-schema",
+        "impact-propagation-rules",
+        "event-registry",
+        "structural-invariants",
+        "policy-approval",
+        "intended-topology",
+        "materialized-build",
+        "observed-runtime",
+        "audit-chain",
+        "bootstrap-trust",
+        "parameter-values",
+        "experiment-rubric"
+      ]
+    }
+  }
+}

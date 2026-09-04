@@ -1,0 +1,9 @@
+# Snapshot digests are computed over source file bytes, so every checkout must
+# produce identical bytes on every platform. Normalize to LF in the repository
+# and in the working tree; never let the platform decide.
+* text=auto eol=lf
+
+# Binary
+*.png binary
+*.jpg binary
+*.pdf binary

@@ -1,0 +1,32 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build output
+dist/
+build/
+*.tsbuildinfo
+
+# generated control-plane artifacts
+# Compiled snapshots are derived, never normative. Golden fixtures live in
+# glt-specpack/contracts/examples/golden/ and are committed on purpose.
+/snapshots/
+/reports/
+coverage/
+
+# secrets — private keys never enter the repository
+*.pem
+*.key
+!glt-specpack/trust/seed-public-keys/*.pub
+.env
+.env.*
+
+# tooling caches
+.turbo/
+.vite/
+.eslintcache
+
+# editor and OS
+.DS_Store
+Thumbs.db
+*.swp

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glt.dev/schemas/v1alpha1/registry-bundle.schema.json",
+  "title": "RegistryBundle",
+  "description": "Authoring and storage format of a registry. Entries and edges use the canonical wire schemas; the bundle adds no second representation of the same fact.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "const": "glt.dev/registry/v1" },
+    "kind": { "const": "RegistryBundle" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "boundary"],
+      "properties": {
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "boundary": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*@\\d+$" },
+        "namespace": { "type": "string" }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entries", "edges"],
+      "properties": {
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "registry-entry.schema.json" }
+        },
+        "edges": {
+          "type": "array",
+          "items": { "$ref": "edge.schema.json" }
+        }
+      }
+    }
+  }
+}

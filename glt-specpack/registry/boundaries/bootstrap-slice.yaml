@@ -1,0 +1,17 @@
+apiVersion: glt.dev/boundary/v1
+kind: BoundaryManifest
+metadata:
+  id: glt.bootstrap-slice
+  revision: 1
+spec:
+  title: GLT Bootstrap Slice
+  nodes:
+    - glt.controlplane.registry.entry
+    - glt.controlplane.compiler
+    - glt.controlplane.check
+    - glt.controlplane.gate.bootstrap
+  edges:
+    - glt.edge.compiler-depends-registry
+    - glt.edge.check-validates-compiler
+    - glt.edge.gate-gates-check
+  outside_boundary_policy: known_unknowns_required

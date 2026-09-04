@@ -1,0 +1,13 @@
+{
+  "apiVersion": "glt.dev/v1alpha1",
+  "kind": "Edge",
+  "metadata": { "id": "glt.edge.no-propagation" },
+  "spec": {
+    "from": "glt.controlplane.compiler",
+    "to": "glt.controlplane.registry.entry",
+    "relation": "depends_on",
+    "assertions": [
+      { "plane": "intended", "status": "asserted", "evidence": null }
+    ]
+  }
+}

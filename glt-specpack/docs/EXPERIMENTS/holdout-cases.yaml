@@ -1,0 +1,27 @@
+# Holdout cases — SEALED for experiments
+
+frozen_at: 2026-08-14
+version: 1
+
+cases:
+  - id: H01
+    description: Remove validates edge from bootstrap slice
+    expected: gate failed, check missing in required_checks
+  - id: H02
+    description: Change file outside glt.bootstrap-slice boundary
+    expected: known_unknowns non-empty
+  - id: H03
+    description: Conflicting SoT for same fact class
+    expected: conflict axis source_conflict
+  - id: H04
+    description: Snapshot older than P01
+    expected: freshness stale, runner blocked
+  - id: H05
+    description: Tamper one audit record
+    expected: chain verify fail
+
+policy:
+  - Do not tune parameters against holdout
+  - Correctness gate requires pass on H01-H05 (criterion E03)
+  - Holdout is used only for E03; recall is measured on the open seeded change set
+  - Changes require new holdout version and changelog
