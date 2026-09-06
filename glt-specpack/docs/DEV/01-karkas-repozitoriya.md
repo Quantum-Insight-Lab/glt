@@ -42,18 +42,21 @@ Sheets и порядок внедрения: [structural-invariants.md](../SPEC/
 
 ### Скелет и сборка
 
-- [ ] `pnpm install` проходит на чистой копии без ручных шагов
-- [ ] `pnpm typecheck` зелёный
-- [ ] `pnpm test` зелёный, и в выводе видно число тестов, а не «0 passed»
-- [ ] В `control-plane/packages/` шесть пакетов: contracts, domain, registry, snapshot, impact, cli
-- [ ] TypeScript strict включён вместе с `noUncheckedIndexedAccess` и `exactOptionalPropertyTypes`
+- [x] `pnpm install` проходит на чистой копии без ручных шагов
+- [x] `pnpm typecheck` зелёный
+- [x] `pnpm test` зелёный, и в выводе видно число тестов, а не «0 passed»
+- [x] В `control-plane/packages/` шесть пакетов: contracts, domain, registry, snapshot, impact, cli
+- [x] TypeScript strict включён вместе с `noUncheckedIndexedAccess` и `exactOptionalPropertyTypes`
 
 ### Кодогенерация
 
-- [ ] `pnpm gen` печатает число сгенерированных модулей схем и констант событий
-- [ ] Каталог `control-plane/packages/contracts/src/generated/` в `.gitignore` и не закоммичен
-- [ ] Ни один тип артефакта не объявлен руками: в `src/` вне `generated/` нет `interface Node`, `interface Edge` и подобного
-- [ ] Удаление схемы из пакета роняет тест «no generated module exists without a schema»
+- [x] `pnpm gen` печатает число сгенерированных модулей схем и констант событий
+- [x] Каталог `control-plane/packages/contracts/src/generated/` в `.gitignore` и не закоммичен
+- [x] Ни один тип артефакта не объявлен руками: в `src/` вне `generated/` нет `interface Node`, `interface Edge` и подобного
+- [ ] `SCHEMA_NAMES` и тип `SchemaName` **генерируются**, а не написаны руками
+- [ ] `pnpm gen` чистит каталог вывода: устаревший модуль удалённой схемы не остаётся
+- [ ] Удаление схемы, на которую что-то опирается, роняет прогон **при чистом `generated/`** — то есть так же, как на CI. Проверить на `snapshot` (ломает кодогенерацию через `$ref`) и на `registry-bundle` (роняет тест манифеста и валидатор)
+- [ ] Ссылки bootstrap-манифеста разрешаются: удаление любой заявленной схемы, фикстуры или ключа роняет тест
 
 ### Механизмы инвариантов
 
@@ -102,7 +105,7 @@ pnpm boundaries
 
 Чистая установка проверена 06.09: `node_modules` удалены полностью, затем
 `pnpm install` → `pnpm typecheck` → `pnpm test` без единого ручного шага.
-Постинсталл esbuild отрабатывает сам, 22 теста проходят.
+Постинсталл esbuild отрабатывает сам, тесты проходят.
 
 До этой проверки шаг считался закрытым по локальному прогону на уже собранном
 дереве, а это другое утверждение. `pnpm install` на существующем дереве печатает
@@ -115,6 +118,12 @@ pnpm boundaries
 дефект, против которого написан весь пакет, и он нашёлся в собственном CI.
 Объявление из workflow удалено, единственным владельцем остался
 `packageManager`.
+
+Проверка чеклиста вскрыла ещё одно: тип `SchemaName` был написан руками и
+дублировал список схем, а тест синхронности ловил удаление схемы только за счёт
+устаревшего файла в каталоге вывода — то есть на CI, где каталога нет вообще, не
+ловил никогда. `SCHEMA_NAMES` теперь генерируется, `pnpm gen` чистит вывод, а
+ссылки bootstrap-манифеста проверяются отдельным тестом.
 
 Собрано: pnpm workspace на шесть пакетов, TypeScript strict, vitest,
 кодогенерация 12 модулей типов и 10 констант событий из пакета, CI и

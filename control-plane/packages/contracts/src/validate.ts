@@ -3,6 +3,7 @@ import { basename, join } from "node:path";
 import Ajv2020, { type ValidateFunction } from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import { PACK, SCHEMA_ID_PREFIX } from "./paths.ts";
+import type { SchemaName } from "./generated/schema-names.ts";
 
 /**
  * The single JSON Schema validator (S-4). Strict mode is on: a schema that ajv
@@ -21,21 +22,6 @@ export function createValidator(): Ajv2020 {
 
   return ajv;
 }
-
-/** Artifact kinds addressable by schema stem, e.g. `node`, `snapshot`. */
-export type SchemaName =
-  | "action-plan"
-  | "action-spec"
-  | "audit-record"
-  | "edge"
-  | "event-registry"
-  | "impact-report"
-  | "node"
-  | "propagation-matrix"
-  | "registry-bundle"
-  | "registry-entry"
-  | "snapshot"
-  | "source-ref";
 
 export function schemaId(name: SchemaName): string {
   return `${SCHEMA_ID_PREFIX}${name}.schema.json`;

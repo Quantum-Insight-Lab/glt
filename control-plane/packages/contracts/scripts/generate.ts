@@ -7,7 +7,7 @@
  * sync with the pack, so drift fails the build instead of being discovered by a
  * confused reader.
  */
-import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { compileFromFile } from "json-schema-to-typescript";
@@ -126,10 +126,35 @@ function generateEventConstants(): number {
   return entries.length;
 }
 
+/**
+ * The list of schema names is generated, not hand-written.
+ *
+ * It used to be a union typed by hand in validate.ts, which made it a second
+ * source for one fact: a schema could be deleted while its name lived on in the
+ * type, and nothing failed. Generated, a removed schema drops out of the union
+ * and every reference to it stops compiling — which typecheck catches on a
+ * fresh clone, where a file-count comparison cannot.
+ */
+function generateSchemaNames(roots: Map<string, string>): void {
+  const names = [...roots.keys()].sort();
+  const lines = [
+    BANNER,
+    "/** Schema stems present in the pack. Reference a removed one and typecheck fails. */",
+    "export const SCHEMA_NAMES = [",
+    ...names.map((n) => `  "${n}",`),
+    "] as const;",
+    "",
+    "export type SchemaName = (typeof SCHEMA_NAMES)[number];",
+    "",
+  ];
+  writeFileSync(join(OUT_DIR, "schema-names.ts"), lines.join("\n"));
+}
+
 function generateIndex(roots: Map<string, string>): void {
   const lines = [
     BANNER,
     'export * from "./events.ts";',
+    'export * from "./schema-names.ts";',
     "",
     ...[...roots.entries()]
       .sort(([a], [b]) => a.localeCompare(b))
@@ -139,9 +164,14 @@ function generateIndex(roots: Map<string, string>): void {
   writeFileSync(join(OUT_DIR, "index.ts"), lines.join("\n"));
 }
 
+// Wipe first. A stale module left behind from a deleted schema would otherwise
+// survive regeneration and quietly stay exported.
+rmSync(OUT_DIR, { recursive: true, force: true });
 mkdirSync(OUT_DIR, { recursive: true });
+
 const roots = await generateSchemaTypes();
 const eventCount = generateEventConstants();
+generateSchemaNames(roots);
 generateIndex(roots);
 
 console.log(`generated ${roots.size} schema modules, ${eventCount} event constants`);

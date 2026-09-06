@@ -5,7 +5,6 @@ export {
   getValidator,
   schemaId,
   validateAgainst,
-  type SchemaName,
   type ValidationFailure,
 } from "./validate.ts";
 export * from "./generated/index.ts";
