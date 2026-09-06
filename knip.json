@@ -1,0 +1,35 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": ["vitest.config.ts", "control-plane/tests/**/*.test.ts"],
+      "project": ["*.ts"]
+    },
+    "control-plane/packages/contracts": {
+      "entry": ["src/index.ts", "scripts/generate.ts", "src/**/*.test.ts"],
+      "project": ["src/**/*.ts", "scripts/**/*.ts"],
+      "ignore": ["src/generated/**"]
+    },
+    "control-plane/packages/cli": {
+      "entry": ["src/index.ts", "src/bin.ts"],
+      "project": ["src/**/*.ts"]
+    },
+    "control-plane/packages/domain": {
+      "entry": ["src/index.ts"],
+      "project": ["src/**/*.ts"]
+    },
+    "control-plane/packages/registry": {
+      "entry": ["src/index.ts"],
+      "project": ["src/**/*.ts"]
+    },
+    "control-plane/packages/snapshot": {
+      "entry": ["src/index.ts"],
+      "project": ["src/**/*.ts"]
+    },
+    "control-plane/packages/impact": {
+      "entry": ["src/index.ts"],
+      "project": ["src/**/*.ts"]
+    }
+  },
+  "ignoreDependencies": ["ajv-formats"]
+}

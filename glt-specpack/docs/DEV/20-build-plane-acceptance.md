@@ -14,44 +14,62 @@ gate: none
 source_refs: []
 ---
 
-# 20 — Build plane acceptance + B1 dashboard
+# 20 — Приёмка build-плоскости и B1 dashboard
 
-**Wave:** 2 · **Risk:** medium · **Gate:** none
+**Волна:** 2 · **Риск:** средний · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- build overlay: Intended and Build planes in snapshot
-- B1 dashboard, Change mode, read-only projection
+- Build-плоскость: intended и materialized в одном снимке
+- B1 dashboard, режим Change, только чтение
 
-## Why the dashboard lands here
+## Почему dashboard именно здесь
 
-It was a wave 1 deliverable until 0.5.0, justified by the Product gate. That
-gate is now split: the Correctness gate (DEV-12) is machine-measured and does
-not use a dashboard, and the Usefulness gate is deferred until at least four
-people who did not author the graph are available.
+До версии 0.5.0 он был deliverable волны 1 и обосновывался Product gate. Этот
+gate разделён: Correctness gate машинный и UI не использует, а Usefulness gate
+отложен до появления минимум четырёх человек, не писавших граф.
 
-Building a UI whose value cannot be measured, before correctness is proven on a
-real-sized graph, is the "dashboard theatre" this pack argues against. By DEV-20
-both planes exist, so the plane toggle `Intended / Build / Combined` has
-something real to toggle between, and drift between the two is visible — which
-is the first thing a map shows that a CLI does not.
+Строить интерфейс, ценность которого невозможно измерить, до того как доказана
+корректность на графе реального размера — это ровно тот «dashboard theatre»,
+против которого написан весь пакет. К DEV-20 существуют обе плоскости, поэтому
+переключателю `Intended / Build / Combined` есть что переключать, а drift между
+ними видно — это первое, что показывает карта и не показывает CLI.
 
-Change mode only. Glyph layer stays blocked: it depends on E04, which belongs to
-the deferred gate. Text labels and node ids are sufficient and are required
-anyway by the accessibility rules in [dashboard.md](../SPEC/dashboard.md).
+Только режим Change. Слой глифов остаётся заблокированным: он зависит от E04,
+который принадлежит отложенному gate.
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- Read-only: dashboard writes nothing except action requests through the API (S-5)
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым.
 
-## SPEC
+### Build-плоскость
+
+- [ ] Intended и materialized хранятся раздельно и сравниваются
+- [ ] Drift между плоскостями отображается как отдельный класс, а не как поломка
+- [ ] Snapshot остаётся детерминированным после добавления build-фактов
+
+### Dashboard
+
+- [ ] Dashboard ничего не пишет, кроме запросов действий через API (S-5)
+- [ ] Ручная правка статуса на дашборде невозможна
+- [ ] `unknown` визуально отличается от `healthy`
+- [ ] Цвет не единственный канал передачи смысла
+- [ ] Всё доступно с клавиатуры и читается скринридером
+- [ ] Слой глифов **не** включён: E04 не измерен
+- [ ] Каждый зелёный статус раскрывается в «на основании чего»
+
+### Общее
+
+- [ ] CI зелёный на шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [collectors.md](../SPEC/collectors.md)
 - [dashboard.md](../SPEC/dashboard.md)
 
+## Статус
 
-## Status
-
-planned
+запланирован

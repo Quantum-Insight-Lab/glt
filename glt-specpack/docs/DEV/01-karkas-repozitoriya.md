@@ -14,40 +14,112 @@ gate: none
 source_refs: []
 ---
 
-# 01 — Karkas repozitoriya
+# 01 — Каркас репозитория
 
-**Wave:** 1 · **Risk:** low · **Gate:** none
+**Волна:** 1 · **Риск:** низкий · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- repo skeleton
+- Скелет `control-plane/`: pnpm workspace, TypeScript strict, vitest
 - CI
-- structural invariant mechanisms S-1, S-2, S-3, S-6, S-10 — blocking from day one
-- Agent Rules File (`AGENTS.md`) with mechanism registry and Definition of Done
-- Event Registry codegen + string-literal ban
-- S-8 in warning mode
+- Работающие механизмы инвариантов сборки S-1, S-2, S-3, S-5, S-6, S-10 — блокирующие с первого дня
+- `AGENTS.md` в корне: реестр механизмов и Definition of Done
+- Кодогенерация типов из схем и констант из реестра событий
+- S-8 в режиме предупреждения
 
-Per patch v1.2 §9.11 the day-one set is boundary rules, event registry with
-generated types, and the rules file. A structural invariant is admitted only
-together with a working check, so these ship as configuration, not as prose:
-`dependency-cruiser` (S-1, S-2, S-5), `madge --circular` (S-6), codegen plus
-eslint literal rule (S-3), command-set equality test (S-10).
+По разделу 9.11 патча v1.2 набор первого дня — это правила границ, реестр
+событий с генерацией типов и файл правил исполнителя. Инвариант сборки
+принимается **только вместе с работающей проверкой**, поэтому всё перечисленное
+приезжает конфигами и тестами, а не текстом.
 
-Sheets and rollout order: [structural-invariants.md](../SPEC/structural-invariants.md).
+Sheets и порядок внедрения: [structural-invariants.md](../SPEC/structural-invariants.md).
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено своими руками. Непроверенный пункт остаётся
+пустым — именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### Скелет и сборка
+
+- [ ] `pnpm install` проходит на чистой копии без ручных шагов
+- [ ] `pnpm typecheck` зелёный
+- [ ] `pnpm test` зелёный, и в выводе видно число тестов, а не «0 passed»
+- [ ] В `control-plane/packages/` шесть пакетов: contracts, domain, registry, snapshot, impact, cli
+- [ ] TypeScript strict включён вместе с `noUncheckedIndexedAccess` и `exactOptionalPropertyTypes`
+
+### Кодогенерация
+
+- [ ] `pnpm gen` печатает число сгенерированных модулей схем и констант событий
+- [ ] Каталог `control-plane/packages/contracts/src/generated/` в `.gitignore` и не закоммичен
+- [ ] Ни один тип артефакта не объявлен руками: в `src/` вне `generated/` нет `interface Node`, `interface Edge` и подобного
+- [ ] Удаление схемы из пакета роняет тест «no generated module exists without a schema»
+
+### Механизмы инвариантов
+
+Каждый пункт проверяется **негативно**: внести нарушение, увидеть падение, откатить.
+
+- [ ] S-1 — добавить `import { readFileSync } from "node:fs"` в `packages/domain` → тест границ падает
+- [ ] S-2 — добавить в `packages/registry` импорт из `@glt/impact` → тест границ падает
+- [ ] S-3 — вписать строку `"glt.snapshot.compiled"` в любой исходник → тест реестра событий падает
+- [ ] S-6 — создать цикл импортов между двумя модулями → тест границ падает
+- [ ] S-8 — добавить в `packages/domain` число вне `[-1, 0, 1, 2]` → тест параметров падает
+- [ ] S-10 — добавить команду в `COMMANDS` или строку в таблицу `cli.md` → тест поверхности CLI падает
+- [ ] В именах тестов стоят ID: `S-1`, `S-2`, `S-3`, `S-5`, `S-6`, `S-8`, `S-10`
+
+### Поверхность CLI
+
+- [ ] Множество команд парсера в точности равно таблице в [cli.md](../SPEC/cli.md)
+- [ ] `commit`, `push`, `deploy`, `self-upgrade`, `self-write` отсутствуют как команды, подкоманды и флаги
+- [ ] Нереализованная команда завершается кодом 1 и **ничего** не пишет в stdout
+- [ ] Ни одна команда не пишет в рабочую копию
+
+### Общее
+
+- [ ] CI зелёный
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+
+### Чем проверить
+
+```bash
+pnpm install
+pnpm gen
+pnpm typecheck
+pnpm test
+pnpm boundaries
+```
+
+## Спецификация
 
 - [architecture.md](../SPEC/architecture.md)
 - [structural-invariants.md](../SPEC/structural-invariants.md)
 - [cli.md](../SPEC/cli.md)
 
+## Статус
 
-## Status
+**сделано локально, CI не прогонялся** — ветка `wave1`.
 
-planned — generated with specpack 0.1.0
+Чистая установка проверена 06.09: `node_modules` удалены полностью, затем
+`pnpm install` → `pnpm typecheck` → `pnpm test` без единого ручного шага.
+Постинсталл esbuild отрабатывает сам, 22 теста проходят.
+
+До этой проверки шаг считался закрытым по локальному прогону на уже собранном
+дереве, а это другое утверждение. `pnpm install` на существующем дереве печатает
+«Already up to date» и не переоценивает build scripts, поэтому подтверждает
+только то, что ничего не сломалось, — но не то, что установка с нуля работает.
+
+**Остаётся незакрытым:** CI ни разу не запускался, ветка не отправлена.
+«Зелено локально» и «зелено в CI» — разные утверждения, и смешивать их нельзя.
+
+Собрано: pnpm workspace на шесть пакетов, TypeScript strict, vitest,
+кодогенерация 12 модулей типов и 10 констант событий из пакета, CI и
+блокирующие механизмы S-1, S-2, S-3, S-5, S-6, S-8, S-10.
+
+Каждый механизм проверен негативно: нарушение внесено намеренно, прогон обязан
+упасть. Шесть случаев, шесть падений. Механизм, видевший только чистый код, не
+является доказательством.
+
+Реализация вскрыла три расхождения со спекой, они записаны в `CHANGELOG.md`
+0.7.0: `madge` удалён как второй детектор циклов (S-4), `cli` и `api` объявлены
+композиционными корнями в S-2, S-3 и S-8 обеспечиваются сканом источников, а не
+eslint.

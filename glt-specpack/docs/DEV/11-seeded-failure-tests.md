@@ -13,44 +13,77 @@ gate: product-prep
 source_refs: []
 ---
 
-# 11 — Seeded failure tests
+# 11 — Seeded-случаи
 
-**Wave:** 1 · **Risk:** medium · **Gate:** product-prep
+**Волна:** 1 · **Риск:** средний · **Gate:** product-prep
 
-## Outputs
+## Что делаем
 
-- CI seeds S1-S3
-- seeded change set with authored ground truth (≥10 cases)
+- Инъекции дефектов S1–S3 в CI
+- Набор seeded changes с ручной ground truth, не менее 10 случаев
 
-## Two sets, not one
+## Два набора, а не один
 
-S1–S3 are defect injections: they check that a mechanism fires, and the outcome
-is binary. Recall cannot be computed on them — an injection has no "set of
-affected nodes".
+S1–S3 — это инъекции дефектов: они проверяют, что механизм **срабатывает**, и
+исход у них бинарный. Recall на них не считается: у инъекции нет «набора
+затронутых узлов».
 
-The Correctness gate measures recall, so it needs the second set: changes
-without defects, each carrying a hand-derived correct answer. Ground truth is
-derived from the matrix and the graph **by hand**, never by running the impact
-engine: an answer produced by the tool under measurement is a tautology, not a
-ground truth.
+Correctness gate измеряет именно recall, поэтому нужен второй набор — изменения
+без дефекта, у каждого свой правильный ответ, выведенный **вручную** по матрице
+и графу. Ответ, полученный измеряемым инструментом, — это тавтология, а не
+эталон.
 
-Requirements, review rules and case format: [seeded-failures.md](../EXPERIMENTS/seeded-failures.md).
+Требования, формат случая и правила ревью:
+[seeded-failures.md](../EXPERIMENTS/seeded-failures.md).
 
-The set is reviewed by a role that did not author the propagation matrix. It is
-open, unlike holdout H01–H05, and debugging the impact engine against it is
-allowed.
+Набор открыт, в отличие от holdout H01–H05, и отлаживать impact engine на нём
+разрешено.
 
-## Required evidence
+## Известное ограничение
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Спецификация требует, чтобы набор ревьюила роль, не писавшая propagation matrix:
+автор матрицы, заверяющий ground truth для собственной матрицы, замыкает
+проверку на себя.
 
-## SPEC
+**При одном исполнителе это требование невыполнимо.** Это тот же дефект, из-за
+которого разделён Product gate. До начала шага нужно выбрать: выводить ground
+truth независимо от матрицы (из SPEC и рёбер, а не из правил обхода), либо
+записать ограничение как известное, либо отложить часть случаев до появления
+второго исполнителя. Молча заверить самому себе — не вариант.
+
+## Чеклист приёмки
+
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым.
+
+### Инъекции S1–S3
+
+- [ ] S1: удаление ребра `validates` роняет gate
+- [ ] S2: узел за пределами boundary даёт непустой `known_unknowns`
+- [ ] S3: дублирование владельца класса фактов роняет verifier
+- [ ] Все три автоматизированы в CI, а не выполняются вручную
+
+### Набор seeded changes
+
+- [ ] Не менее 10 случаев
+- [ ] Покрыты все восемь change classes
+- [ ] Покрыты все отношения, у которых есть строка в матрице
+- [ ] Не менее двух случаев выходят за boundary
+- [ ] Не менее одного случая на непокрытое отношение из `uncovered_relations`
+- [ ] У каждого случая есть rationale со ссылками на id рёбер и строки матрицы
+- [ ] Ground truth выведена вручную, а **не** прогоном impact engine
+- [ ] Вопрос независимого ревью решён явно, а не обойдён
+
+### Общее
+
+- [ ] CI зелёный на шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [seeded-failures.md](../EXPERIMENTS/seeded-failures.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

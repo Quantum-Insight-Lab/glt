@@ -13,25 +13,37 @@ gate: none
 source_refs: []
 ---
 
-# 25 — Compose deployment
+# 25 — Развёртывание через Compose
 
-**Wave:** 3 · **Risk:** medium · **Gate:** none
+**Волна:** 3 · **Риск:** средний · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- docker-compose
+- Docker Compose для self-hosted запуска
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] Поднимается с нуля на чистой машине по документации
+- [ ] Версии образов закреплены digest, а не тегом
+- [ ] Секреты приходят извне, в репозитории их нет
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [self-hosting.md](../SPEC/self-hosting.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

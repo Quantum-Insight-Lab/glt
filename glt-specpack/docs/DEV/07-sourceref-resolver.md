@@ -13,37 +13,58 @@ gate: none
 source_refs: []
 ---
 
-# 07 — SourceRef resolver
+# 07 — Резолвер SourceRef
 
-**Wave:** 1 · **Risk:** medium · **Gate:** none
+**Волна:** 1 · **Риск:** средний · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- resolve refs CLI
+- Команда `glt resolve`
 
-## Path convention
+## Конвенция пути
 
-`path` is resolved against the root of the repository named in `repository` —
-never against the specpack root. Two conventions coexisted until 0.6.0
-(`docs/SPEC/...` and `glt-specpack/docs/...`), and a resolver cannot
-disambiguate them without guessing, which is exactly what a resolver must not
-do.
+`path` разрешается относительно **корня репозитория**, названного в
+`repository`, и никогда относительно корня пакета.
 
-Extraction of the specpack into its own repository root requires stripping the
-`glt-specpack/` prefix. The existence check from DEV-03 fails if that step is
-skipped, so it cannot pass silently.
+До версии 0.6.0 в пакете сосуществовали две конвенции — `docs/SPEC/...` и
+`glt-specpack/docs/...`. Резолвер не может выбрать между ними, не догадываясь, а
+догадываться ему запрещено ровно тем же правилом, что запрещает угадывать
+неизвестный alias.
 
-## Required evidence
+Вынос пакета в корень отдельного репозитория требует снять префикс
+`glt-specpack/` со всех путей. Проверка существования из DEV-03 падает, если
+этот шаг пропущен, поэтому пропустить его молча нельзя.
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+## Чеклист приёмки
 
-## SPEC
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым.
+
+### По шагу
+
+- [ ] `path` разрешается от корня репозитория, а не от корня пакета
+- [ ] Ссылка на несуществующий файл даёт ошибку, а не пустой результат
+- [ ] Selector работает: `lines:10-40` для текста, JSON Pointer для YAML и JSON
+- [ ] Ссылка без `commit` и `digest` годится для навигации, но отвергается как evidence для approval и gate
+- [ ] Несовпадение `digest` с содержимым файла роняет разрешение
+- [ ] Неоднозначная ссылка даёт ошибку, а не первый подходящий вариант (PROTO-02)
+
+### Общее
+
+- [ ] CI зелёный на шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+### Чем проверить
+
+```bash
+pnpm exec glt resolve glt-specpack/docs/SPEC/registry.md
+```
+
+## Спецификация
 
 - [provenance.md](../SPEC/provenance.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

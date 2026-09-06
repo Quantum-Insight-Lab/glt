@@ -13,57 +13,84 @@ gate: none
 source_refs: []
 ---
 
-# 09 — Bootstrap four-node slice
+# 09 — Bootstrap-срез из четырёх узлов
 
-**Wave:** 1 · **Risk:** medium · **Gate:** none
+**Волна:** 1 · **Риск:** средний · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- golden snapshot match
-- frozen golden digests
-- second boundary: full intended control-plane meta-graph
+- Совпадение с golden-снимком
+- Заморозка golden digests
+- Второй boundary: полный intended мета-граф контрол-плейна
 
-## Second boundary
+## Заморозка golden
 
-`glt.bootstrap-slice@1` stays four nodes: it is the determinism oracle, and a
-small fixed oracle is the point of it.
+Golden-фикстуры приезжают из пакета с зарезервированным placeholder-digest —
+`sha256:` и 64 нуля. Этот шаг пересчитывает их компилятором и замораживает
+результат.
 
-Measurement needs a different graph. On four nodes and three edges the correct
-impact answer is visible by eye, so recall is 1.0 for any implementation
-including a wrong one — the metric distinguishes nothing. The Correctness gate
-therefore runs against a second boundary, `glt.controlplane-intended@1`: the
-full meta-graph of the control plane — the eleven components, the DEV steps with
-their dependencies, the checks and the gates.
+Freeze-check **обязан отвергать** placeholder, иначе фикстура, которую забыли
+перегенерировать, пройдёт как оракул детерминизма, ничего при этом не
+подтверждая.
 
-This is **pure data authoring**. The intended plane comes from the registry and
-from machine-readable DEV frontmatter; no collector is involved, so none of
-wave 2 is a prerequisite. Only GLT ids and SourceRefs are written by hand — if
-maintaining the map required re-annotating every step, the map would itself
-become a second source of truth and the pilot would stop.
-
-Both boundaries coexist. Golden determinism is checked on the slice, recall is
-measured on the meta-graph.
-
-Golden fixtures ship from the specpack with the reserved unfrozen placeholder
-digest (`sha256:` + 64 zeros). This step recomputes them with the compiler and
-freezes the result. The freeze check MUST reject a placeholder digest, so a
-fixture that was never regenerated cannot pass as a determinism oracle.
-
-Frozen here: `contracts/examples/golden/bootstrap-snapshot.json`
-(`digest`, `source_digests`, `pinned_to.git_sha`) and
+Замораживаются: `contracts/examples/golden/bootstrap-snapshot.json`
+(`digest`, `source_digests`, `pinned_to.git_sha`) и
 `contracts/examples/golden/impact-bootstrap.json` (`snapshot_digest`).
 
-## Required evidence
+## Второй boundary
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+`glt.bootstrap-slice@1` остаётся четырёхузловым: это оракул детерминизма, и
+маленький фиксированный оракул — весь его смысл.
 
-## SPEC
+Для измерения нужен другой граф. На четырёх узлах и трёх рёбрах правильный ответ
+виден глазами, поэтому recall равен 1.0 у любой реализации, включая
+неправильную, и метрика не различает ничего. Correctness gate работает на втором
+boundary `glt.controlplane-intended@1` — полном мета-графе контрол-плейна:
+одиннадцать компонентов, шаги DEV с их зависимостями, checks и gates.
+
+Это **чистые данные**. Intended-плоскость собирается из реестра и
+машиночитаемого frontmatter шагов DEV, коллекторы не участвуют, поэтому ничто из
+волны 2 не является предусловием. Вручную пишутся только GLT-ID и SourceRef:
+если для поддержки карты придётся заново размечать все 35 шагов, пилот
+останавливается — карта станет вторым источником истины.
+
+## Чеклист приёмки
+
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым.
+
+### Заморозка
+
+- [ ] Ни один digest в golden не равен 64 нулям
+- [ ] Freeze-check падает, если вернуть placeholder обратно
+- [ ] Пересборка снимка даёт ровно замороженный digest
+- [ ] `pinned_to.git_sha` заполнен настоящим SHA
+
+### Мета-граф
+
+- [ ] `glt.controlplane-intended@1` существует как boundary-манифест
+- [ ] Статусы, зависимости и `expected_from_step` берутся из frontmatter шагов DEV, а не продублированы руками
+- [ ] Правка `depends_on` в шаге DEV меняет граф без ручной синхронизации
+- [ ] Оба boundary сосуществуют: детерминизм проверяется на срезе, recall измеряется на мета-графе
+- [ ] Плановый узел без кода не считается сломанным — у него есть `expected_from_step`
+
+### Общее
+
+- [ ] CI зелёный на шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+### Чем проверить
+
+```bash
+pnpm exec glt compile snapshot --boundary glt.bootstrap-slice@1
+pnpm test
+```
+
+## Спецификация
 
 - [topology.md](../SPEC/topology.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

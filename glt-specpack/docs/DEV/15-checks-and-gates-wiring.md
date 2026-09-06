@@ -13,25 +13,38 @@ gate: none
 source_refs: []
 ---
 
-# 15 — Checks and gates wiring
+# 15 — Связывание checks и gates
 
-**Wave:** 2 · **Risk:** medium · **Gate:** none
+**Волна:** 2 · **Риск:** средний · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- gate evaluator
+- Вычислитель состояния gate
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] Обязательный или упавший check переводит gate в `pending` или `blocked`
+- [ ] Gate не проходит при отсутствии сигнала — отсутствие не равно успеху (PROTO-12)
+- [ ] Каждый переход состояния несёт evidence: закрытый gate, отчёт проверки или явную блокировку
+- [ ] Gate в v1 только вычисляет и ничего не мерджит
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [gates.md](../SPEC/gates.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

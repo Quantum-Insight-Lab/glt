@@ -14,31 +14,67 @@ gate: none
 source_refs: []
 ---
 
-# 08 — Snapshot compiler
+# 08 — Компилятор снимков
 
-**Wave:** 1 · **Risk:** high · **Gate:** none
+**Волна:** 1 · **Риск:** высокий · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- bootstrap snapshot
-- RFC 8785 canonicalizer with its own test vectors
+- Bootstrap-снимок
+- Канонизатор RFC 8785 с собственными тестовыми векторами
 
-PROTO-03 is only testable once the canonical form is implemented: sorted unordered
-arrays, JCS serialization, NFC strings, digest over the document with the
-`digest` member removed. The canonicalizer lives in `packages/domain` with no
-third-party dependency, so the bootstrap verifier does not widen its trust base.
+## Почему сначала векторы
 
-## Required evidence
+PROTO-03 становится проверяемым только после реализации канонической формы:
+сортировка неупорядоченных массивов, сериализация JCS, нормализация строк в NFC,
+digest по документу с удалённым членом `digest`.
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Векторы пишутся **до** компилятора, а не после. Реализация без векторов создаёт
+видимость детерминизма: снимок совпадает сам с собой, и этого достаточно, чтобы
+тест был зелёным, но недостаточно, чтобы digest совпал на другой машине.
 
-## SPEC
+Канонизатор живёт в `packages/domain` без сторонних зависимостей, чтобы
+bootstrap verifier не расширял базу доверия.
+
+## Чеклист приёмки
+
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым.
+
+### Канонизатор
+
+- [ ] Тестовые векторы RFC 8785 проходят, и их видно в выводе тестов
+- [ ] Массивы сортируются: узлы и рёбра по `metadata.id`, assertions по `plane`, остальные лексикографически
+- [ ] Строки нормализуются в NFC — проверить на глифах в aliases
+- [ ] Канонизатор не тянет ни одной сторонней зависимости
+- [ ] Digest считается по документу **с удалённым** членом `digest`, а не с обнулённым
+
+### Снимок
+
+- [ ] Два прогона на одном входе дают побайтово одинаковый результат
+- [ ] Изменение `as_of` на секунду меняет digest, изменение порядка ключей в источнике — нет
+- [ ] В снимке материализованы defaults: `sensitivity`, `capabilities`, `signals` (PROTO-05)
+- [ ] Узлы и рёбра — полные объекты, а не список id (PROTO-04)
+- [ ] Снимок закреплён за git SHA, artifact digest или deployment id (PROTO-10)
+- [ ] Digest считается только через `packages/domain/src/digest.ts` — второго способа нет
+
+### Общее
+
+- [ ] CI зелёный на шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+### Чем проверить
+
+```bash
+pnpm exec glt compile snapshot --output json
+pnpm exec glt compile snapshot --output json   # тот же digest
+```
+
+## Спецификация
 
 - [snapshots.md](../SPEC/snapshots.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

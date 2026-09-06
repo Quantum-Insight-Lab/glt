@@ -57,9 +57,12 @@ control-plane/packages/
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |
 | Тесты | `vitest` | все пакеты |
-| Границы | `dependency-cruiser` | корень |
-| Циклы | `madge --circular` | корень |
+| Границы и циклы | `dependency-cruiser` | корень, `.dependency-cruiser.cjs` |
 | Мёртвый код | `knip` | корень |
+
+Циклы ловит `dependency-cruiser` правилом `s6-no-circular`, а не отдельный
+инструмент: он уже разрешает TS-алиасы `@glt/*`, и второй детектор циклов был бы
+вторым механизмом на одну задачу — то есть нарушением S-4.
 
 Замена механизма — PR, который **удаляет** старый. Не добавляет второй.
 

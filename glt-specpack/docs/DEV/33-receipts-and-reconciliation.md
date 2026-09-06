@@ -13,25 +13,38 @@ gate: none
 source_refs: []
 ---
 
-# 33 — Receipts and reconciliation
+# 33 — Receipts и reconciliation
 
-**Wave:** 4 · **Risk:** high · **Gate:** none
+**Волна:** 4 · **Риск:** высокий · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- unknown_outcome handler
+- Обработка `unknown_outcome`
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] Попытка записывается **до** эффекта (PROTO-16)
+- [ ] Потеря связи после внешней записи даёт `unknown_outcome`, а не автоматический retry
+- [ ] Исход устанавливается сверкой с целевой системой и пишется новой audit-записью
+- [ ] `unknown_outcome` допустим как конечное состояние и не выдаётся за успех
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [audit.md](../SPEC/audit.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

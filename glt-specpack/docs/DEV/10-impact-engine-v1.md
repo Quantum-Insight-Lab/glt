@@ -15,23 +15,45 @@ source_refs: []
 
 # 10 — Impact engine v1
 
-**Wave:** 1 · **Risk:** high · **Gate:** none
+**Волна:** 1 · **Риск:** высокий · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- impact CLI
+- Команда `glt impact`
+- Отчёт о влиянии изменения
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] Обход идёт по матрице, а не по зашитым в код правилам: подмена матрицы меняет результат
+- [ ] Отношение без строки в матрице даёт `known_unknowns` с `kind: uncovered_relation`
+- [ ] Изменение, выходящее за boundary, даёт непустой `known_unknowns`
+- [ ] `validates` кладёт check в `required_checks`, а не в `affected_nodes`
+- [ ] Отчёт несёт `snapshot_digest`, `classifier_version` и `matrix_version`
+- [ ] Golden-случай `impact-bootstrap.json` воспроизводится точно
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+### Чем проверить
+
+```bash
+pnpm exec glt impact --output json
+```
+
+## Спецификация
 
 - [impact.md](../SPEC/impact.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

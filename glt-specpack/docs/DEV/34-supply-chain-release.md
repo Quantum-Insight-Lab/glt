@@ -13,25 +13,37 @@ gate: none
 source_refs: []
 ---
 
-# 34 — Supply chain release
+# 34 — Supply chain и релиз
 
-**Wave:** 4 · **Risk:** high · **Gate:** none
+**Волна:** 4 · **Риск:** высокий · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- signed images
+- Подписанные образы, закреплённые digests
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] Образы подписаны, digests закреплены
+- [ ] Сборка воспроизводима из закреплённых входов
+- [ ] Релиз требует внешнего approval, `glt-cp-runtime@internal` запрещён
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [supply-chain.md](../SECURITY/supply-chain.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

@@ -16,36 +16,71 @@ gate: none
 source_refs: []
 ---
 
-# 04 — JSON Schema validator
+# 04 — Валидатор JSON Schema
 
-**Wave:** 1 · **Risk:** medium · **Gate:** none
+**Волна:** 1 · **Риск:** средний · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- schema test suite
-- S-7 invariant/test reconciliation: audit first, then blocking
-- S-4 mechanism census
+- Набор тестов схем
+- Сверка S-7 «инвариант ↔ тест»: сначала аудит, потом блокирующий режим
+- Тест-перепись механизмов S-4
 
-S-7 parses ids from three registries — `PROTO-xx`, `INV-xx`, `S-x` — and from
-test names, then reports the gap as `glt_structural_coverage`. Baseline is 0 of
-40: no code exists yet. An invariant belonging to an unimplemented wave is
-marked deferred with its DEV step; deferred counts as uncovered and stays
-visible, never silently skipped.
+## Сверка S-7
 
-## Required evidence
+Сверка разбирает ID из трёх реестров — `PROTO-xx`, `INV-xx`, `S-x` — и из имён
+тестов, после чего печатает разрыв как `glt_structural_coverage`.
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Исходная линия: 0 из 40. Инвариант, относящийся к нереализованной волне,
+помечается отложенным с указанием шага DEV. **Отложенный считается непокрытым**
+и остаётся видимым — молча пропустить его нельзя, иначе метрика начнёт врать в
+приятную сторону.
 
-## SPEC
+## Чеклист приёмки
+
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым.
+
+### Схемы
+
+- [ ] Все 12 схем компилируются в ajv в strict mode
+- [ ] Каждая фикстура ведёт себя как ожидается: `valid/` проходит, `invalid/` падает
+- [ ] Реестр, boundary-манифест, матрица и реестр событий валидны своими схемами
+- [ ] Схема, которую ajv считает нестрогой, чинится в схеме, а не отключением флага
+
+### S-7
+
+- [ ] Сверка находит ID во всех трёх реестрах: 18 PROTO, 12 INV, 10 S
+- [ ] Инвариант без теста попадает в отчёт, а не пропадает
+- [ ] Отложенный инвариант помечен шагом DEV и считается **непокрытым**
+- [ ] `glt_structural_coverage` печатается числом, а не словом «ок»
+- [ ] Удаление ID из имени существующего теста роняет сверку
+
+### S-4
+
+- [ ] Перепись находит все механизмы из реестра в `AGENTS.md`
+- [ ] Вторая реализация любого механизма роняет тест — проверить, добавив второй вызов `createHash("sha256")` вне `digest.ts`
+
+### Общее
+
+- [ ] CI зелёный на шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+### Чем проверить
+
+```bash
+pnpm exec glt validate
+pnpm test
+```
+
+## Спецификация
 
 - [registry.md](../SPEC/registry.md)
 - [topology.md](../SPEC/topology.md)
 - [invariants.md](../SPEC/invariants.md)
 - [structural-invariants.md](../SPEC/structural-invariants.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

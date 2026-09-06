@@ -17,57 +17,82 @@ source_refs: []
 
 # 12 — Correctness gate
 
-**Wave:** 1 · **Risk:** medium · **Gate:** correctness
+**Волна:** 1 · **Риск:** средний · **Gate:** correctness
 
-## Outputs
+## Что делаем
 
-- E02a / E02b recall harness against the seeded change set
-- E03 holdout runner for H01–H05
-- E05a boundary honesty check
-- gate evidence report: recall, precision, set size, classifier and matrix versions
+- Стенд для E02a и E02b: recall против набора seeded changes
+- Прогон E03 по holdout H01–H05
+- Проверка E05a: честность границ
+- Отчёт gate: recall, precision, размер набора, версии classifier и matrix
 
-## Criteria
+## Критерии
 
-Fully machine-measured. No criterion compares against a human baseline.
+Полностью машинные. Ни один критерий не сравнивается с человеческим baseline.
 
-| Criterion | Threshold |
+| Критерий | Порог |
 |---|---|
-| E02a required-check recall | 1.0 |
-| E02b affected-node recall | 1.0 |
-| E03 false green on holdout | 0 |
-| E05a `known_unknowns` non-empty outside boundary | always |
+| E02a recall обязательных проверок | 1.0 |
+| E02b recall затронутых узлов | 1.0 |
+| E03 false green на holdout | 0 |
+| E05a `known_unknowns` вне boundary | всегда непусто |
 
-Recall is gated, precision is reported. An extra node in the report costs a
-developer some reading; a missed required check is the failure GLT exists to
-prevent. A symmetric threshold would treat those as equivalent.
+Гейтится **recall**, precision публикуется. Лишний узел в отчёте стоит
+разработчику времени на чтение; пропущенная обязательная проверка — это тот
+отказ, ради предотвращения которого GLT существует. Симметричный порог уравнял
+бы эти два исхода, а они не равны.
 
-Runs against `glt.controlplane-intended@1` (DEV-09), not against the four-node
-slice: on four nodes recall is 1.0 for any implementation, correct or not.
+Порог recall равен 1.0, а не 0.8. Мягкий порог означает «иногда молча теряем
+обязательную проверку», что противоречит PROTO-12 и всей логике
+`known_unknowns`: неполнота обязана быть **названной**, а не статистической.
 
-## What this gate does not prove
+Измеряется на `glt.controlplane-intended@1`, а не на четырёхузловом срезе: на
+четырёх узлах recall равен 1.0 у любой реализации, корректной или нет.
 
-It proves GLT computes correctly. It says nothing about whether GLT makes anyone
-faster — that is the Usefulness gate, which is deferred with status **not
-measured** because it needs at least four people who did not author the graph.
+## Чего этот gate не доказывает
 
-Passing this gate does not license claims about speed or productivity. See
-[product-gate.md](../EXPERIMENTS/product-gate.md).
+Он доказывает, что GLT считает правильно. Он ничего не говорит о том, ускоряет
+ли GLT чью-то работу — это Usefulness gate, отложенный со статусом **«не
+проверено»**, потому что требует минимум четырёх участников, не писавших граф.
 
-No UI is involved. The B1 dashboard moved to DEV-20, where both planes exist and
-there is something worth showing.
+Прохождение этого gate не даёт права утверждать что-либо о скорости или
+продуктивности. См. [product-gate.md](../EXPERIMENTS/product-gate.md).
 
-## Required evidence
+UI не участвует. B1 dashboard перенесён в DEV-20, где существуют обе плоскости и
+есть что показывать.
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- Gate evidence per [docs/EXPERIMENTS/product-gate.md](../EXPERIMENTS/product-gate.md)
+## Чеклист приёмки
 
-## SPEC
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым.
+
+### Критерии
+
+- [ ] E02a: recall обязательных проверок равен 1.0 на всём наборе
+- [ ] E02b: recall затронутых узлов равен 1.0 на всём наборе
+- [ ] E03: ноль false-green на holdout H01–H05
+- [ ] E05a: изменение вне boundary всегда даёт непустой `known_unknowns`
+- [ ] Precision посчитана и опубликована, но не гейтится
+
+### Честность прогона
+
+- [ ] Прогон идёт на мета-графе, а не на четырёхузловом срезе
+- [ ] Holdout не использовался для отладки и настройки параметров
+- [ ] Отчёт называет размер набора и версии classifier и matrix
+- [ ] Отчёт нигде не утверждает, что GLT ускоряет работу
+- [ ] Usefulness gate остаётся в статусе «не проверено», а не «пройден»
+
+### Общее
+
+- [ ] CI зелёный на шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [impact.md](../SPEC/impact.md)
 - [product-gate.md](../EXPERIMENTS/product-gate.md)
 
+## Статус
 
-## Status
-
-planned
+запланирован

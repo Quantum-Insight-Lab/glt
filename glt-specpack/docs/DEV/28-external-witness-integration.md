@@ -13,25 +13,38 @@ gate: anti-cycle
 source_refs: []
 ---
 
-# 28 — External witness integration
+# 28 — Интеграция внешнего witness
 
-**Wave:** 3 · **Risk:** high · **Gate:** anti-cycle
+**Волна:** 3 · **Риск:** высокий · **Gate:** anti-cycle
 
-## Outputs
+## Что делаем
 
-- witness client
+- Клиент внешнего witness
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] Head-hash анкорится у третьей стороны, receipt сохраняется
+- [ ] Устаревание witness сверх P06 переводит систему в read-only
+- [ ] Endpoint реальный, а не `example.invalid`
+- [ ] Gate anti-cycle: контрол-плейн не подтверждает целостность своего audit сам
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [external-witness.md](../SECURITY/external-witness.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

@@ -13,25 +13,38 @@ gate: none
 source_refs: []
 ---
 
-# 17 — Freshness and conflicts
+# 17 — Freshness и конфликты
 
-**Wave:** 2 · **Risk:** high · **Gate:** none
+**Волна:** 2 · **Риск:** высокий · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- stale/conflict detect
+- Определение устаревания и расхождения источников
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] Снимок старше `snapshot.stale_after_seconds` (P01) помечается и блокирует write
+- [ ] Просроченный сигнал исключается из расчёта здоровья (PROTO-11)
+- [ ] Расхождение двух авторитетных источников даёт `source_conflict`
+- [ ] Порог берётся из parameter card, а не из литерала в коде (S-8)
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [degradation.md](../SPEC/degradation.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

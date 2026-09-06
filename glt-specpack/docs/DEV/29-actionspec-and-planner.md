@@ -13,25 +13,37 @@ gate: none
 source_refs: []
 ---
 
-# 29 — ActionSpec and planner
+# 29 — ActionSpec и planner
 
-**Wave:** 4 · **Risk:** high · **Gate:** none
+**Волна:** 4 · **Риск:** высокий · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- plan builder
+- Сборка immutable plan из зарегистрированных действий
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] Plan собирается только из зарегистрированных ActionSpec, произвольная строка невозможна
+- [ ] Execution DAG ацикличен (PROTO-07)
+- [ ] Envelope содержит все digests: plan, policy, executor image, snapshot (PROTO-14)
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [runner.md](../SPEC/runner.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

@@ -15,23 +15,37 @@ source_refs: []
 
 # 32 — Sandboxed read/build runner
 
-**Wave:** 4 · **Risk:** critical · **Gate:** safety-prep
+**Волна:** 4 · **Риск:** критический · **Gate:** safety-prep
 
-## Outputs
+## Что делаем
 
-- container executor
+- Исполнитель в контейнере с deny по умолчанию
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] Escape-сценарии E06 блокируются полностью, 100%
+- [ ] Сеть выключена по умолчанию, egress только через policy broker
+- [ ] Код проверяемой ветки считается недоверенным
+- [ ] Нет Docker socket, нет host credentials, образ закреплён подписанным digest
+- [ ] Seeded failures S4–S6 автоматизированы
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [sandbox.md](../SECURITY/sandbox.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

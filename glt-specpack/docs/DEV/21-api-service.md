@@ -13,25 +13,37 @@ gate: none
 source_refs: []
 ---
 
-# 21 — API service
+# 21 — API-сервис
 
-**Wave:** 3 · **Risk:** medium · **Gate:** none
+**Волна:** 3 · **Риск:** средний · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- Fastify API
+- HTTP API контрол-плейна
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] API отдаёт те же артефакты, что CLI, и валидирует их теми же схемами
+- [ ] Ни один эндпоинт не пишет в рабочую копию
+- [ ] Ответ несёт версии входов: `snapshot_id`, `registry_version`, digests
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [architecture.md](../SPEC/architecture.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

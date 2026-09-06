@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Types come from the pack. Generating here proves a fresh clone can do it.
+      - name: generate types from contracts
+        run: pnpm gen
+
+      - name: typecheck
+        run: pnpm typecheck
+
+      # S-1, S-2, S-3, S-5, S-6, S-7, S-8, S-10 all live here: each test name
+      # carries the id of the invariant it enforces.
+      - name: tests and structural invariants
+        run: pnpm test
+
+      # Same rules as the boundaries test, run standalone so the CI log names
+      # the violated rule directly.
+      - name: boundaries
+        run: pnpm boundaries
+
+      # S-9 is warning severity: dead code is reported, not blocking.
+      - name: dead code
+        run: pnpm deadcode
+        continue-on-error: true

@@ -2,8 +2,8 @@
 
 Переносимый specpack для standalone-проекта **GLT Control Plane**: наблюдаемая архитектура, анализ влияния изменений и контролируемые read/build-действия.
 
-**Версия пакета:** 0.6.0 · 04.09.2026  
-**Статус:** pre-code, контракты машинно проверены, готов к DEV-01  
+**Версия пакета:** 0.7.0 · 04.09.2026  
+**Статус:** DEV-01 сделан, механизмы S-1…S-3, S-5, S-6, S-8, S-10 блокируют в CI  
 **Методология:** [Possibility-Driven Architecture (PDA)](../archive/Possibility-Driven_Architecture_Methodology_ru_v1_1.docx.md) v1.1 + [патч v1.2](../archive/PDA_patch_v1.2_structural_integrity.md)
 
 ---

@@ -14,25 +14,44 @@ gate: none
 source_refs: []
 ---
 
-# 05 — Authority map enforcement
+# 05 — Enforcement authority map
 
-**Wave:** 1 · **Risk:** high · **Gate:** none
+**Волна:** 1 · **Риск:** высокий · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- authority CI check
+- CI-проверка `trust/authority-map.yaml`
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] Два владельца одного класса фактов роняют проверку (sheet INV-01)
+- [ ] Нормативный документ с `owner` вне authority map роняет проверку
+- [ ] Один путь, заявленный двумя классами фактов, роняет проверку
+- [ ] Конфликт даёт `source_conflict` и блокирует действия выше `read`, а не «выбирает правильный источник»
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+### Чем проверить
+
+```bash
+pnpm exec glt lint authority
+```
+
+## Спецификация
 
 - [provenance.md](../SPEC/provenance.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

@@ -7,6 +7,9 @@ dist/
 build/
 *.tsbuildinfo
 
+# generated from glt-specpack/contracts/ — never edited, never committed
+control-plane/packages/contracts/src/generated/
+
 # generated control-plane artifacts
 # Compiled snapshots are derived, never normative. Golden fixtures live in
 # glt-specpack/contracts/examples/golden/ and are committed on purpose.
@@ -27,6 +30,7 @@ coverage/
 .eslintcache
 
 # editor and OS
+.cursor/
 .DS_Store
 Thumbs.db
 *.swp

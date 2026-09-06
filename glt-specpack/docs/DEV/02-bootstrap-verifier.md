@@ -16,24 +16,43 @@ source_refs: []
 
 # 02 — Bootstrap verifier
 
-**Wave:** 1 · **Risk:** high · **Gate:** trust
+**Волна:** 1 · **Риск:** высокий · **Gate:** trust
 
-## Outputs
+## Что делаем
 
-- glt verify CLI
+- CLI `glt verify`
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] `glt verify` читает T0-ключи из `trust/seed-public-keys/` **до** разбора манифеста, а не после
+- [ ] Манифест, подписанный только тем ключом, который в нём же и лежит, отвергается (sheet INV-10)
+- [ ] Прогон на свежей копии репозитория проходит без ручных шагов
+- [ ] Понятно, какой из трёх отказов произошёл: нет ключа, не сошлась подпись, неверный порядок загрузки
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+### Чем проверить
+
+```bash
+pnpm exec glt verify
+```
+
+## Спецификация
 
 - [invariants.md](../SPEC/invariants.md)
 - [bootstrap-trust.md](../SECURITY/bootstrap-trust.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

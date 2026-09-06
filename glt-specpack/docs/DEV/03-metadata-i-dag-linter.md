@@ -13,40 +13,62 @@ gate: pre-code
 source_refs: []
 ---
 
-# 03 — Metadata i DAG linter
+# 03 — Линтер метаданных и DAG
 
-**Wave:** 1 · **Risk:** medium · **Gate:** pre-code
+**Волна:** 1 · **Риск:** средний · **Gate:** pre-code
 
-## Outputs
+## Что делаем
 
-- doc DAG check
-- `source_refs` existence check
+- Проверка DAG документов
+- Проверка **существования** целей `source_refs`
 
-## Existence, not just structure
+## Существование, а не только структура
 
-Validating a SourceRef against its schema proves the shape, not the target. A
-ref to a moved file stays schema-valid and keeps looking authoritative, which
-makes it worse than a malformed one.
+Проверка SourceRef по схеме подтверждает форму, но не цель. Ссылка на
+перемещённый файл остаётся schema-valid и продолжает выглядеть авторитетной —
+это хуже, чем ссылка, сломанная по форме: та себя выдаёт.
 
-This gap was real: moving the concept documents into `archive/` broke 41 paths
-across 26 files, and the 0.5.0 checker reported green because it only validated
-structure. The linter must resolve every `path` against the repository root and
-fail on anything missing.
+Пробел был настоящим. Перенос концептуальных документов в `archive/` сломал 41
+путь в 26 файлах, а проверка версии 0.5.0 отрапортовала зелёным, потому что
+смотрела только структуру. Линтер обязан разрешать каждый `path` относительно
+корня репозитория и падать на любом отсутствующем.
 
-Same rule for SourceRefs inside data artifacts — registry bundle, golden
-fixtures — not only in frontmatter.
+То же правило действует для SourceRef внутри данных — бандл реестра, golden
+фикстуры — а не только во frontmatter.
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым.
 
-## SPEC
+### По шагу
+
+- [ ] Документ в `docs/` без frontmatter роняет проверку
+- [ ] Цикл в `depends_on` обнаруживается и печатается полным путём цикла
+- [ ] Висячий `depends_on` роняет проверку
+- [ ] Неразрешимый `spec_refs` роняет проверку
+- [ ] **Несуществующая цель `source_refs` роняет проверку** — проверить, вернув путь `GLT-2.0.md` вместо `archive/GLT-2.0.md`
+- [ ] То же для SourceRef внутри данных, не только во frontmatter
+- [ ] `owner` нормативного документа вне authority map роняет проверку
+- [ ] Документ в `examples/**` с `normativity` не равной `non_normative` роняет проверку
+- [ ] Есть тест с `S-7` в имени, если сверка реализуется здесь
+
+### Общее
+
+- [ ] CI зелёный на шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+### Чем проверить
+
+```bash
+pnpm exec glt lint docs
+```
+
+## Спецификация
 
 - [metadata-contract.md](../00-governance/metadata-contract.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован

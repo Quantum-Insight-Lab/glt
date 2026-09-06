@@ -1,0 +1,31 @@
+{
+  "name": "glt-controlplane",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "gen": "tsx control-plane/packages/contracts/scripts/generate.ts",
+    "typecheck": "tsc --noEmit",
+    "pretest": "pnpm gen",
+    "test": "vitest run",
+    "boundaries": "depcruise control-plane/packages --config .dependency-cruiser.cjs",
+    "deadcode": "knip",
+    "check": "pnpm gen && pnpm typecheck && pnpm test"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "dependency-cruiser": "^16.9.0",
+    "json-schema-to-typescript": "^15.0.4",
+    "knip": "^5.42.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

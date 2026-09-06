@@ -15,23 +15,36 @@ source_refs: []
 
 # 13 — Git collector
 
-**Wave:** 2 · **Risk:** medium · **Gate:** none
+**Волна:** 2 · **Риск:** средний · **Gate:** нет
 
-## Outputs
+## Что делаем
 
-- materialized hints
+- Materialized-факты: граф модулей, source digests
 
-## Required evidence
+## Чеклист приёмки
 
-- CI green on depends_on steps
-- Spec refs implemented or explicitly deferred in CHANGELOG
-- For gate steps: evidence per docs/EXPERIMENTS/
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
+именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
+пройденным при живом цикле.
 
-## SPEC
+### По шагу
+
+- [ ] Коллектор собирает факты и не принимает решений политики
+- [ ] `source_digests` совпадают при повторном запуске на том же commit
+- [ ] Факты помечены планом `materialized` и не смешиваются с `intended`
+- [ ] Отсутствие данных даёт `unknown`, а не пустоту, которую видно как «всё в порядке»
+
+### Общее
+
+- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+
+## Спецификация
 
 - [collectors.md](../SPEC/collectors.md)
 
+## Статус
 
-## Status
-
-planned — generated with specpack 0.1.0
+запланирован
