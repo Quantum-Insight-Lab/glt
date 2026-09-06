@@ -16,7 +16,7 @@ export interface OutputOptions {
 
 export interface Writer {
   /** Emits the artifact. Called at most once per command. */
-  artifact(value: unknown, renderText: (value: never) => string): void;
+  artifact<T>(value: T, renderText: (value: T) => string): void;
   /** Diagnostics and progress. Never stdout. */
   note(message: string): void;
   warn(message: string): void;
@@ -35,9 +35,7 @@ export function createWriter(
   return {
     artifact(value, renderText) {
       const text =
-        options.format === "json"
-          ? JSON.stringify(value, null, 2)
-          : renderText(value as never);
+        options.format === "json" ? JSON.stringify(value, null, 2) : renderText(value);
       streams.out(text + "\n");
     },
 

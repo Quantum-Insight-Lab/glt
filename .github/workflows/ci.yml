@@ -40,6 +40,12 @@ jobs:
       - name: boundaries
         run: pnpm boundaries
 
+      # The metadata contract. A markdown formatter can destroy frontmatter
+      # silently — it already did once — and until this step existed nothing in
+      # CI would have noticed a corrupted document reaching the branch.
+      - name: docs metadata and DAG
+        run: pnpm lint:docs
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

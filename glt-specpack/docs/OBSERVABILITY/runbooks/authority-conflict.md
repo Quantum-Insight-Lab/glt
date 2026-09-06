@@ -25,7 +25,7 @@ source_refs: []
 ## Mitigate
 
 1. **Определить класс фактов**, а не документ. Конфликт всегда о классе: `intended-topology`, `materialized-build`, `observed-runtime` и так далее.
-2. **Применить правило разрешения** из [`../../trust/authority-map.yaml`](../../trust/authority-map.yaml):
+2. **Применить правило разрешения** из [`authority-map.yaml`](../../../trust/authority-map.yaml):
    - один класс, два источника → `conflicted`, действия выше `read` блокируются;
    - разные классы → оба сохраняются с разделением по планам, это не конфликт;
    - registry против engineering → engineering выигрывает по тексту контракта, registry выигрывает по id и alias;
