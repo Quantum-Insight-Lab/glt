@@ -81,3 +81,16 @@ export const invariantViolated = (
  */
 export const evidenceInsufficient = (message: string, refs?: readonly string[]): GltError =>
   new GltError({ code: ExitCode.EvidenceInsufficient, message, ...(refs ? { refs } : {}) });
+
+/** Two authoritative sources of one fact class disagree. Actions above read are blocked. */
+export const sourceConflict = (
+  message: string,
+  refs?: readonly string[],
+  invariant?: InvariantId,
+): GltError =>
+  new GltError({
+    code: ExitCode.SourceConflict,
+    message,
+    ...(invariant ? { invariant } : {}),
+    ...(refs ? { refs } : {}),
+  });

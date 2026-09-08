@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.11.0] — 2026-09-08
+
+DEV-05: enforcement authority map. Sheet INV-01 — команда, а не договорённость.
+
+### Added
+
+- `glt lint authority` — один владелец на класс фактов, нормативный `owner` только из карты, один путь не принадлежит двум владельцам. Конфликт внутри класса — `source_conflict`, действия выше `read` блокируются; правило `registry_vs_engineering` победителя не выбирает. Код 6 ([runbook](docs/OBSERVABILITY/runbooks/authority-conflict.md)).
+- `packages/domain/src/authority.ts` — чистая проверка. Разбор карты — один (`factClassesFromMap`); `lint docs` берёт множество owner оттуда же.
+- Шаг CI `authority map`. Живая карта не правится: пересечение `registry/` у двух классов с одним owner и префикс vs узкий путь — не конфликт.
+
+### Notes
+
+- INV-01 снят с отложения S-7. Покрытие `glt_structural_coverage`: **0.35 (14/40)**. Негативно: синтетическая карта с двумя владельцами, неизвестный owner, путь у двух owner; живой YAML на диске не портится.
+- Чеклист и `status: accepted` не трогались: приёмка шага — за человеком.
+
 ## [0.10.0] — 2026-09-08
 
 DEV-04: валидатор JSON Schema, сверка S-7 и перепись механизмов S-4.

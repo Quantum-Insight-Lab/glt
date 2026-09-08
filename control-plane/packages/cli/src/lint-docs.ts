@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import {
-  PACK_ROOT,
+  PACK,
   REPO_ROOT,
   bodyLinkTargets,
   createValidator,
@@ -10,7 +10,13 @@ import {
   validateAgainst,
   type PackDoc,
 } from "@glt/contracts";
-import { findCycles, findDanglingDependencies, findDuplicateIds } from "@glt/domain";
+import {
+  findCycles,
+  findDanglingDependencies,
+  findDuplicateIds,
+  factClassesFromMap,
+  ownersFromClasses,
+} from "@glt/domain";
 
 /**
  * `glt lint docs` — the metadata contract, enforced.
@@ -57,19 +63,11 @@ const REQUIRED_FIELDS = [
   "source_refs",
 ] as const;
 
-interface AuthorityMap {
-  spec: { fact_classes: { owner: string }[] };
-}
-
 export function lintDocs(): LintReport {
   const docs = loadPackDocs();
   const findings: Finding[] = [];
 
-  const owners = new Set(
-    loadYaml<AuthorityMap>(join(PACK_ROOT, "trust", "authority-map.yaml")).spec.fact_classes.map(
-      (c) => c.owner,
-    ),
-  );
+  const owners = ownersFromClasses(factClassesFromMap(loadYaml(PACK.authorityMap)));
 
   const ajv = createValidator();
   const parsed: { doc: PackDoc; id: string; dependsOn: string[] }[] = [];

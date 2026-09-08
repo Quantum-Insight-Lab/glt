@@ -19,6 +19,7 @@
     "prevalidate": "pnpm gen",
     "validate": "tsx control-plane/packages/cli/src/bin.ts validate",
     "lint:docs": "tsx control-plane/packages/cli/src/bin.ts lint docs",
+    "lint:authority": "tsx control-plane/packages/cli/src/bin.ts lint authority",
     "deadcode": "knip",
     "check": "pnpm gen && pnpm typecheck && pnpm test"
   },

@@ -2,6 +2,7 @@ import { Command } from "commander";
 import { ExitCode, usageError } from "@glt/domain";
 import { COMMANDS, type CommandSpec } from "./commands.ts";
 import { lintDocs, renderLintReport } from "./lint-docs.ts";
+import { runLintAuthority } from "./lint-authority.ts";
 import { createWriter, defaultFormat, type OutputFormat, type Writer } from "./output.ts";
 import { runValidate } from "./validate.ts";
 import { runVerify } from "./verify.ts";
@@ -10,6 +11,7 @@ export { COMMANDS, ALLOWED_CAPABILITIES, FORBIDDEN_COMMANDS } from "./commands.t
 export type { CommandSpec, Capability } from "./commands.ts";
 export { lintDocs, renderLintReport } from "./lint-docs.ts";
 export type { Finding, FindingKind, LintReport } from "./lint-docs.ts";
+export { lintAuthority, runLintAuthority, renderAuthorityReport } from "./lint-authority.ts";
 export { verifyBootstrap } from "./verify.ts";
 export { validateDocuments, runValidate, renderValidateReport } from "./validate.ts";
 export type { ValidateReport, DocumentFailure } from "./validate.ts";
@@ -38,6 +40,7 @@ const HANDLERS: Readonly<Record<string, Handler>> = {
     // metadata contract. Distinct from 3, an invariant violation.
     return report.findings.length > 0 ? ExitCode.ContractInvalid : ExitCode.Success;
   },
+  "lint authority": (writer) => runLintAuthority(writer),
 };
 
 /**

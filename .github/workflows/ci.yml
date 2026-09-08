@@ -46,6 +46,11 @@ jobs:
       - name: docs metadata and DAG
         run: pnpm lint:docs
 
+      # INV-01: one owner per fact class. Dual-owner or dual-path is exit 6,
+      # not a winner picked from conflict_resolution.
+      - name: authority map
+        run: pnpm lint:authority
+
       # INV-10: T0 keys from seed-public-keys/ before the manifest. A fresh
       # clone must pass this without a manual key step.
       - name: bootstrap verifier

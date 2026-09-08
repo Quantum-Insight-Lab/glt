@@ -9,9 +9,31 @@ depends_on:
   - glt.dev.03
 spec_refs:
   - ../SPEC/provenance.md
+  - ../SPEC/cli.md
+  - ../SPEC/invariants.md
+  - ../SPEC/structural-invariants.md
+  - ../PDA/04-invariants.md
+  - ../OBSERVABILITY/runbooks/authority-conflict.md
+  - ../../trust/authority-map.yaml
 risk: high
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/provenance.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/trust/authority-map.yaml
+    authority: governance-normativity
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/04-invariants.md
+    authority: methodology-pda
+    role: derived-from
 ---
 
 # 05 — Enforcement authority map
@@ -45,12 +67,20 @@ source_refs: []
 ### Чем проверить
 
 ```bash
-pnpm exec glt lint authority
+pnpm lint:authority
 ```
+
+Рабочий вход — скрипт `lint:authority` в корневом `package.json` (через `tsx`).
+То же: `pnpm glt lint authority`. Код конфликта — 6, не 2 и не 3.
 
 ## Спецификация
 
 - [provenance.md](../SPEC/provenance.md)
+- [cli.md](../SPEC/cli.md)
+- [invariants.md](../SPEC/invariants.md)
+- [04-invariants.md](../PDA/04-invariants.md) — sheet INV-01
+- [authority-conflict.md](../OBSERVABILITY/runbooks/authority-conflict.md)
+- [authority-map.yaml](../../trust/authority-map.yaml)
 
 ## Статус
 

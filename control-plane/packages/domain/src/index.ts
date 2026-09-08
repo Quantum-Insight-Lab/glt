@@ -40,7 +40,17 @@ export {
   contractInvalid,
   evidenceInsufficient,
   invariantViolated,
+  sourceConflict,
   usageError,
   type GltErrorInit,
   type InvariantId,
 } from "./errors.ts";
+export {
+  enforceAuthorityMap,
+  factClassesFromMap,
+  ownersFromClasses,
+  type AuthorityFinding,
+  type AuthorityReport,
+  type FactClass,
+  type NormativeDocOwner,
+} from "./authority.ts";
