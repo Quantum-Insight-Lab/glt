@@ -1,7 +1,8 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { describe, expect, it } from "vitest";
-import { REPO_ROOT } from "@glt/contracts";
+import { REPO_ROOT, loadParameterCards } from "@glt/contracts";
+import { parameterSpecFromCard, parameterValue } from "@glt/domain";
 
 const DOMAIN_SRC = join(REPO_ROOT, "control-plane", "packages", "domain", "src");
 
@@ -40,5 +41,14 @@ describe("S-8 behaviour constants come from parameters/, not from literals", () 
     }
 
     expect(offenders.join("\n")).toBe("");
+  });
+
+  it("S-8 every parameter card is readable through the loader", () => {
+    const cards = loadParameterCards();
+    expect(cards.length).toBeGreaterThan(0);
+    for (const card of cards) {
+      const spec = parameterSpecFromCard(card);
+      expect(parameterValue(spec)).toBe(spec.default);
+    }
   });
 });

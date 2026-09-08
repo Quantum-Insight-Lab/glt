@@ -30,7 +30,7 @@ jobs:
       - name: typecheck
         run: pnpm typecheck
 
-      # S-1, S-2, S-3, S-5, S-6, S-7, S-8, S-10 all live here: each test name
+      # S-1, S-2, S-3, S-4, S-5, S-6, S-7, S-8, S-10 all live here: each test name
       # carries the id of the invariant it enforces.
       - name: tests and structural invariants
         run: pnpm test
@@ -50,6 +50,10 @@ jobs:
       # clone must pass this without a manual key step.
       - name: bootstrap verifier
         run: pnpm verify
+
+      # DEV-04: schema-validate registry, boundary, matrix and fixtures.
+      - name: schema validate
+        run: pnpm validate
 
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code

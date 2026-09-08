@@ -1,11 +1,11 @@
 import {
-  createHash,
   createPrivateKey,
   createPublicKey,
   sign as ed25519Sign,
   verify as ed25519Verify,
   type KeyObject,
 } from "node:crypto";
+import { sha256Bytes } from "./digest.ts";
 
 /**
  * Ed25519 via node:crypto (S-4). The only signature implementation.
@@ -29,7 +29,7 @@ export function keyPairFromUtf8Seed(utf8Seed: string): {
   privateKey: KeyObject;
   publicKey: KeyObject;
 } {
-  const privateKey = privateKeyFromSeed(createHash("sha256").update(utf8Seed).digest());
+  const privateKey = privateKeyFromSeed(sha256Bytes(utf8Seed));
   return { privateKey, publicKey: createPublicKey(privateKey) };
 }
 

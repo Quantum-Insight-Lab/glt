@@ -1,6 +1,26 @@
 export { canonicalize } from "./canonical.ts";
 export { digestOf } from "./digest.ts";
 export {
+  reconcileCoverage,
+  parseRegistryIds,
+  parseTestIds,
+  parseDeferrals,
+  type CoverageInput,
+  type CoverageReport,
+  type Deferral,
+} from "./coverage.ts";
+export {
+  parseMechanismRegistry,
+  listedPaths,
+  extraSha256HashCalls,
+  type MechanismRow,
+} from "./mechanisms.ts";
+export {
+  parameterSpecFromCard,
+  parameterValue,
+  type ParameterSpec,
+} from "./params.ts";
+export {
   BOOTSTRAP_FAILURE,
   stripSignature,
   verifyBootstrapManifest,

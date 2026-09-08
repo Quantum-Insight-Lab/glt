@@ -3,6 +3,7 @@ import { ExitCode, usageError } from "@glt/domain";
 import { COMMANDS, type CommandSpec } from "./commands.ts";
 import { lintDocs, renderLintReport } from "./lint-docs.ts";
 import { createWriter, defaultFormat, type OutputFormat, type Writer } from "./output.ts";
+import { runValidate } from "./validate.ts";
 import { runVerify } from "./verify.ts";
 
 export { COMMANDS, ALLOWED_CAPABILITIES, FORBIDDEN_COMMANDS } from "./commands.ts";
@@ -10,6 +11,9 @@ export type { CommandSpec, Capability } from "./commands.ts";
 export { lintDocs, renderLintReport } from "./lint-docs.ts";
 export type { Finding, FindingKind, LintReport } from "./lint-docs.ts";
 export { verifyBootstrap } from "./verify.ts";
+export { validateDocuments, runValidate, renderValidateReport } from "./validate.ts";
+export type { ValidateReport, DocumentFailure } from "./validate.ts";
+export { structuralCoverage } from "./coverage-scan.ts";
 
 export interface RunResult {
   readonly code: number;
@@ -18,7 +22,7 @@ export interface RunResult {
 }
 
 /** A command that this build actually implements. Returns its exit code. */
-type Handler = (writer: Writer) => number;
+type Handler = (writer: Writer, paths: readonly string[]) => number;
 
 /**
  * Implemented commands, keyed exactly as in cli.md. Everything absent from here
@@ -26,6 +30,7 @@ type Handler = (writer: Writer) => number;
  */
 const HANDLERS: Readonly<Record<string, Handler>> = {
   verify: (writer) => runVerify(writer),
+  validate: (writer, paths) => runValidate(writer, paths),
   "lint docs": (writer) => {
     const report = lintDocs();
     writer.artifact(report, renderLintReport);
@@ -81,9 +86,10 @@ export function buildProgram(writer: Writer, onExitCode?: (code: number) => void
     target
       .command(signature)
       .description(spec.summary)
-      .action(() => {
+      .action((first: unknown) => {
         if (!handler) throw notAvailableYet(spec);
-        onExitCode?.(handler(writer));
+        const paths = spec.args ? asStringList(first) : [];
+        onExitCode?.(handler(writer, paths));
       });
   }
 
@@ -137,4 +143,10 @@ function isCommanderExit(error: unknown): error is { exitCode: number } {
     "exitCode" in error &&
     typeof (error as { exitCode: unknown }).exitCode === "number"
   );
+}
+
+function asStringList(value: unknown): string[] {
+  if (Array.isArray(value)) return value.filter((item): item is string => typeof item === "string");
+  if (typeof value === "string") return [value];
+  return [];
 }

@@ -16,6 +16,8 @@
     "glt": "tsx control-plane/packages/cli/src/bin.ts",
     "preverify": "pnpm gen",
     "verify": "tsx control-plane/packages/cli/src/bin.ts verify",
+    "prevalidate": "pnpm gen",
+    "validate": "tsx control-plane/packages/cli/src/bin.ts validate",
     "lint:docs": "tsx control-plane/packages/cli/src/bin.ts lint docs",
     "deadcode": "knip",
     "check": "pnpm gen && pnpm typecheck && pnpm test"

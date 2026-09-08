@@ -1,5 +1,14 @@
 export { PACK, PACK_ROOT, REPO_ROOT, SCHEMA_ID_PREFIX } from "./paths.ts";
 export { loadDocument, loadJson, loadYaml, readText } from "./load.ts";
+export {
+  listContractExamples,
+  listBoundaryManifests,
+  defaultValidatePaths,
+  type ContractExample,
+  type ExampleBucket,
+} from "./examples.ts";
+export { kindIndex, resolveSchemaName } from "./schema-name.ts";
+export { loadParameterCards } from "./parameters.ts";
 export { loadSeedPublicKeys } from "./seed-keys.ts";
 export {
   bodyLinkTargets,

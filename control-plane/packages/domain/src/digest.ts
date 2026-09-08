@@ -13,7 +13,8 @@ const DIGEST_PREFIX = "sha256:" as const;
 
 type Digest = `${typeof DIGEST_PREFIX}${string}`;
 
-function sha256(data: string | Uint8Array): Buffer {
+/** The only `createHash("sha256")` call site in our code (S-4). */
+export function sha256Bytes(data: string | Uint8Array): Buffer {
   return createHash("sha256").update(data).digest();
 }
 
@@ -23,7 +24,7 @@ function formatDigest(bytes: Buffer): Digest {
 
 export function digestOf(value: unknown, omit?: string): Digest {
   const payload = omit === undefined ? value : omitMember(value, omit);
-  return formatDigest(sha256(canonicalize(payload)));
+  return formatDigest(sha256Bytes(canonicalize(payload)));
 }
 
 function omitMember(value: unknown, key: string): unknown {

@@ -11,9 +11,28 @@ spec_refs:
   - ../SPEC/topology.md
   - ../SPEC/invariants.md
   - ../SPEC/structural-invariants.md
+  - ../SPEC/cli.md
+  - ../OBSERVABILITY/metrics.md
+  - ../../contracts/schemas/boundary-manifest.schema.json
 risk: medium
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/contracts/schemas/boundary-manifest.schema.json
+    authority: wire-schema
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/contracts/examples/valid/registry-entry.json
+    authority: wire-schema
+    role: informative
+  - repository: glt-controlplane
+    path: AGENTS.md
+    authority: structural-invariants
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
 ---
 
 # 04 — Валидатор JSON Schema
@@ -70,7 +89,7 @@ source_refs: []
 ### Чем проверить
 
 ```bash
-pnpm exec glt validate
+pnpm glt validate
 pnpm test
 ```
 
