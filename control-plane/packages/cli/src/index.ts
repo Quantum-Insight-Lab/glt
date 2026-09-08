@@ -3,11 +3,13 @@ import { ExitCode, usageError } from "@glt/domain";
 import { COMMANDS, type CommandSpec } from "./commands.ts";
 import { lintDocs, renderLintReport } from "./lint-docs.ts";
 import { createWriter, defaultFormat, type OutputFormat, type Writer } from "./output.ts";
+import { runVerify } from "./verify.ts";
 
 export { COMMANDS, ALLOWED_CAPABILITIES, FORBIDDEN_COMMANDS } from "./commands.ts";
 export type { CommandSpec, Capability } from "./commands.ts";
 export { lintDocs, renderLintReport } from "./lint-docs.ts";
 export type { Finding, FindingKind, LintReport } from "./lint-docs.ts";
+export { verifyBootstrap } from "./verify.ts";
 
 export interface RunResult {
   readonly code: number;
@@ -23,6 +25,7 @@ type Handler = (writer: Writer) => number;
  * is declared but not built, and says so instead of pretending to succeed.
  */
 const HANDLERS: Readonly<Record<string, Handler>> = {
+  verify: (writer) => runVerify(writer),
   "lint docs": (writer) => {
     const report = lintDocs();
     writer.artifact(report, renderLintReport);

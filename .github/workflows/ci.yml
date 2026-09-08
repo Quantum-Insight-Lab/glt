@@ -46,6 +46,11 @@ jobs:
       - name: docs metadata and DAG
         run: pnpm lint:docs
 
+      # INV-10: T0 keys from seed-public-keys/ before the manifest. A fresh
+      # clone must pass this without a manual key step.
+      - name: bootstrap verifier
+        run: pnpm verify
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

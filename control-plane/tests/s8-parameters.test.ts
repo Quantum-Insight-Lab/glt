@@ -6,7 +6,7 @@ import { REPO_ROOT } from "@glt/contracts";
 const DOMAIN_SRC = join(REPO_ROOT, "control-plane", "packages", "domain", "src");
 
 /** Documented legal exception from the S-8 sheet: constants of format, not of behaviour. */
-const FORMAT_CONSTANT_FILES = new Set(["errors.ts"]);
+const FORMAT_CONSTANT_FILES = new Set(["errors.ts", "canonical.ts", "digest.ts", "signature.ts"]);
 
 const ALLOWED = new Set([-1, 0, 1, 2]);
 

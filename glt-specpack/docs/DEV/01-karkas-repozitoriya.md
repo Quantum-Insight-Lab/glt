@@ -2,16 +2,33 @@
 id: glt.dev.01
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 1
 depends_on: []
 spec_refs:
   - ../SPEC/architecture.md
   - ../SPEC/structural-invariants.md
   - ../SPEC/cli.md
+  - ../../../AGENTS.md
 risk: low
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/architecture.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/structural-invariants.md
+    authority: structural-invariants
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: AGENTS.md
+    authority: structural-invariants
+    role: derived-from
 ---
 
 # 01 — Каркас репозитория
@@ -79,8 +96,8 @@ Sheets и порядок внедрения: [structural-invariants.md](../SPEC/
 
 ### Общее
 
-- [ ] CI зелёный
-- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [x] CI зелёный
+- [x] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
 
 ### Чем проверить
 
@@ -97,6 +114,7 @@ pnpm boundaries
 - [architecture.md](../SPEC/architecture.md)
 - [structural-invariants.md](../SPEC/structural-invariants.md)
 - [cli.md](../SPEC/cli.md)
+- [AGENTS.md](../../../AGENTS.md)
 
 ## Статус
 

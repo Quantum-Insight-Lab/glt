@@ -1,3 +1,13 @@
+export { canonicalize } from "./canonical.ts";
+export { digestOf } from "./digest.ts";
+export {
+  BOOTSTRAP_FAILURE,
+  stripSignature,
+  verifyBootstrapManifest,
+  type BootstrapVerifyOk,
+  type SeedKey,
+} from "./bootstrap.ts";
+export { keyPairFromUtf8Seed, publicKeyDer, signBytes } from "./signature.ts";
 export {
   findCycles,
   findDanglingDependencies,

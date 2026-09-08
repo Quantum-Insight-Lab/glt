@@ -2,15 +2,34 @@
 id: glt.dev.03
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 1
 depends_on:
   - glt.dev.01
 spec_refs:
   - ../00-governance/metadata-contract.md
+  - ../SPEC/cli.md
+  - ../../contracts/schemas/source-ref.schema.json
+  - ../../trust/authority-map.yaml
 risk: medium
 gate: pre-code
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/00-governance/metadata-contract.md
+    authority: governance-normativity
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/contracts/schemas/source-ref.schema.json
+    authority: wire-schema
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/trust/authority-map.yaml
+    authority: governance-normativity
+    role: derived-from
 ---
 
 # 03 — Линтер метаданных и DAG
@@ -81,6 +100,9 @@ pnpm lint:docs
 ## Спецификация
 
 - [metadata-contract.md](../00-governance/metadata-contract.md)
+- [cli.md](../SPEC/cli.md)
+- [source-ref.schema.json](../../contracts/schemas/source-ref.schema.json)
+- [authority-map.yaml](../../trust/authority-map.yaml)
 
 ## Статус
 

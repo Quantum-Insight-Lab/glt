@@ -72,7 +72,7 @@ describe("S-10 CLI surface equals the allowlist", () => {
   });
 
   it("an unimplemented command reports usage error, never success", async () => {
-    const result = await run(["verify", "-o", "json"]);
+    const result = await run(["compile", "registry", "-o", "json"]);
     expect(result.code).toBe(1);
     expect(result.stdout).toBe("");
     expect(result.stderr).toContain("not implemented in this build");

@@ -14,6 +14,7 @@
     "test": "vitest run",
     "boundaries": "depcruise control-plane/packages --config .dependency-cruiser.cjs",
     "glt": "tsx control-plane/packages/cli/src/bin.ts",
+    "verify": "tsx control-plane/packages/cli/src/bin.ts verify",
     "lint:docs": "tsx control-plane/packages/cli/src/bin.ts lint docs",
     "deadcode": "knip",
     "check": "pnpm gen && pnpm typecheck && pnpm test"

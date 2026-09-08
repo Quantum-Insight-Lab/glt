@@ -4,6 +4,10 @@ metadata:
   id: glt.trust.bootstrap-manifest
   version: 1
   signed_by: external-release-identity
+  signature:
+    alg: Ed25519
+    key_id: glt-dev-only-2026
+    value: mgnRkepIddnL3FqksT84xzG595ezNQ7s39kfGKMjPG/5ymNavYyp3PjX+aPMKpCOydyrbuua5oQYr/4oNqRpCw==
 spec:
   description: >
     Signed manifest for bootstrap verifier. Public keys in seed-public-keys/
@@ -59,3 +63,4 @@ spec:
   notes:
     - Verifier MUST NOT trust only keys present in this manifest
     - Placeholder digests replaced at sealed release (DEV-35)
+    - metadata.signature is Ed25519 over RFC 8785 JCS of this document with that field removed

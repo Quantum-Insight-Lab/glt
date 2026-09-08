@@ -65,7 +65,7 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | # | Шаг | Волна | Риск | Статус |
 |---|---|:---:|---|---|
 | 01 | [Каркас репозитория](01-karkas-repozitoriya.md) | 1 | низкий | **сделано** |
-| 02 | [Bootstrap verifier](02-bootstrap-verifier.md) | 1 | высокий | запланирован |
+| 02 | [Bootstrap verifier](02-bootstrap-verifier.md) | 1 | высокий | **сделано** |
 | 03 | [Линтер метаданных и DAG](03-metadata-i-dag-linter.md) | 1 | средний | **сделано** |
 | 04 | [Валидатор JSON Schema](04-json-schema-validator.md) | 1 | средний | запланирован |
 | 05 | [Enforcement authority map](05-authority-map-enforcement.md) | 1 | высокий | запланирован |
