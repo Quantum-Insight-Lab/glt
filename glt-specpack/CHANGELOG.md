@@ -13,6 +13,10 @@ DEV-02: bootstrap verifier. Trust termination на T0, а не на ключе �
 - `metadata.signature` у `trust/bootstrap-manifest.yaml`. Подпись снята с канонической формы перед проверкой. Ключ — опубликованный `glt-dev-only-2026`; `release-policy.yaml` по-прежнему отвергает его как release root.
 - Шаг CI `bootstrap verifier`.
 
+### Fixed
+
+- Свежий клон: `pnpm install && pnpm verify` падал без ручного `pnpm gen`, потому что `@glt/contracts` реэкспортирует `generated/`, а тот каталог в gitignore. `preverify` гоняет генерацию, как `pretest`.
+
 ### Notes
 
 - Схемы и golden digest команда на этом шаге не сверяет. Иначе unfrozen placeholder ронял бы свежий клон. Это DEV-04 и DEV-09.
