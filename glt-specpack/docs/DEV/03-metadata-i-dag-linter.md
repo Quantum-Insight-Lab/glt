@@ -72,8 +72,11 @@ source_refs: []
 ### Чем проверить
 
 ```bash
-pnpm exec glt lint docs
+pnpm lint:docs
 ```
+
+Глобальной команды `glt` нет: бинарник не в PATH, а `bin` указывает на `.ts`.
+Рабочий вход — скрипт `lint:docs` в корневом `package.json` (через `tsx`).
 
 ## Спецификация
 
