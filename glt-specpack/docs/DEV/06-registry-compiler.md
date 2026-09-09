@@ -8,9 +8,32 @@ depends_on:
   - glt.dev.04
 spec_refs:
   - ../SPEC/registry.md
+  - ../SPEC/cli.md
+  - ../SPEC/invariants.md
+  - ../SPEC/structural-invariants.md
+  - ../PDA/04-invariants.md
+  - ../../contracts/schemas/registry-bundle.schema.json
+  - ../../registry/glt-controlplane.yaml
+  - ../../registry/boundaries/bootstrap-slice.yaml
 risk: medium
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/registry.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/registry/glt-controlplane.yaml
+    authority: glt-id-registry
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/04-invariants.md
+    authority: methodology-pda
+    role: derived-from
 ---
 
 # 06 — Компилятор реестра
@@ -46,12 +69,20 @@ source_refs: []
 ### Чем проверить
 
 ```bash
-pnpm exec glt compile registry
+pnpm compile:registry
 ```
+
+Рабочий вход — скрипт `compile:registry` в корневом `package.json` (через `tsx`).
+То же: `pnpm glt compile registry`. Нарушение инварианта — код 3, расхождение с boundary — код 2. Команда не пишет в рабочую копию.
 
 ## Спецификация
 
 - [registry.md](../SPEC/registry.md)
+- [cli.md](../SPEC/cli.md)
+- [invariants.md](../SPEC/invariants.md)
+- [04-invariants.md](../PDA/04-invariants.md) — sheet INV-02
+- [glt-controlplane.yaml](../../registry/glt-controlplane.yaml)
+- [bootstrap-slice.yaml](../../registry/boundaries/bootstrap-slice.yaml)
 
 ## Статус
 

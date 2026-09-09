@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { ExitCode, usageError } from "@glt/domain";
 import { COMMANDS, type CommandSpec } from "./commands.ts";
+import { runCompileRegistry } from "./compile-registry.ts";
 import { lintDocs, renderLintReport } from "./lint-docs.ts";
 import { runLintAuthority } from "./lint-authority.ts";
 import { createWriter, defaultFormat, type OutputFormat, type Writer } from "./output.ts";
@@ -12,6 +13,7 @@ export type { CommandSpec, Capability } from "./commands.ts";
 export { lintDocs, renderLintReport } from "./lint-docs.ts";
 export type { Finding, FindingKind, LintReport } from "./lint-docs.ts";
 export { lintAuthority, runLintAuthority, renderAuthorityReport } from "./lint-authority.ts";
+export { runCompileRegistry, renderCompiledRegistry } from "./compile-registry.ts";
 export { verifyBootstrap } from "./verify.ts";
 export { validateDocuments, runValidate, renderValidateReport } from "./validate.ts";
 export type { ValidateReport, DocumentFailure } from "./validate.ts";
@@ -24,7 +26,11 @@ export interface RunResult {
 }
 
 /** A command that this build actually implements. Returns its exit code. */
-type Handler = (writer: Writer, paths: readonly string[]) => number;
+type Handler = (
+  writer: Writer,
+  paths: readonly string[],
+  options: { registry?: string; boundary?: string },
+) => number;
 
 /**
  * Implemented commands, keyed exactly as in cli.md. Everything absent from here
@@ -41,6 +47,7 @@ const HANDLERS: Readonly<Record<string, Handler>> = {
     return report.findings.length > 0 ? ExitCode.ContractInvalid : ExitCode.Success;
   },
   "lint authority": (writer) => runLintAuthority(writer),
+  "compile registry": (writer, _paths, options) => runCompileRegistry(writer, options),
 };
 
 /**
@@ -92,7 +99,11 @@ export function buildProgram(writer: Writer, onExitCode?: (code: number) => void
       .action((first: unknown) => {
         if (!handler) throw notAvailableYet(spec);
         const paths = spec.args ? asStringList(first) : [];
-        onExitCode?.(handler(writer, paths));
+        const globals = program.opts<{ registry?: string; boundary?: string }>();
+        const options: { registry?: string; boundary?: string } = {};
+        if (globals.registry !== undefined) options.registry = globals.registry;
+        if (globals.boundary !== undefined) options.boundary = globals.boundary;
+        onExitCode?.(handler(writer, paths, options));
       });
   }
 

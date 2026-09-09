@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.12.0] — 2026-09-09
+
+DEV-06: компилятор реестра. Alias либо разрешается однозначно, либо ошибка.
+
+### Added
+
+- `glt compile registry` — schema-validate бандла и boundary, уникальный индекс `(alias, namespace, version)`, NFC. Артефакт в stdout, в рабочую копию не пишет.
+- `resolveAlias` в `packages/domain/src/resolve.ts`. Неизвестный или неоднозначный alias — код 3, сообщение `unknown` / `ambiguous`, без догадки (PROTO-02, INV-02). Два id на один alias — PROTO-01. Переназначение внутри той же SemVer-строки — PROTO-08. Смена `spec` при том же revision — PROTO-09. Расхождение id с boundary — код 2.
+- Шаг CI `compile registry`.
+
+### Notes
+
+- PROTO-01, PROTO-02, PROTO-08, PROTO-09 и INV-02 сняты с отложения S-7. Покрытие `glt_structural_coverage`: **0.475 (19/40)**. Негативно: синтетический бандл; живой YAML на диске не портится.
+- Чеклист и `status: accepted` не трогались: приёмка шага — за человеком.
+
 ## [0.11.0] — 2026-09-08
 
 DEV-05: enforcement authority map. Sheet INV-01 — команда, а не договорённость.
@@ -15,7 +30,7 @@ DEV-05: enforcement authority map. Sheet INV-01 — команда, а не до
 ### Notes
 
 - INV-01 снят с отложения S-7. Покрытие `glt_structural_coverage`: **0.35 (14/40)**. Негативно: синтетическая карта с двумя владельцами, неизвестный owner, путь у двух owner; живой YAML на диске не портится.
-- Чеклист и `status: accepted` не трогались: приёмка шага — за человеком.
+- Шаг принят: `docs/DEV/05-authority-map-enforcement.md` — `status: accepted`.
 
 ## [0.10.0] — 2026-09-08
 

@@ -12,7 +12,7 @@ GLT Control Plane: наблюдаемая архитектура, анализ �
 
 Методология — Possibility-Driven Architecture v1.2. Нормативные контракты живут в `glt-specpack/`, код в `control-plane/`.
 
-Статус: волна 1 (DEV-01…12). DEV-01…04 сделаны. DEV-05: `glt lint authority` (INV-01) в дереве, приёмка за человеком.
+Статус: волна 1 (DEV-01…12). DEV-01…05 сделаны. DEV-06: `glt compile registry` в дереве, приёмка за человеком.
 
 ---
 
@@ -54,6 +54,8 @@ control-plane/packages/
 | Парсинг YAML | `yaml` | `packages/contracts` |
 | Параметры | загрузчик из `glt-specpack/parameters/` | `packages/domain/src/params.ts` |
 | Authority map (INV-01) | `enforceAuthorityMap` | `packages/domain/src/authority.ts` |
+| Разрешение alias | `resolveAlias` | `packages/domain/src/resolve.ts` |
+| Компилятор реестра | `compileRegistry` | `packages/domain/src/resolve.ts`, `packages/registry/src/compile.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |

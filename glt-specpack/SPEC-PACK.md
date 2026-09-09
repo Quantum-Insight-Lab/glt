@@ -7,10 +7,10 @@ apiVersion: glt.dev/specpack/v1
 kind: SpecPack
 metadata:
   id: glt.specpack
-  version: 0.11.0
+  version: 0.12.0
   status: pre-code
   created: 2026-08-14
-  revised: 2026-09-08
+  revised: 2026-09-09
 spec:
   product: Glyph Language for Topology — Control Plane
   methodology: PDA v1.2

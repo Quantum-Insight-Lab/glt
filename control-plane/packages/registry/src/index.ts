@@ -9,4 +9,6 @@
  *
  * Contract: glt-specpack/docs/SPEC/registry.md
  */
-export const STEP = "glt.dev.06" as const;
+
+export { compileRegistryFromPaths, resolveBundlePath } from "./compile.ts";
+export type { CompileRegistryPaths } from "./compile.ts";

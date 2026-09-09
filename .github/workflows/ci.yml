@@ -60,6 +60,10 @@ jobs:
       - name: schema validate
         run: pnpm validate
 
+      # DEV-06: unique alias index, PROTO-01/02/08/09. Does not write the workspace.
+      - name: compile registry
+        run: pnpm compile:registry
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

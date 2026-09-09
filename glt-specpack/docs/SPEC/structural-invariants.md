@@ -144,13 +144,9 @@ source_refs:
 
 | ID | until |
 |---|---|
-| PROTO-01 | glt.dev.06 |
-| PROTO-02 | glt.dev.06 |
 | PROTO-03 | glt.dev.08 |
 | PROTO-05 | glt.dev.08 |
 | PROTO-07 | glt.dev.10 |
-| PROTO-08 | glt.dev.06 |
-| PROTO-09 | glt.dev.06 |
 | PROTO-10 | glt.dev.08 |
 | PROTO-11 | glt.dev.16 |
 | PROTO-12 | glt.dev.16 |
@@ -160,7 +156,6 @@ source_refs:
 | PROTO-16 | glt.dev.33 |
 | PROTO-17 | glt.dev.29 |
 | PROTO-18 | glt.dev.24 |
-| INV-02 | glt.dev.06 |
 | INV-03 | glt.dev.08 |
 | INV-04 | glt.dev.12 |
 | INV-05 | glt.dev.10 |
@@ -222,7 +217,9 @@ source_refs:
 
 **DEV-04 — сделано.** S-7 блокирует сверкой имён тестов с тремя реестрами; отложенные ID видны и непокрыты. S-4 — тест-перепись реестра механизмов; второй `createHash("sha256")` вне `digest.ts` роняет прогон. S-9 остаётся предупреждением.
 
-**DEV-05.** INV-01 снят с отложения: `glt lint authority` блокирует двух владельцев одного класса и один путь у двух владельцев. Конфликт — `source_conflict`, код 6; правило `registry_vs_engineering` победителя не выбирает.
+**DEV-05 — сделано.** INV-01 снят с отложения: `glt lint authority` блокирует двух владельцев одного класса и один путь у двух владельцев. Конфликт — `source_conflict`, код 6; правило `registry_vs_engineering` победителя не выбирает.
+
+**DEV-06.** PROTO-01, PROTO-02, PROTO-08, PROTO-09 и INV-02 сняты с отложения: `glt compile registry` строит уникальный индекс alias и падает на неизвестном/неоднозначном имени, переназначении внутри той же версии и смене смысла без revision.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

@@ -20,6 +20,7 @@
     "validate": "tsx control-plane/packages/cli/src/bin.ts validate",
     "lint:docs": "tsx control-plane/packages/cli/src/bin.ts lint docs",
     "lint:authority": "tsx control-plane/packages/cli/src/bin.ts lint authority",
+    "compile:registry": "tsx control-plane/packages/cli/src/bin.ts compile registry",
     "deadcode": "knip",
     "check": "pnpm gen && pnpm typecheck && pnpm test"
   },

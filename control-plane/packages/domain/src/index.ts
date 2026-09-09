@@ -46,6 +46,15 @@ export {
   type InvariantId,
 } from "./errors.ts";
 export {
+  compileRegistry,
+  resolveAlias,
+  type AliasBinding,
+  type CompileRegistryInput,
+  type CompiledRegistry,
+  type RegistryEdgeView,
+  type RegistryEntryView,
+} from "./resolve.ts";
+export {
   enforceAuthorityMap,
   factClassesFromMap,
   ownersFromClasses,
