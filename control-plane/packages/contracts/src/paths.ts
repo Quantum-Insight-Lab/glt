@@ -28,6 +28,7 @@ export const PACK = {
   propagationMatrix: join(PACK_ROOT, "contracts", "propagation", "propagation-matrix.yaml"),
   eventRegistry: join(PACK_ROOT, "contracts", "events", "event-registry.yaml"),
   registryBundle: join(PACK_ROOT, "registry", "glt-controlplane.yaml"),
+  intendedComponents: join(PACK_ROOT, "registry", "intended-components.yaml"),
   boundaries: join(PACK_ROOT, "registry", "boundaries"),
   parameters: join(PACK_ROOT, "parameters"),
   authorityMap: join(PACK_ROOT, "trust", "authority-map.yaml"),

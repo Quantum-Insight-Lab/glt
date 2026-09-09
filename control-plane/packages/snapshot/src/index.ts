@@ -1,5 +1,6 @@
 /**
- * SourceRef resolver — DEV-07 — and snapshot compiler — DEV-08.
+ * SourceRef resolver — DEV-07 — snapshot compiler — DEV-08 — intended
+ * meta-graph and golden freeze — DEV-09.
  *
  * `path` in a SourceRef resolves against the root of the repository named in
  * `repository`, never against the pack root. The snapshot carries full Node and

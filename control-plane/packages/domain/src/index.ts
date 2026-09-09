@@ -1,5 +1,5 @@
 export { canonicalize } from "./canonical.ts";
-export { digestOf, digestOfUtf8 } from "./digest.ts";
+export { digestOf, digestOfUtf8, isUnfrozenPlaceholder } from "./digest.ts";
 export {
   reconcileCoverage,
   parseRegistryIds,
@@ -91,3 +91,14 @@ export {
   type SnapshotNodeDraft,
   type SnapshotPin,
 } from "./snapshot.ts";
+export {
+  INTENDED_BOUNDARY_ID,
+  INTENDED_BOUNDARY_REF,
+  assembleIntendedGraph,
+  isDevStepId,
+  isIntendedBoundaryRef,
+  type IntendedComponentStub,
+  type IntendedGraph,
+  type IntendedSourceRef,
+  type IntendedStepCard,
+} from "./intended.ts";

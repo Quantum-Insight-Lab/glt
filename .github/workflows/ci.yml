@@ -72,6 +72,10 @@ jobs:
       - name: compile snapshot
         run: pnpm compile:snapshot -- --as-of 2026-08-14T10:00:00Z
 
+      # DEV-09: intended meta-graph from DEV frontmatter. Slice stays the digest oracle.
+      - name: compile intended snapshot
+        run: pnpm compile:snapshot -- --as-of 2026-08-14T10:00:00Z --boundary glt.controlplane-intended@1
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

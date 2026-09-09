@@ -84,7 +84,7 @@ digest = "sha256:" + hex(sha256(JCS(snapshot without the "digest" member)))
 
 The `digest` member is removed, not zeroed, before hashing. Stored snapshot files are pretty-printed for review; member order in the file is free because JCS re-sorts it. Array order is not free — see above.
 
-`sha256:` followed by 64 zeros is the reserved **unfrozen placeholder**. It is schema-valid so fixtures stay loadable, and the DEV-09 freeze check MUST reject it. Golden fixtures ship unfrozen until DEV-09 computes and freezes real digests.
+`sha256:` followed by 64 zeros is the reserved **unfrozen placeholder**. It is schema-valid so fixtures stay loadable, and the freeze check MUST reject it. DEV-09 froze `bootstrap-snapshot.json` and `impact-bootstrap.json` by running the compiler; writing a hash by hand forges the determinism oracle.
 
 ## Determinism
 

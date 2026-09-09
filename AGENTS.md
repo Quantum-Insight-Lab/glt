@@ -12,7 +12,7 @@ GLT Control Plane: наблюдаемая архитектура, анализ �
 
 Методология — Possibility-Driven Architecture v1.2. Нормативные контракты живут в `glt-specpack/`, код в `control-plane/`.
 
-Статус: волна 1 (DEV-01…12). DEV-01…08 сделаны. DEV-09: freeze golden snapshot.
+Статус: волна 1 (DEV-01…12). DEV-01…09 сделаны. DEV-10: impact engine, запланирован.
 
 ---
 
@@ -58,6 +58,7 @@ control-plane/packages/
 | Компилятор реестра | `compileRegistry` | `packages/domain/src/resolve.ts`, `packages/registry/src/compile.ts` |
 | Разрешение SourceRef | `resolveRef` | `packages/domain/src/sourceref.ts`, `packages/snapshot/src/resolve.ts` |
 | Компилятор снимков | `compileSnapshot` | `packages/domain/src/snapshot.ts`, `packages/snapshot/src/compile.ts` |
+| Intended мета-граф | `assembleIntendedGraph` из DEV frontmatter | `packages/domain/src/intended.ts`, `packages/registry/src/intended.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |
@@ -82,7 +83,7 @@ control-plane/packages/
 5. **Не считать digest вторым способом.** Только через `packages/domain/src/digest.ts` поверх канонизатора. Иначе PROTO-03 получает два ответа.
 6. **Не хардкодить числа поведения.** Только через загрузчик параметров (S-8).
 7. **Не добавлять зависимость без согласования.** Особенно в `domain`: там база доверия bootstrap verifier.
-8. **Не заморозить golden digest вручную.** Значения `sha256:` + 64 нуля — placeholder; их вычисляет компилятор на DEV-09. Вписать хэш руками означает подделать оракул детерминизма.
+8. **Не заморозить golden digest вручную.** Значения `sha256:` + 64 нуля — placeholder; golden уже посчитал компилятор на DEV-09. Вписать хэш руками означает подделать оракул детерминизма.
 9. **Не расширять граф домена самостоятельно.** См. «Конфликт».
 
 ---

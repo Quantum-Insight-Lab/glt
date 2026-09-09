@@ -1,0 +1,70 @@
+# Hand-authored GLT-IDs and SourceRefs for the intended meta-graph.
+# Status, depends_on and expected_from_step come from docs/DEV frontmatter.
+
+components:
+  - id: glt.controlplane.contracts
+    source:
+      repository: glt-controlplane
+      path: control-plane/packages/contracts
+      authority: engineering-contract
+      role: contract
+  - id: glt.controlplane.domain
+    source:
+      repository: glt-controlplane
+      path: control-plane/packages/domain
+      authority: engineering-contract
+      role: contract
+  - id: glt.controlplane.registry
+    source:
+      repository: glt-controlplane
+      path: control-plane/packages/registry
+      authority: engineering-contract
+      role: contract
+  - id: glt.controlplane.snapshot
+    source:
+      repository: glt-controlplane
+      path: control-plane/packages/snapshot
+      authority: engineering-contract
+      role: contract
+  - id: glt.controlplane.collectors
+    source:
+      repository: glt-controlplane
+      path: control-plane/packages/collectors
+      authority: engineering-contract
+      role: contract
+  - id: glt.controlplane.impact
+    source:
+      repository: glt-controlplane
+      path: control-plane/packages/impact
+      authority: engineering-contract
+      role: contract
+  - id: glt.controlplane.runner
+    source:
+      repository: glt-controlplane
+      path: control-plane/packages/runner
+      authority: engineering-contract
+      role: contract
+  - id: glt.controlplane.audit
+    source:
+      repository: glt-controlplane
+      path: control-plane/packages/audit
+      authority: engineering-contract
+      role: contract
+  - id: glt.controlplane.api
+    source:
+      repository: glt-controlplane
+      path: control-plane/packages/api
+      authority: engineering-contract
+      role: contract
+  - id: glt.controlplane.dashboard
+    source:
+      repository: glt-controlplane
+      path: control-plane/packages/dashboard
+      authority: engineering-contract
+      role: contract
+  - id: glt.controlplane.cli
+    source:
+      repository: glt-controlplane
+      path: control-plane/packages/cli
+      authority: engineering-contract
+      role: contract

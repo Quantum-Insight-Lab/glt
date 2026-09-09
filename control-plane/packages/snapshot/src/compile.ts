@@ -20,13 +20,16 @@ import {
   contractInvalid,
   digestOf,
   digestOfUtf8,
+  isIntendedBoundaryRef,
   usageError,
+  type CompiledRegistry,
   type CompiledSnapshot,
   type SnapshotEdgeDraft,
   type SnapshotNodeDraft,
   type SnapshotPin,
 } from "@glt/domain";
 import {
+  compileIntendedFromPack,
   compileRegistryFromPaths,
   resolveBoundaryPath,
   resolveBundlePath,
@@ -38,6 +41,7 @@ export interface CompileSnapshotOptions {
   readonly matrix?: string;
   readonly asOf?: string;
   readonly pinnedTo?: SnapshotPin;
+  readonly snapshotId?: string;
 }
 
 const COLLECTOR_VERSIONS = { intent: "1.0.0", registry: "1.0.0" } as const;
@@ -46,16 +50,6 @@ const CONFIG_PROFILE = "bootstrap";
 export function compileSnapshotFromPaths(
   options: CompileSnapshotOptions = {},
 ): CompiledSnapshot {
-  const bundlePath = resolveBundlePath(options.registry);
-  const bundleText = readText(bundlePath);
-  const bundleDoc = loadDocument(bundlePath);
-  rejectSnapshotInput(bundleDoc, bundlePath);
-
-  const compiled = compileRegistryFromPaths({
-    bundlePath,
-    ...(options.boundary !== undefined ? { boundaryRef: options.boundary } : {}),
-  });
-
   const matrixPath = resolveMatrixPath(options.matrix);
   const matrixDoc = loadDocument(matrixPath);
   const matrixErrors = validateAgainst(createValidator(), "propagation-matrix", matrixDoc);
@@ -65,36 +59,41 @@ export function compileSnapshotFromPaths(
       [matrixPath],
     );
   }
+  const matrixVersion = matrixVersionOf(matrixDoc);
 
-  const boundaryPath = resolveBoundaryPath(compiled.boundary);
+  const loaded = isIntendedBoundaryRef(options.boundary)
+    ? loadIntended()
+    : loadBootstrap(options);
+
   const sourceDigests = {
-    boundary: digestOfUtf8(readText(boundaryPath)),
+    boundary: digestOfUtf8(readText(loaded.boundaryPath)),
     propagation_matrix: digestOfUtf8(readText(matrixPath)),
-    registry: digestOfUtf8(bundleText),
+    registry: loaded.registryDigest,
   };
 
   const asOf = truncateAsOf(options.asOf ?? new Date().toISOString());
-  const matrixVersion = matrixVersionOf(matrixDoc);
-  const snapshotId = makeSnapshotId(asOf, {
-    as_of: asOf,
-    boundary_id: compiled.boundary,
-    collector_versions: COLLECTOR_VERSIONS,
-    config_profile: CONFIG_PROFILE,
-    matrix_version: matrixVersion,
-    registry_version: compiled.version,
-    source_digests: sourceDigests,
-  });
+  const snapshotId =
+    options.snapshotId ??
+    makeSnapshotId(asOf, {
+      as_of: asOf,
+      boundary_id: loaded.compiled.boundary,
+      collector_versions: COLLECTOR_VERSIONS,
+      config_profile: CONFIG_PROFILE,
+      matrix_version: matrixVersion,
+      registry_version: loaded.compiled.version,
+      source_digests: sourceDigests,
+    });
 
   const sealed = compileSnapshot({
     snapshotId,
     asOf,
-    registryVersion: compiled.version,
-    boundaryId: compiled.boundary,
+    registryVersion: loaded.compiled.version,
+    boundaryId: loaded.compiled.boundary,
     sourceDigests,
     collectorVersions: COLLECTOR_VERSIONS,
     pinnedTo: options.pinnedTo ?? defaultPin(sourceDigests.registry),
-    nodes: nodeDrafts(bundleDoc, compiled.entries.map((e) => e.id)),
-    edges: edgeDrafts(bundleDoc, compiled.edges.map((e) => e.id)),
+    nodes: nodeDrafts(loaded.bundleDoc, loaded.compiled.entries.map((e) => e.id)),
+    edges: edgeDrafts(loaded.bundleDoc, loaded.compiled.edges.map((e) => e.id)),
     configProfile: CONFIG_PROFILE,
     matrixVersion,
   });
@@ -107,6 +106,44 @@ export function compileSnapshotFromPaths(
     );
   }
   return sealed;
+}
+
+function loadBootstrap(options: CompileSnapshotOptions): {
+  compiled: CompiledRegistry;
+  bundleDoc: unknown;
+  boundaryPath: string;
+  registryDigest: ReturnType<typeof digestOfUtf8>;
+} {
+  const bundlePath = resolveBundlePath(options.registry);
+  const bundleText = readText(bundlePath);
+  const bundleDoc = loadDocument(bundlePath);
+  rejectSnapshotInput(bundleDoc, bundlePath);
+  const compiled = compileRegistryFromPaths({
+    bundlePath,
+    ...(options.boundary !== undefined ? { boundaryRef: options.boundary } : {}),
+  });
+  return {
+    compiled,
+    bundleDoc,
+    boundaryPath: resolveBoundaryPath(compiled.boundary),
+    registryDigest: digestOfUtf8(bundleText),
+  };
+}
+
+function loadIntended(): {
+  compiled: CompiledRegistry;
+  bundleDoc: unknown;
+  boundaryPath: string;
+  registryDigest: ReturnType<typeof digestOf>;
+} {
+  const intended = compileIntendedFromPack();
+  rejectSnapshotInput(intended.bundleDoc, intended.boundaryPath);
+  return {
+    compiled: intended.compiled,
+    bundleDoc: intended.bundleDoc,
+    boundaryPath: intended.boundaryPath,
+    registryDigest: digestOf(intended.bundleDoc),
+  };
 }
 
 export function renderCompiledSnapshot(snapshot: CompiledSnapshot): string {

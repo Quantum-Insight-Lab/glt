@@ -71,8 +71,8 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | 05 | [Enforcement authority map](05-authority-map-enforcement.md) | 1 | высокий | **сделано** |
 | 06 | [Компилятор реестра](06-registry-compiler.md) | 1 | средний | **сделано** |
 | 07 | [Резолвер SourceRef](07-sourceref-resolver.md) | 1 | средний | **сделано** |
-| 08 | [Компилятор снимков](08-snapshot-compiler.md) | 1 | высокий | запланирован |
-| 09 | [Bootstrap-срез из четырёх узлов](09-bootstrap-four-node-slice.md) | 1 | средний | запланирован |
+| 08 | [Компилятор снимков](08-snapshot-compiler.md) | 1 | высокий | **сделано** |
+| 09 | [Bootstrap-срез из четырёх узлов](09-bootstrap-four-node-slice.md) | 1 | средний | **сделано** |
 | 10 | [Impact engine v1](10-impact-engine-v1.md) | 1 | высокий | запланирован |
 | 11 | [Seeded-случаи](11-seeded-failure-tests.md) | 1 | средний | запланирован |
 | 12 | [Correctness gate](12-correctness-gate.md) | 1 | средний | запланирован |

@@ -12,3 +12,5 @@
 
 export { compileRegistryFromPaths, resolveBoundaryPath, resolveBundlePath } from "./compile.ts";
 export type { CompileRegistryPaths } from "./compile.ts";
+export { compileIntendedFromPack } from "./intended.ts";
+export type { CompiledIntended } from "./intended.ts";

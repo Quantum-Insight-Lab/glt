@@ -1,13 +1,15 @@
 {
   "report_id": "imp-bootstrap-001",
   "snapshot_id": "snap-bootstrap-golden-001",
-  "snapshot_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "snapshot_digest": "sha256:5bca8f91f0a92a6ae60dc83515810b388b809649101f76a500d235a490c65b41",
   "boundary_id": "glt.bootstrap-slice@1",
   "mode": "change",
   "change": {
     "classifier_version": "1.0.0",
     "matrix_version": "1.0.0",
-    "labels": ["interface"],
+    "labels": [
+      "interface"
+    ],
     "sources": [
       {
         "repository": "glt-controlplane",
@@ -22,9 +24,14 @@
     "glt.controlplane.registry.entry"
   ],
   "candidate_paths": [
-    ["glt.controlplane.registry.entry", "glt.controlplane.compiler"]
+    [
+      "glt.controlplane.registry.entry",
+      "glt.controlplane.compiler"
+    ]
   ],
-  "required_checks": ["glt.controlplane.check"],
+  "required_checks": [
+    "glt.controlplane.check"
+  ],
   "known_unknowns": [],
   "release": {
     "gate": "glt.controlplane.gate.bootstrap",

@@ -2,7 +2,7 @@
 id: glt.dev.09
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 1
 depends_on:
   - glt.dev.08
@@ -60,32 +60,36 @@ boundary `glt.controlplane-intended@1` — полном мета-графе ко
 
 ### Заморозка
 
-- [ ] Ни один digest в golden не равен 64 нулям
-- [ ] Freeze-check падает, если вернуть placeholder обратно
-- [ ] Пересборка снимка даёт ровно замороженный digest
-- [ ] `pinned_to.git_sha` заполнен настоящим SHA
+- [x] Ни один digest в golden не равен 64 нулям
+- [x] Freeze-check падает, если вернуть placeholder обратно
+- [x] Пересборка снимка даёт ровно замороженный digest
+- [x] `pinned_to.git_sha` заполнен настоящим SHA
 
 ### Мета-граф
 
-- [ ] `glt.controlplane-intended@1` существует как boundary-манифест
-- [ ] Статусы, зависимости и `expected_from_step` берутся из frontmatter шагов DEV, а не продублированы руками
-- [ ] Правка `depends_on` в шаге DEV меняет граф без ручной синхронизации
-- [ ] Оба boundary сосуществуют: детерминизм проверяется на срезе, recall измеряется на мета-графе
-- [ ] Плановый узел без кода не считается сломанным — у него есть `expected_from_step`
+- [x] `glt.controlplane-intended@1` существует как boundary-манифест
+- [x] Статусы, зависимости и `expected_from_step` берутся из frontmatter шагов DEV, а не продублированы руками
+- [x] Правка `depends_on` в шаге DEV меняет граф без ручной синхронизации
+- [x] Оба boundary сосуществуют: детерминизм проверяется на срезе, recall измеряется на мета-графе
+- [x] Плановый узел без кода не считается сломанным — у него есть `expected_from_step`
 
 ### Общее
 
-- [ ] CI зелёный на шагах, от которых зависит этот
-- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
-- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
-- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+- [x] CI зелёный на шагах, от которых зависит этот
+- [x] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [x] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [x] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
 
 ### Чем проверить
 
 ```bash
-pnpm exec glt compile snapshot --boundary glt.bootstrap-slice@1
+pnpm compile:snapshot -- --as-of 2026-08-14T10:00:00Z
+pnpm compile:snapshot -- --as-of 2026-08-14T10:00:00Z --boundary glt.controlplane-intended@1
 pnpm test
 ```
+
+Рабочий вход — скрипт `compile:snapshot` в корневом `package.json` (через `tsx`).
+То же: `pnpm glt compile snapshot`. Артефакт в stdout, в рабочую копию не пишет.
 
 ## Спецификация
 
@@ -93,4 +97,6 @@ pnpm test
 
 ## Статус
 
-запланирован
+**сделано** — ветка `wave1`. Golden digest заморожен `compileSnapshot`, не руками. Freeze-check отвергает `sha256:` + 64 нуля. Второй boundary `glt.controlplane-intended@1` собирается из DEV frontmatter; срез из четырёх узлов остаётся оракулом детерминизма. CLI в рабочую копию не пишет.
+
+Негатив: неизвестный `depends_on` (код 2); возврат placeholder в digest. Живой YAML среза не правился. CI — шаг `compile intended snapshot`.

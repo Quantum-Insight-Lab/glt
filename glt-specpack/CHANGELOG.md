@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.15.0] — 2026-09-09
+
+DEV-09: заморозка golden digest компилятором и второй boundary intended мета-графа.
+
+### Added
+
+- Freeze-check: `isUnfrozenPlaceholder` отвергает `sha256:` + 64 нуля. Golden `bootstrap-snapshot.json` и `impact-bootstrap.json` пересчитаны `compileSnapshot`, не вписаны руками.
+- Boundary `glt.controlplane-intended@1`: 11 компонентов (GLT-ID + SourceRef) и шаги DEV из frontmatter (`depends_on`, `status`, `expected_from_step`). Bootstrap-срез из четырёх узлов остаётся оракулом детерминизма.
+- Шаг CI `compile intended snapshot`.
+
+### Notes
+
+- Правка `depends_on` в карточке DEV меняет граф без второй карты. Плановый шаг без кода не отказ: у него есть `expected_from_step`.
+- Шаг принят: `docs/DEV/09-bootstrap-four-node-slice.md` — `status: accepted`.
+
 ## [0.14.0] — 2026-09-09
 
 DEV-08: компилятор снимков. Канонизатор RFC 8785 с векторами; digest только через `digest.ts`.

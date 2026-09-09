@@ -219,7 +219,9 @@ source_refs:
 
 **DEV-07 — сделано.** `glt resolve`: `path` от корня репозитория, не от корня пакета; нет файла — код 5; неоднозначный locator — PROTO-02, не первый хит.
 
-**DEV-08 — сделано.** PROTO-03, PROTO-05, PROTO-10 и INV-03 сняты с отложения: `glt compile snapshot` канонизирует JCS, материализует defaults, требует pin. Golden digest не заморожен (DEV-09).
+**DEV-08 — сделано.** PROTO-03, PROTO-05, PROTO-10 и INV-03 сняты с отложения: `glt compile snapshot` канонизирует JCS, материализует defaults, требует pin.
+
+**DEV-09 — сделано.** Golden digest заморожен компилятором; freeze-check отвергает placeholder. Второй boundary `glt.controlplane-intended@1` собирается из DEV frontmatter.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

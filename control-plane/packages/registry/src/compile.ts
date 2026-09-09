@@ -16,12 +16,14 @@ import {
 import {
   compileRegistry,
   contractInvalid,
+  isIntendedBoundaryRef,
   usageError,
   type AliasBinding,
   type CompiledRegistry,
   type RegistryEdgeView,
   type RegistryEntryView,
 } from "@glt/domain";
+import { compileIntendedFromPack } from "./intended.ts";
 
 export interface CompileRegistryPaths {
   readonly bundlePath?: string;
@@ -43,6 +45,10 @@ export function resolveBoundaryPath(ref: string): string {
 export function compileRegistryFromPaths(
   options: CompileRegistryPaths = {},
 ): CompiledRegistry {
+  if (isIntendedBoundaryRef(options.boundaryRef)) {
+    return compileIntendedFromPack().compiled;
+  }
+
   const bundlePath = resolveBundlePath(options.bundlePath);
   const bundleDoc = loadDocument(bundlePath);
   const ajv = createValidator();

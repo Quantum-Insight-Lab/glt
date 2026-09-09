@@ -5,6 +5,7 @@ import {
   GltError,
   compileSnapshot,
   digestOf,
+  isUnfrozenPlaceholder,
   type CompiledSnapshot,
   type SnapshotEdgeDraft,
   type SnapshotNodeDraft,
@@ -227,9 +228,33 @@ describe("DEV-08 snapshot compiler", () => {
     expect(first.stdout).not.toContain(REPO_ROOT.replaceAll("\\", "\\\\"));
   });
 
-  it("golden bootstrap snapshot stays unfrozen until DEV-09", () => {
+  it("PROTO-03 golden digest is frozen by the compiler, not the placeholder", () => {
+    const golden = loadJson<{
+      digest: string;
+      as_of: string;
+      snapshot_id: string;
+      pinned_to?: { git_sha?: string; artifact_digest?: string };
+      source_digests: Record<string, string>;
+    }>(join(PACK.examples, "golden", "bootstrap-snapshot.json"));
+    expect(isUnfrozenPlaceholder(golden.digest)).toBe(false);
+    for (const digest of Object.values(golden.source_digests)) {
+      expect(isUnfrozenPlaceholder(digest)).toBe(false);
+    }
+    expect(golden.pinned_to?.git_sha).toMatch(/^[0-9a-f]{7,40}$/);
+    const rebuilt = compileSnapshotFromPaths({
+      asOf: golden.as_of,
+      snapshotId: golden.snapshot_id,
+      ...(golden.pinned_to !== undefined ? { pinnedTo: golden.pinned_to } : {}),
+    });
+    expect(rebuilt.digest).toBe(golden.digest);
+  });
+
+  it("PROTO-03 freeze-check rejects a placeholder golden digest", () => {
     const golden = loadJson<{ digest: string }>(join(PACK.examples, "golden", "bootstrap-snapshot.json"));
-    expect(golden.digest).toBe("sha256:" + "0".repeat(64));
+    const placeholder = "sha256:" + "0".repeat(64);
+    expect(isUnfrozenPlaceholder(placeholder)).toBe(true);
+    expect(isUnfrozenPlaceholder(golden.digest)).toBe(false);
+    expect(isUnfrozenPlaceholder(placeholder)).not.toBe(isUnfrozenPlaceholder(golden.digest));
   });
 
   it("S-4 the canonicalizer has no third-party dependency", () => {

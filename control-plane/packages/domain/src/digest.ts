@@ -11,6 +11,7 @@ import { canonicalize } from "./canonical.ts";
  */
 
 const DIGEST_PREFIX = "sha256:" as const;
+const UNFROZEN_HEX = "0".repeat(64);
 
 type Digest = `${typeof DIGEST_PREFIX}${string}`;
 
@@ -31,6 +32,11 @@ export function digestOf(value: unknown, omit?: string): Digest {
 /** File-content digest for SourceRef. Not a second hash: same `sha256Bytes`. */
 export function digestOfUtf8(text: string): Digest {
   return formatDigest(sha256Bytes(text));
+}
+
+/** Reserved placeholder. Schema-valid; the DEV-09 freeze check MUST reject it. */
+export function isUnfrozenPlaceholder(digest: string): boolean {
+  return digest === `${DIGEST_PREFIX}${UNFROZEN_HEX}`;
 }
 
 function omitMember(value: unknown, key: string): unknown {
