@@ -5,6 +5,7 @@ import { runCompileRegistry } from "./compile-registry.ts";
 import { lintDocs, renderLintReport } from "./lint-docs.ts";
 import { runLintAuthority } from "./lint-authority.ts";
 import { createWriter, defaultFormat, type OutputFormat, type Writer } from "./output.ts";
+import { runResolve } from "./resolve.ts";
 import { runValidate } from "./validate.ts";
 import { runVerify } from "./verify.ts";
 
@@ -14,6 +15,7 @@ export { lintDocs, renderLintReport } from "./lint-docs.ts";
 export type { Finding, FindingKind, LintReport } from "./lint-docs.ts";
 export { lintAuthority, runLintAuthority, renderAuthorityReport } from "./lint-authority.ts";
 export { runCompileRegistry, renderCompiledRegistry } from "./compile-registry.ts";
+export { runResolve } from "./resolve.ts";
 export { verifyBootstrap } from "./verify.ts";
 export { validateDocuments, runValidate, renderValidateReport } from "./validate.ts";
 export type { ValidateReport, DocumentFailure } from "./validate.ts";
@@ -48,6 +50,7 @@ const HANDLERS: Readonly<Record<string, Handler>> = {
   },
   "lint authority": (writer) => runLintAuthority(writer),
   "compile registry": (writer, _paths, options) => runCompileRegistry(writer, options),
+  resolve: (writer, paths, options) => runResolve(writer, paths[0], options),
 };
 
 /**

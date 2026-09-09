@@ -1,5 +1,5 @@
 export { canonicalize } from "./canonical.ts";
-export { digestOf } from "./digest.ts";
+export { digestOf, digestOfUtf8 } from "./digest.ts";
 export {
   reconcileCoverage,
   parseRegistryIds,
@@ -63,3 +63,20 @@ export {
   type FactClass,
   type NormativeDocOwner,
 } from "./authority.ts";
+export {
+  applyJsonPointer,
+  applyLineRange,
+  applySelector,
+  assertDigestMatch,
+  classifyResolveInput,
+  parseSelector,
+  requireEvidencePins,
+  uniqueLocator,
+  usableAs,
+  type LocatorMatch,
+  type ResolveInput,
+  type ResolvedRef,
+  type Selector,
+  type SourceRefView,
+  type UsableAs,
+} from "./sourceref.ts";

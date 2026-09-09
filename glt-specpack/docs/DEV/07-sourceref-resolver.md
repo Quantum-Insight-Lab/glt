@@ -2,15 +2,35 @@
 id: glt.dev.07
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 1
 depends_on:
   - glt.dev.06
 spec_refs:
   - ../SPEC/provenance.md
+  - ../SPEC/cli.md
+  - ../SPEC/invariants.md
+  - ../00-governance/metadata-contract.md
+  - ../../contracts/schemas/source-ref.schema.json
 risk: medium
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/provenance.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/00-governance/metadata-contract.md
+    authority: governance-normativity
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/contracts/schemas/source-ref.schema.json
+    authority: wire-schema
+    role: derived-from
 ---
 
 # 07 — Резолвер SourceRef
@@ -41,30 +61,38 @@ source_refs: []
 
 ### По шагу
 
-- [ ] `path` разрешается от корня репозитория, а не от корня пакета
-- [ ] Ссылка на несуществующий файл даёт ошибку, а не пустой результат
-- [ ] Selector работает: `lines:10-40` для текста, JSON Pointer для YAML и JSON
-- [ ] Ссылка без `commit` и `digest` годится для навигации, но отвергается как evidence для approval и gate
-- [ ] Несовпадение `digest` с содержимым файла роняет разрешение
-- [ ] Неоднозначная ссылка даёт ошибку, а не первый подходящий вариант (PROTO-02)
+- [x] `path` разрешается от корня репозитория, а не от корня пакета
+- [x] Ссылка на несуществующий файл даёт ошибку, а не пустой результат
+- [x] Selector работает: `lines:10-40` для текста, JSON Pointer для YAML и JSON
+- [x] Ссылка без `commit` и `digest` годится для навигации, но отвергается как evidence для approval и gate
+- [x] Несовпадение `digest` с содержимым файла роняет разрешение
+- [x] Неоднозначная ссылка даёт ошибку, а не первый подходящий вариант (PROTO-02)
 
 ### Общее
 
-- [ ] CI зелёный на шагах, от которых зависит этот
-- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
-- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
-- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+- [x] CI зелёный на шагах, от которых зависит этот
+- [x] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [x] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [x] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
 
 ### Чем проверить
 
 ```bash
-pnpm exec glt resolve glt-specpack/docs/SPEC/registry.md
+pnpm resolve glt-specpack/docs/SPEC/registry.md
 ```
+
+Рабочий вход — скрипт `resolve` в корневом `package.json` (через `tsx`).
+То же: `pnpm glt resolve <ref>`. `<ref>` — alias, node id или JSON SourceRef.
+Нет файла — код 5. Неоднозначный locator — код 3 (PROTO-02). Команда не пишет в рабочую копию.
 
 ## Спецификация
 
 - [provenance.md](../SPEC/provenance.md)
+- [cli.md](../SPEC/cli.md)
+- [metadata-contract.md](../00-governance/metadata-contract.md)
 
 ## Статус
 
-запланирован
+**сделано** — ветка `wave1`. `glt resolve`: `path` от корня репозитория, не от пакета. Нет файла, чужой digest, evidence без pins — код 5. Неоднозначный locator — код 3 (PROTO-02), не первый хит. Selector `lines:N-M` и JSON Pointer. В рабочую копию не пишет.
+
+Негатив: pack-relative `docs/SPEC/registry.md`, отсутствующий файл, `role: evidence` без commit/digest, несовпавший digest, id=`foo` при alias=`foo` у другой записи. Живой YAML не правился. CI — шаг `resolve sourceref`.

@@ -2,6 +2,23 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.13.0] — 2026-09-09
+
+DEV-07: резолвер SourceRef. `path` от корня репозитория, названного в `repository`, никогда от корня пакета.
+
+### Added
+
+- `glt resolve <ref>` — alias, node id или JSON SourceRef. Артефакт в stdout, в рабочую копию не пишет.
+- `packages/domain/src/sourceref.ts` — selector `lines:N-M` и JSON Pointer (RFC 6901), pins для `role: evidence`, уникальный locator (PROTO-02). I/O — `packages/snapshot/src/resolve.ts`: `join(REPO_ROOT, path)`, без `PACK_ROOT`.
+- Нет файла, чужой `repository`, несовпадение digest, evidence без `commit`+`digest` — код 5. Неоднозначный locator — код 3, не первый хит. Битый JSON SourceRef — код 2.
+- Шаг CI `resolve sourceref`.
+
+### Notes
+
+- Две конвенции `docs/SPEC/...` и `glt-specpack/docs/...` резолвер не выбирает: это догадка, запрещённая тем же правилом, что PROTO-02. `docs/SPEC/registry.md` — код 5, даже если файл есть под `glt-specpack/`.
+- Навигация без `commit`/`digest` разрешена; как evidence для approval/gate — нет.
+- Шаг принят: `docs/DEV/07-sourceref-resolver.md` — `status: accepted`.
+
 ## [0.12.0] — 2026-09-09
 
 DEV-06: компилятор реестра. Alias либо разрешается однозначно, либо ошибка.
@@ -15,7 +32,7 @@ DEV-06: компилятор реестра. Alias либо разрешаетс
 ### Notes
 
 - PROTO-01, PROTO-02, PROTO-08, PROTO-09 и INV-02 сняты с отложения S-7. Покрытие `glt_structural_coverage`: **0.475 (19/40)**. Негативно: синтетический бандл; живой YAML на диске не портится.
-- Чеклист и `status: accepted` не трогались: приёмка шага — за человеком.
+- Шаг принят: `docs/DEV/06-registry-compiler.md` — `status: accepted`.
 
 ## [0.11.0] — 2026-09-08
 

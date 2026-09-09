@@ -12,7 +12,7 @@ GLT Control Plane: наблюдаемая архитектура, анализ �
 
 Методология — Possibility-Driven Architecture v1.2. Нормативные контракты живут в `glt-specpack/`, код в `control-plane/`.
 
-Статус: волна 1 (DEV-01…12). DEV-01…05 сделаны. DEV-06: `glt compile registry` в дереве, приёмка за человеком.
+Статус: волна 1 (DEV-01…12). DEV-01…07 сделаны.
 
 ---
 
@@ -56,6 +56,7 @@ control-plane/packages/
 | Authority map (INV-01) | `enforceAuthorityMap` | `packages/domain/src/authority.ts` |
 | Разрешение alias | `resolveAlias` | `packages/domain/src/resolve.ts` |
 | Компилятор реестра | `compileRegistry` | `packages/domain/src/resolve.ts`, `packages/registry/src/compile.ts` |
+| Разрешение SourceRef | `resolveRef` | `packages/domain/src/sourceref.ts`, `packages/snapshot/src/resolve.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |

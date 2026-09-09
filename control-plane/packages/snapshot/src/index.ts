@@ -9,6 +9,8 @@
  * The digest comes from the canonicalizer only. A second way to compute it
  * would give PROTO-03 two answers.
  *
- * Contract: glt-specpack/docs/SPEC/snapshots.md
+ * Contract: glt-specpack/docs/SPEC/provenance.md, snapshots.md
  */
+export { ioFromOptions, renderResolved, resolveRef } from "./resolve.ts";
+export type { ResolveIo, ResolveOptions } from "./resolve.ts";
 export const STEP = "glt.dev.08" as const;

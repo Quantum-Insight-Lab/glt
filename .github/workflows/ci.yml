@@ -64,6 +64,10 @@ jobs:
       - name: compile registry
         run: pnpm compile:registry
 
+      # DEV-07: SourceRef from the repository root, never the pack root.
+      - name: resolve sourceref
+        run: pnpm resolve glt-specpack/docs/SPEC/registry.md
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode
