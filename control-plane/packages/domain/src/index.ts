@@ -92,6 +92,19 @@ export {
   type SnapshotPin,
 } from "./snapshot.ts";
 export {
+  CLASSIFIER_VERSION,
+  classifyChange,
+  computeImpact,
+  type ComputeImpactInput,
+  type ImpactEdgeView,
+  type ImpactMatrixView,
+  type ImpactNodeView,
+  type ImpactReportView,
+  type ImpactRuleView,
+  type ImpactSource,
+  type ImpactUnknown,
+} from "./impact.ts";
+export {
   INTENDED_BOUNDARY_ID,
   INTENDED_BOUNDARY_REF,
   assembleIntendedGraph,

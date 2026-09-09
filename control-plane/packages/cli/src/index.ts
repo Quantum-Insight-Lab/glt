@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { ExitCode, usageError } from "@glt/domain";
 import { COMMANDS, type CommandSpec } from "./commands.ts";
+import { runImpact } from "./impact.ts";
 import { runCompileRegistry } from "./compile-registry.ts";
 import { runCompileSnapshot } from "./compile-snapshot.ts";
 import { lintDocs, renderLintReport } from "./lint-docs.ts";
@@ -16,6 +17,7 @@ export { lintDocs, renderLintReport } from "./lint-docs.ts";
 export type { Finding, FindingKind, LintReport } from "./lint-docs.ts";
 export { lintAuthority, runLintAuthority, renderAuthorityReport } from "./lint-authority.ts";
 export { runCompileRegistry, renderCompiledRegistry } from "./compile-registry.ts";
+export { runImpact } from "./impact.ts";
 export { runCompileSnapshot } from "./compile-snapshot.ts";
 export { runResolve } from "./resolve.ts";
 export { verifyBootstrap } from "./verify.ts";
@@ -33,7 +35,14 @@ export interface RunResult {
 type Handler = (
   writer: Writer,
   paths: readonly string[],
-  options: { registry?: string; boundary?: string; matrix?: string; asOf?: string },
+  options: {
+    registry?: string;
+    boundary?: string;
+    matrix?: string;
+    asOf?: string;
+    snapshot?: string;
+    maxDepth?: string;
+  },
 ) => number;
 
 /**
@@ -54,6 +63,7 @@ const HANDLERS: Readonly<Record<string, Handler>> = {
   "compile registry": (writer, _paths, options) => runCompileRegistry(writer, options),
   "compile snapshot": (writer, _paths, options) => runCompileSnapshot(writer, options),
   resolve: (writer, paths, options) => runResolve(writer, paths[0], options),
+  impact: (writer, _paths, options) => runImpact(writer, options),
 };
 
 /**
@@ -114,16 +124,29 @@ export function buildProgram(
           boundary?: string;
           matrix?: string;
           asOf?: string;
+          snapshot?: string;
+          maxDepth?: string;
         }>();
-        const options: { registry?: string; boundary?: string; matrix?: string; asOf?: string } = {};
+        const options: {
+          registry?: string;
+          boundary?: string;
+          matrix?: string;
+          asOf?: string;
+          snapshot?: string;
+          maxDepth?: string;
+        } = {};
         const registry = readOption(argv, "--registry") ?? globals.registry;
         const boundary = readOption(argv, "--boundary") ?? globals.boundary;
         const matrix = readOption(argv, "--matrix") ?? globals.matrix;
         const asOf = readOption(argv, "--as-of") ?? globals.asOf;
+        const snapshot = readOption(argv, "--snapshot") ?? globals.snapshot;
+        const maxDepth = readOption(argv, "--max-depth") ?? globals.maxDepth;
         if (registry !== undefined) options.registry = registry;
         if (boundary !== undefined) options.boundary = boundary;
         if (matrix !== undefined) options.matrix = matrix;
         if (asOf !== undefined) options.asOf = asOf;
+        if (snapshot !== undefined) options.snapshot = snapshot;
+        if (maxDepth !== undefined) options.maxDepth = maxDepth;
         onExitCode?.(handler(writer, paths, options));
       });
   }

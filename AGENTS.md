@@ -12,7 +12,7 @@ GLT Control Plane: наблюдаемая архитектура, анализ �
 
 Методология — Possibility-Driven Architecture v1.2. Нормативные контракты живут в `glt-specpack/`, код в `control-plane/`.
 
-Статус: волна 1 (DEV-01…12). DEV-01…09 сделаны. DEV-10: impact engine, запланирован.
+Статус: волна 1 (DEV-01…12). DEV-01…10 сделаны. DEV-11: seeded failures, запланирован.
 
 ---
 
@@ -59,6 +59,7 @@ control-plane/packages/
 | Разрешение SourceRef | `resolveRef` | `packages/domain/src/sourceref.ts`, `packages/snapshot/src/resolve.ts` |
 | Компилятор снимков | `compileSnapshot` | `packages/domain/src/snapshot.ts`, `packages/snapshot/src/compile.ts` |
 | Intended мета-граф | `assembleIntendedGraph` из DEV frontmatter | `packages/domain/src/intended.ts`, `packages/registry/src/intended.ts` |
+| Impact | `computeImpact` по матрице, не по зашитым правилам | `packages/domain/src/impact.ts`, `packages/impact/src/compute.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |

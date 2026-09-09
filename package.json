@@ -22,6 +22,7 @@
     "lint:authority": "tsx control-plane/packages/cli/src/bin.ts lint authority",
     "compile:registry": "tsx control-plane/packages/cli/src/bin.ts compile registry",
     "compile:snapshot": "tsx control-plane/packages/cli/src/bin.ts compile snapshot",
+    "impact": "tsx control-plane/packages/cli/src/bin.ts impact",
     "resolve": "tsx control-plane/packages/cli/src/bin.ts resolve",
     "deadcode": "knip",
     "check": "pnpm gen && pnpm typecheck && pnpm test"

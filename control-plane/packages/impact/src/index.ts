@@ -6,9 +6,8 @@
  * entry of kind `uncovered_relation` — it is never silently skipped, because a
  * missing edge cannot be discovered from the graph itself.
  *
- * Recall of required checks is what the Correctness gate measures, so an
- * omission here is the failure the whole system exists to prevent.
- *
  * Contract: glt-specpack/docs/SPEC/impact.md
  */
+export { computeImpactFromPaths, renderImpactReport } from "./compute.ts";
+export type { ComputeImpactFromPathsOptions } from "./compute.ts";
 export const STEP = "glt.dev.10" as const;

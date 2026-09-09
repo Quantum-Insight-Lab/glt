@@ -2,6 +2,22 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.16.0] — 2026-09-09
+
+DEV-10: `glt impact` — обход по propagation matrix, отчёт с `known_unknowns`.
+
+### Added
+
+- `glt impact` — change-impact по матрице, не по зашитым правилам. Check из `validates` идёт в `required_checks`, gate — в `release`, не в `affected_nodes`. Артефакт в stdout, в рабочую копию не пишет.
+- Freeze golden `impact-bootstrap.json` совпадает с прогоном на golden snapshot. Отношение без строки матрицы — `known_unknowns.kind: uncovered_relation`. Выход за boundary — непустой `known_unknowns` (INV-05).
+- LLM-метки не входят в `change.labels` и `release` (INV-12). Цикл топологии не зацикливает обход; цикл порядка исполнения — PROTO-07.
+- Шаг CI `impact`. S-8 блокирующе: `impact.max_traversal_depth` только из `parameters/`.
+
+### Notes
+
+- PROTO-07, INV-05 и INV-12 сняты с отложения. Покрытие `glt_structural_coverage`: **0.65 (26/40)**.
+- Шаг принят: `docs/DEV/10-impact-engine-v1.md` — `status: accepted`.
+
 ## [0.15.0] — 2026-09-09
 
 DEV-09: заморозка golden digest компилятором и второй boundary intended мета-графа.

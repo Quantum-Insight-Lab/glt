@@ -14,6 +14,7 @@
   "dependencies": {
     "@glt/contracts": "workspace:*",
     "@glt/domain": "workspace:*",
+    "@glt/impact": "workspace:*",
     "@glt/registry": "workspace:*",
     "@glt/snapshot": "workspace:*",
     "commander": "^12.1.0"

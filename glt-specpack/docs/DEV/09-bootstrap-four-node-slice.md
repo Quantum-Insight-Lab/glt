@@ -7,10 +7,52 @@ wave: 1
 depends_on:
   - glt.dev.08
 spec_refs:
+  - ../SPEC/snapshots.md
   - ../SPEC/topology.md
+  - ../SPEC/cli.md
+  - ../SPEC/invariants.md
+  - ../SPEC/structural-invariants.md
+  - ../PDA/04-invariants.md
+  - ../../contracts/schemas/snapshot.schema.json
+  - ../../contracts/examples/golden/bootstrap-snapshot.json
+  - ../../contracts/examples/golden/impact-bootstrap.json
+  - ../../registry/boundaries/controlplane-intended.yaml
+  - ../../registry/intended-components.yaml
 risk: medium
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/snapshots.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/topology.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/contracts/schemas/snapshot.schema.json
+    authority: wire-schema
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/contracts/examples/golden/bootstrap-snapshot.json
+    authority: wire-schema
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/registry/boundaries/controlplane-intended.yaml
+    authority: glt-id-registry
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/registry/intended-components.yaml
+    authority: glt-id-registry
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/04-invariants.md
+    authority: methodology-pda
+    role: derived-from
 ---
 
 # 09 — Bootstrap-срез из четырёх узлов
@@ -93,7 +135,9 @@ pnpm test
 
 ## Спецификация
 
+- [snapshots.md](../SPEC/snapshots.md)
 - [topology.md](../SPEC/topology.md)
+- [cli.md](../SPEC/cli.md)
 
 ## Статус
 

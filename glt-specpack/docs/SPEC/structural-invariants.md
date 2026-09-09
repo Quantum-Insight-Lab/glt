@@ -144,7 +144,6 @@ source_refs:
 
 | ID | until |
 |---|---|
-| PROTO-07 | glt.dev.10 |
 | PROTO-11 | glt.dev.16 |
 | PROTO-12 | glt.dev.16 |
 | PROTO-13 | glt.dev.29 |
@@ -154,13 +153,11 @@ source_refs:
 | PROTO-17 | glt.dev.29 |
 | PROTO-18 | glt.dev.24 |
 | INV-04 | glt.dev.12 |
-| INV-05 | glt.dev.10 |
 | INV-06 | glt.dev.29 |
 | INV-07 | glt.dev.33 |
 | INV-08 | glt.dev.29 |
 | INV-09 | glt.dev.30 |
 | INV-11 | glt.dev.24 |
-| INV-12 | glt.dev.10 |
 
 Исходный разрыв на момент 0.3.0: **8 из 18** PROTO имеют sheet, **0 из 40** ID имеют тест, потому что кода нет. Это база, к которой возвращаются.
 
@@ -222,6 +219,8 @@ source_refs:
 **DEV-08 — сделано.** PROTO-03, PROTO-05, PROTO-10 и INV-03 сняты с отложения: `glt compile snapshot` канонизирует JCS, материализует defaults, требует pin.
 
 **DEV-09 — сделано.** Golden digest заморожен компилятором; freeze-check отвергает placeholder. Второй boundary `glt.controlplane-intended@1` собирается из DEV frontmatter.
+
+**DEV-10 — сделано.** `glt impact`: обход по матрице, `known_unknowns` на uncovered relation и за boundary, check не в `affected_nodes`. PROTO-07, INV-05 и INV-12 сняты с отложения. S-8 блокирующе: глубина обхода только из `parameters/`.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

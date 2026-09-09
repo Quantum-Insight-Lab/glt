@@ -76,6 +76,10 @@ jobs:
       - name: compile intended snapshot
         run: pnpm compile:snapshot -- --as-of 2026-08-14T10:00:00Z --boundary glt.controlplane-intended@1
 
+      # DEV-10: impact report to stdout. Does not write the workspace.
+      - name: impact
+        run: pnpm impact -- --snapshot glt-specpack/contracts/examples/golden/bootstrap-snapshot.json
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode
