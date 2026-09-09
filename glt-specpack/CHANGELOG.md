@@ -2,6 +2,23 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.14.0] — 2026-09-09
+
+DEV-08: компилятор снимков. Канонизатор RFC 8785 с векторами; digest только через `digest.ts`.
+
+### Added
+
+- `glt compile snapshot` — полный Node/Edge, материализованные defaults (PROTO-04, PROTO-05), pin (PROTO-10). Артефакт в stdout, в рабочую копию не пишет.
+- Векторы RFC 8785 §3.2.3 и Appendix B в `canonical.test.ts`. Массивы снимка сортируются до JCS: узлы/рёбра по `metadata.id`, assertions по `plane`, остальное лексикографически. NFC на alias.
+- Digest = `digestOf(snapshot, "digest")`: член `digest` удаляется, не обнуляется. Снимок как вход компилятора — отказ (S-5).
+- Шаг CI `compile snapshot`.
+
+### Notes
+
+- Golden `bootstrap-snapshot.json` остаётся с placeholder-digest: заморозка — DEV-09. Вписать хэш руками нельзя.
+- PROTO-03, PROTO-05, PROTO-10 и INV-03 сняты с отложения S-7. Покрытие `glt_structural_coverage`: **0.575 (23/40)**.
+- Шаг принят: `docs/DEV/08-snapshot-compiler.md` — `status: accepted`.
+
 ## [0.13.0] — 2026-09-09
 
 DEV-07: резолвер SourceRef. `path` от корня репозитория, названного в `repository`, никогда от корня пакета.

@@ -80,3 +80,14 @@ export {
   type SourceRefView,
   type UsableAs,
 } from "./sourceref.ts";
+export {
+  compileSnapshot,
+  materializeEdge,
+  materializeNode,
+  type CompiledSnapshot,
+  type SnapshotAssertion,
+  type SnapshotCompileInput,
+  type SnapshotEdgeDraft,
+  type SnapshotNodeDraft,
+  type SnapshotPin,
+} from "./snapshot.ts";

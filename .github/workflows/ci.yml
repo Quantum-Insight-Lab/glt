@@ -68,6 +68,10 @@ jobs:
       - name: resolve sourceref
         run: pnpm resolve glt-specpack/docs/SPEC/registry.md
 
+      # DEV-08: deterministic snapshot to stdout. Does not write the workspace.
+      - name: compile snapshot
+        run: pnpm compile:snapshot -- --as-of 2026-08-14T10:00:00Z
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

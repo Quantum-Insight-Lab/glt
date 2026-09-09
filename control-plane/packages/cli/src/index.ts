@@ -2,6 +2,7 @@ import { Command } from "commander";
 import { ExitCode, usageError } from "@glt/domain";
 import { COMMANDS, type CommandSpec } from "./commands.ts";
 import { runCompileRegistry } from "./compile-registry.ts";
+import { runCompileSnapshot } from "./compile-snapshot.ts";
 import { lintDocs, renderLintReport } from "./lint-docs.ts";
 import { runLintAuthority } from "./lint-authority.ts";
 import { createWriter, defaultFormat, type OutputFormat, type Writer } from "./output.ts";
@@ -15,6 +16,7 @@ export { lintDocs, renderLintReport } from "./lint-docs.ts";
 export type { Finding, FindingKind, LintReport } from "./lint-docs.ts";
 export { lintAuthority, runLintAuthority, renderAuthorityReport } from "./lint-authority.ts";
 export { runCompileRegistry, renderCompiledRegistry } from "./compile-registry.ts";
+export { runCompileSnapshot } from "./compile-snapshot.ts";
 export { runResolve } from "./resolve.ts";
 export { verifyBootstrap } from "./verify.ts";
 export { validateDocuments, runValidate, renderValidateReport } from "./validate.ts";
@@ -31,7 +33,7 @@ export interface RunResult {
 type Handler = (
   writer: Writer,
   paths: readonly string[],
-  options: { registry?: string; boundary?: string },
+  options: { registry?: string; boundary?: string; matrix?: string; asOf?: string },
 ) => number;
 
 /**
@@ -50,6 +52,7 @@ const HANDLERS: Readonly<Record<string, Handler>> = {
   },
   "lint authority": (writer) => runLintAuthority(writer),
   "compile registry": (writer, _paths, options) => runCompileRegistry(writer, options),
+  "compile snapshot": (writer, _paths, options) => runCompileSnapshot(writer, options),
   resolve: (writer, paths, options) => runResolve(writer, paths[0], options),
 };
 
@@ -57,7 +60,11 @@ const HANDLERS: Readonly<Record<string, Handler>> = {
  * Builds the parser. Exported so S-10 can enumerate the registered command set
  * from the parser itself rather than from a list that could drift from it.
  */
-export function buildProgram(writer: Writer, onExitCode?: (code: number) => void): Command {
+export function buildProgram(
+  writer: Writer,
+  onExitCode?: (code: number) => void,
+  argv: readonly string[] = [],
+): Command {
   const program = new Command();
 
   program
@@ -102,10 +109,21 @@ export function buildProgram(writer: Writer, onExitCode?: (code: number) => void
       .action((first: unknown) => {
         if (!handler) throw notAvailableYet(spec);
         const paths = spec.args ? asStringList(first) : [];
-        const globals = program.opts<{ registry?: string; boundary?: string }>();
-        const options: { registry?: string; boundary?: string } = {};
-        if (globals.registry !== undefined) options.registry = globals.registry;
-        if (globals.boundary !== undefined) options.boundary = globals.boundary;
+        const globals = program.opts<{
+          registry?: string;
+          boundary?: string;
+          matrix?: string;
+          asOf?: string;
+        }>();
+        const options: { registry?: string; boundary?: string; matrix?: string; asOf?: string } = {};
+        const registry = readOption(argv, "--registry") ?? globals.registry;
+        const boundary = readOption(argv, "--boundary") ?? globals.boundary;
+        const matrix = readOption(argv, "--matrix") ?? globals.matrix;
+        const asOf = readOption(argv, "--as-of") ?? globals.asOf;
+        if (registry !== undefined) options.registry = registry;
+        if (boundary !== undefined) options.boundary = boundary;
+        if (matrix !== undefined) options.matrix = matrix;
+        if (asOf !== undefined) options.asOf = asOf;
         onExitCode?.(handler(writer, paths, options));
       });
   }
@@ -134,7 +152,7 @@ export async function run(
     { out: (s) => (stdout += s), err: (s) => (stderr += s) },
   );
 
-  const program = buildProgram(writer, (c) => (code = c));
+  const program = buildProgram(writer, (c) => (code = c), argv);
   try {
     await program.parseAsync(["node", "glt", ...argv]);
     return { code, stdout, stderr };
@@ -160,6 +178,12 @@ function isCommanderExit(error: unknown): error is { exitCode: number } {
     "exitCode" in error &&
     typeof (error as { exitCode: unknown }).exitCode === "number"
   );
+}
+
+function readOption(argv: readonly string[], name: string): string | undefined {
+  const i = argv.findIndex((a) => a === name);
+  const value = i >= 0 ? argv[i + 1] : undefined;
+  return typeof value === "string" && value.length > 0 && !value.startsWith("-") ? value : undefined;
 }
 
 function asStringList(value: unknown): string[] {

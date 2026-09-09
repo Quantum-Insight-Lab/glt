@@ -32,6 +32,14 @@ export interface CompileRegistryPaths {
   };
 }
 
+export function resolveBoundaryPath(ref: string): string {
+  for (const path of listBoundaryManifests()) {
+    const doc = loadDocument(path);
+    if (boundaryRefOf(doc) === ref || boundaryIdOf(doc) === ref) return path;
+  }
+  throw usageError(`boundary ${ref} not found`, [ref]);
+}
+
 export function compileRegistryFromPaths(
   options: CompileRegistryPaths = {},
 ): CompiledRegistry {
@@ -79,11 +87,7 @@ export function resolveBundlePath(flag: string | undefined): string {
 }
 
 function loadBoundary(ref: string): unknown {
-  for (const path of listBoundaryManifests()) {
-    const doc = loadDocument(path);
-    if (boundaryRefOf(doc) === ref || boundaryIdOf(doc) === ref) return doc;
-  }
-  throw usageError(`boundary ${ref} not found`, [ref]);
+  return loadDocument(resolveBoundaryPath(ref));
 }
 
 function asBundle(doc: unknown): {

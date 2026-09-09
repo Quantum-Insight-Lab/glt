@@ -144,10 +144,7 @@ source_refs:
 
 | ID | until |
 |---|---|
-| PROTO-03 | glt.dev.08 |
-| PROTO-05 | glt.dev.08 |
 | PROTO-07 | glt.dev.10 |
-| PROTO-10 | glt.dev.08 |
 | PROTO-11 | glt.dev.16 |
 | PROTO-12 | glt.dev.16 |
 | PROTO-13 | glt.dev.29 |
@@ -156,7 +153,6 @@ source_refs:
 | PROTO-16 | glt.dev.33 |
 | PROTO-17 | glt.dev.29 |
 | PROTO-18 | glt.dev.24 |
-| INV-03 | glt.dev.08 |
 | INV-04 | glt.dev.12 |
 | INV-05 | glt.dev.10 |
 | INV-06 | glt.dev.29 |
@@ -222,6 +218,8 @@ source_refs:
 **DEV-06 — сделано.** PROTO-01, PROTO-02, PROTO-08, PROTO-09 и INV-02 сняты с отложения: `glt compile registry` строит уникальный индекс alias и падает на неизвестном/неоднозначном имени, переназначении внутри той же версии и смене смысла без revision.
 
 **DEV-07 — сделано.** `glt resolve`: `path` от корня репозитория, не от корня пакета; нет файла — код 5; неоднозначный locator — PROTO-02, не первый хит.
+
+**DEV-08 — сделано.** PROTO-03, PROTO-05, PROTO-10 и INV-03 сняты с отложения: `glt compile snapshot` канонизирует JCS, материализует defaults, требует pin. Golden digest не заморожен (DEV-09).
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

@@ -10,5 +10,5 @@
  * Contract: glt-specpack/docs/SPEC/registry.md
  */
 
-export { compileRegistryFromPaths, resolveBundlePath } from "./compile.ts";
+export { compileRegistryFromPaths, resolveBoundaryPath, resolveBundlePath } from "./compile.ts";
 export type { CompileRegistryPaths } from "./compile.ts";
