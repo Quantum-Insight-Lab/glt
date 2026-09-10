@@ -115,3 +115,16 @@ export {
   type IntendedSourceRef,
   type IntendedStepCard,
 } from "./intended.ts";
+export {
+  aggregateScores,
+  recallIsComplete,
+  recallPrecision,
+  type RecallPrecision,
+} from "./recall.ts";
+export { snapshotIsStale } from "./freshness.ts";
+export {
+  hashAuditRecord,
+  verifyAuditChain,
+  type AuditChainLink,
+  type AuditChainResult,
+} from "./audit-chain.ts";

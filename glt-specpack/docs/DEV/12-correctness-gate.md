@@ -10,9 +10,50 @@ depends_on:
 spec_refs:
   - ../SPEC/impact.md
   - ../EXPERIMENTS/product-gate.md
+  - ../EXPERIMENTS/seeded-failures.md
+  - ../EXPERIMENTS/seeded-changes.yaml
+  - ../EXPERIMENTS/holdout-cases.yaml
+  - ../SPEC/invariants.md
+  - ../SPEC/structural-invariants.md
+  - ../SPEC/audit.md
+  - ../PDA/04-invariants.md
+  - ../../parameters/snapshot-stale-after.yaml
+  - ../../contracts/propagation/propagation-matrix.yaml
 risk: medium
 gate: correctness
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/EXPERIMENTS/product-gate.md
+    authority: experiment-rubric
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/EXPERIMENTS/seeded-changes.yaml
+    authority: experiment-rubric
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/EXPERIMENTS/holdout-cases.yaml
+    authority: experiment-rubric
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/impact.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/audit.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/parameters/snapshot-stale-after.yaml
+    authority: parameter-values
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/04-invariants.md
+    authority: methodology-pda
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/contracts/propagation/propagation-matrix.yaml
+    authority: impact-propagation-rules
+    role: derived-from
 ---
 
 # 12 — Correctness gate
@@ -46,8 +87,11 @@ source_refs: []
 обязательную проверку», что противоречит PROTO-12 и всей логике
 `known_unknowns`: неполнота обязана быть **названной**, а не статистической.
 
-Измеряется на `glt.controlplane-intended@1`, а не на четырёхузловом срезе: на
-четырёх узлах recall равен 1.0 у любой реализации, корректной или нет.
+Измеряется recall на авторизованном наборе DEV-11 (`glt.seeded-slice@1`): это
+единственный граф с ручной ground truth на все восемь классов и семь отношений
+матрицы. Четырёхузловой bootstrap-срез для E02 не используется. Intended
+мета-граф `glt.controlplane-intended@1` компилируется как стенд (E05a вне его
+границы) и обязан быть крупнее среза.
 
 ## Чего этот gate не доказывает
 
@@ -92,7 +136,10 @@ UI не участвует. B1 dashboard перенесён в DEV-20, где с
 
 - [impact.md](../SPEC/impact.md)
 - [product-gate.md](../EXPERIMENTS/product-gate.md)
+- [seeded-changes.yaml](../EXPERIMENTS/seeded-changes.yaml)
+- [holdout-cases.yaml](../EXPERIMENTS/holdout-cases.yaml)
+- [audit.md](../SPEC/audit.md)
 
 ## Статус
 
-запланирован
+в дереве; чеклист не отмечен до живой приёмки

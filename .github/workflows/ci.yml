@@ -84,6 +84,10 @@ jobs:
       - name: seeded failures
         run: pnpm test:seeded
 
+      # DEV-12: correctness gate. Recall on the open set; holdout H01–H05 is E03 only.
+      - name: correctness gate
+        run: pnpm test:gate
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

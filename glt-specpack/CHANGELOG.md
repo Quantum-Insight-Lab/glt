@@ -2,6 +2,23 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.18.0] — 2026-09-10
+
+DEV-12: correctness gate — recall на авторизованном наборе, holdout H01–H05 без false-green.
+
+### Added
+
+- Стенд E02a/E02b: recall `required_checks` и `affected_nodes` против каталога DEV-11 (`glt.seeded-slice@1`). Гейтится полнота (каждый id истины присутствует); precision публикуется и порогом не является.
+- E03: holdout H01–H05 даёт ожидаемый не-зелёный исход (drop `validates`, выход за boundary, `source_conflict`, snapshot старше P01, разрыв `prev_hash`). YAML holdout не менялся, параметры под него не калибровались.
+- E05a: выход за boundary всегда даёт непустой `known_unknowns` — на каталоге и инъекцией extra-node на intended мета-графе. Intended компилируется как стенд (крупнее среза); ground truth E02 на intended-узлах нет.
+- Чистая логика: `recall.ts`, `freshness.ts` (`snapshotIsStale` в секундах с карточки P01), `verifyAuditChain` через `digestOf`. Шаг CI `correctness gate`. Команды `glt gate` нет.
+
+### Notes
+
+- INV-07 снят с отложения S-7. INV-04 перенесён на DEV-16: у шага нет UI. Usefulness gate остаётся «не проверено».
+- Покрытие `glt_structural_coverage`: **0.675 (27/40)**.
+- Карточка `docs/DEV/12-correctness-gate.md` — в дереве; чеклист не отмечен до живой приёмки.
+
 ## [0.17.0] — 2026-09-10
 
 DEV-11: инъекции S1–S3 в CI и открытый набор seeded changes с ручной ground truth.

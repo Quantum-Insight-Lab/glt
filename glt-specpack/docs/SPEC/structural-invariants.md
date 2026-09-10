@@ -152,9 +152,8 @@ source_refs:
 | PROTO-16 | glt.dev.33 |
 | PROTO-17 | glt.dev.29 |
 | PROTO-18 | glt.dev.24 |
-| INV-04 | glt.dev.12 |
+| INV-04 | glt.dev.16 |
 | INV-06 | glt.dev.29 |
-| INV-07 | glt.dev.33 |
 | INV-08 | glt.dev.29 |
 | INV-09 | glt.dev.30 |
 | INV-11 | glt.dev.24 |
@@ -223,6 +222,8 @@ source_refs:
 **DEV-10 — сделано.** `glt impact`: обход по матрице, `known_unknowns` на uncovered relation и за boundary, check не в `affected_nodes`. PROTO-07, INV-05 и INV-12 сняты с отложения. S-8 блокирующе: глубина обхода только из `parameters/`.
 
 **DEV-11 — сделано.** Инъекции S1–S3 в CI; открытый набор seeded changes с ручной ground truth на `glt.seeded-slice@1`. Независимое ревью записано как limitation. Holdout не открывался.
+
+**DEV-12 — в дереве.** Correctness gate: E02a/E02b recall 1.0 на авторизованном наборе, E03 holdout H01–H05 без false-green, E05a `known_unknowns` вне boundary. Precision публикуется. INV-07 снят с отложения (разрыв `prev_hash`). INV-04 перенесён на DEV-16: у этого шага нет UI. Usefulness остаётся «не проверено».
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

@@ -12,7 +12,7 @@ GLT Control Plane: наблюдаемая архитектура, анализ �
 
 Методология — Possibility-Driven Architecture v1.2. Нормативные контракты живут в `glt-specpack/`, код в `control-plane/`.
 
-Статус: волна 1 (DEV-01…12). DEV-01…11 сделаны. DEV-12: correctness gate, запланирован.
+Статус: волна 1 (DEV-01…12). DEV-01…11 сделаны. DEV-12: correctness gate, в дереве.
 
 ---
 
@@ -30,7 +30,7 @@ control-plane/packages/
   runner/                planner + executor
   audit/                 hash chain
   api/                   HTTP (волна 3)
-  dashboard/             React (DEV-12)
+  dashboard/             React (DEV-20)
   cli/                   glt
 ```
 
@@ -61,6 +61,7 @@ control-plane/packages/
 | Intended мета-граф | `assembleIntendedGraph` из DEV frontmatter | `packages/domain/src/intended.ts`, `packages/registry/src/intended.ts` |
 | Impact | `computeImpact` по матрице, не по зашитым правилам | `packages/domain/src/impact.ts`, `packages/impact/src/compute.ts` |
 | Seeded changes | каталог YAML, GT не из engine | `glt-specpack/docs/EXPERIMENTS/seeded-changes.yaml` |
+| Correctness gate | recall completeness, freshness P01, audit chain | `packages/domain/src/recall.ts`, `packages/domain/src/freshness.ts`, `packages/domain/src/audit-chain.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |

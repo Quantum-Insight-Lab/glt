@@ -37,6 +37,7 @@ export const PACK = {
   seedKeys: join(PACK_ROOT, "trust", "seed-public-keys"),
   docs: join(PACK_ROOT, "docs"),
   seededChanges: join(PACK_ROOT, "docs", "EXPERIMENTS", "seeded-changes.yaml"),
+  holdoutCases: join(PACK_ROOT, "docs", "EXPERIMENTS", "holdout-cases.yaml"),
 } as const;
 
 /** Schema `$id` prefix. Refs between schemas resolve against it, not against disk. */
