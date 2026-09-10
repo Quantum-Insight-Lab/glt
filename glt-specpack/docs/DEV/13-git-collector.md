@@ -2,7 +2,7 @@
 id: glt.dev.13
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 2
 depends_on:
   - glt.dev.12
@@ -87,4 +87,4 @@ source_refs:
 
 ## Статус
 
-чеклист закрыт — шаг не accepted
+**сделано** — ветка `wave2`. Коллектор собирает materialized-факты с pinned commit, не решает политику. Нет commit/объекта → `unknown`, код 5. Нет CODEOWNERS → `hints: null`. `intended` отвергается. Команды `glt collect` нет. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34453443041).

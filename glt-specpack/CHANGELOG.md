@@ -15,7 +15,7 @@ DEV-13: git collector — materialized-факты с pinned commit, без по�
 ### Notes
 
 - Слияние materialized в snapshot — DEV-18. Golden digest и `collector_versions` снимка не менялись.
-- Чеклист DEV-13 закрыт, шаг не accepted. Покрытие `glt_structural_coverage`: **0.7 (28/40)**.
+- Шаг принят: `docs/DEV/13-git-collector.md` — `status: accepted`. Покрытие `glt_structural_coverage`: **0.7 (28/40)**.
 
 ## [0.18.0] — 2026-09-10
 
