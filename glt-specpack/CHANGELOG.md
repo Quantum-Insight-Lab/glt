@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.17.0] — 2026-09-10
+
+DEV-11: инъекции S1–S3 в CI и открытый набор seeded changes с ручной ground truth.
+
+### Added
+
+- Каталог [`docs/EXPERIMENTS/seeded-changes.yaml`](docs/EXPERIMENTS/seeded-changes.yaml) v1.0.0: 13 случаев на срезе `glt.seeded-slice@1`, все восемь change classes и семь отношений со строкой в матрице, два выхода за boundary, один `uncovered_relation`.
+- Инъекции S1–S3 автоматизированы: drop `validates` роняет gate, узел вне boundary даёт `known_unknowns`, дублирование владельца класса — verifier, код 6. Шаг CI `seeded failures`.
+- Ground truth выведена по SPEC/impact.md и id рёбер/строк матрицы, не прогоном `computeImpact`. Независимое ревью при одном исполнителе невозможно: `independent_review.status: limitation-recorded`.
+
+### Notes
+
+- Набор не bootstrap-срез из четырёх узлов и не intended мета-граф: в registry нет `calls`/`reads`/`consumes`/`conflicts_with`. Holdout H01–H05 не открывался.
+- Чеклист `docs/DEV/11-seeded-failure-tests.md` не отмечен до живой приёмки.
+
 ## [0.16.0] — 2026-09-09
 
 DEV-10: `glt impact` — обход по propagation matrix, отчёт с `known_unknowns`.

@@ -8,9 +8,41 @@ depends_on:
   - glt.dev.10
 spec_refs:
   - ../EXPERIMENTS/seeded-failures.md
+  - ../EXPERIMENTS/seeded-changes.yaml
+  - ../EXPERIMENTS/product-gate.md
+  - ../SPEC/impact.md
+  - ../SPEC/invariants.md
+  - ../SPEC/structural-invariants.md
+  - ../PDA/04-invariants.md
+  - ../../contracts/propagation/propagation-matrix.yaml
+  - ../../trust/authority-map.yaml
 risk: medium
 gate: product-prep
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/EXPERIMENTS/seeded-failures.md
+    authority: experiment-rubric
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/EXPERIMENTS/seeded-changes.yaml
+    authority: experiment-rubric
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/impact.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/contracts/propagation/propagation-matrix.yaml
+    authority: impact-propagation-rules
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/trust/authority-map.yaml
+    authority: governance-normativity
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/04-invariants.md
+    authority: methodology-pda
+    role: derived-from
 ---
 
 # 11 — Seeded-случаи
@@ -46,10 +78,11 @@ Correctness gate измеряет именно recall, поэтому нужен
 проверку на себя.
 
 **При одном исполнителе это требование невыполнимо.** Это тот же дефект, из-за
-которого разделён Product gate. До начала шага нужно выбрать: выводить ground
-truth независимо от матрицы (из SPEC и рёбер, а не из правил обхода), либо
-записать ограничение как известное, либо отложить часть случаев до появления
-второго исполнителя. Молча заверить самому себе — не вариант.
+которого разделён Product gate. Решение на этом шаге: ground truth выведена
+по SPEC и id рёбер/строк матрицы (не прогоном engine), ограничение записано
+в [`seeded-changes.yaml`](../EXPERIMENTS/seeded-changes.yaml) как
+`independent_review.status: limitation-recorded`. Набор не выдаётся за
+независимо заверенный. Молча заверить самому себе — не вариант.
 
 ## Чеклист приёмки
 
@@ -86,4 +119,4 @@ truth независимо от матрицы (из SPEC и рёбер, а не
 
 ## Статус
 
-запланирован
+в дереве; чеклист не отмечен до живой приёмки

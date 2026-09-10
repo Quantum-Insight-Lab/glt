@@ -80,6 +80,10 @@ jobs:
       - name: impact
         run: pnpm impact -- --snapshot glt-specpack/contracts/examples/golden/bootstrap-snapshot.json
 
+      # DEV-11: S1–S3 injections and the open seeded change set. Not holdout.
+      - name: seeded failures
+        run: pnpm test:seeded
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

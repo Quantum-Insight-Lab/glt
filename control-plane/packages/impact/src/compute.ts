@@ -63,10 +63,8 @@ export interface ComputeImpactFromPathsOptions {
   readonly mode?: "change" | "incident";
 }
 
-export function computeImpactFromPaths(
-  options: ComputeImpactFromPathsOptions = {},
-): ImpactReportView {
-  const matrixPath = resolveMatrixPath(options.matrix);
+export function loadPropagationMatrix(path?: string): ImpactMatrixView {
+  const matrixPath = resolveMatrixPath(path);
   const matrixDoc = loadDocument(matrixPath);
   const matrixErrors = validateAgainst(createValidator(), "propagation-matrix", matrixDoc);
   if (matrixErrors.length > 0) {
@@ -75,18 +73,36 @@ export function computeImpactFromPaths(
       [matrixPath],
     );
   }
-  const matrix = matrixView(matrixDoc);
+  return matrixView(matrixDoc);
+}
+
+export function impactMaxTraversalDepth(override?: number): number {
+  return parameterValue(depthSpec(), override);
+}
+
+export function impactGraphFromSnapshot(snapshot: CompiledSnapshot): {
+  readonly nodes: ImpactNodeView[];
+  readonly edges: ImpactEdgeView[];
+} {
+  return { nodes: nodeViews(snapshot), edges: edgeViews(snapshot) };
+}
+
+export function computeImpactFromPaths(
+  options: ComputeImpactFromPathsOptions = {},
+): ImpactReportView {
+  const matrix = loadPropagationMatrix(options.matrix);
   const snapshot = loadOrCompileSnapshot(options);
+  const graph = impactGraphFromSnapshot(snapshot);
   const sources = options.sources ?? [BOOTSTRAP_CHANGE];
-  const maxDepth = parameterValue(depthSpec(), options.maxDepth);
+  const maxDepth = impactMaxTraversalDepth(options.maxDepth);
   const input: ComputeImpactInput = {
     reportId: options.reportId ?? reportIdFor(snapshot.snapshot_id),
     snapshotId: snapshot.snapshot_id,
     snapshotDigest: snapshot.digest,
     boundaryId: snapshot.boundary_id,
-    nodes: nodeViews(snapshot),
-    edges: edgeViews(snapshot),
-    boundaryNodes: nodeViews(snapshot).map((node) => node.id),
+    nodes: graph.nodes,
+    edges: graph.edges,
+    boundaryNodes: graph.nodes.map((node) => node.id),
     matrix,
     sources,
     maxDepth,

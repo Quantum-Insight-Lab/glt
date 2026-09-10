@@ -10,6 +10,10 @@ source_refs:
     path: glt-specpack/docs/EXPERIMENTS/holdout-cases.yaml
     authority: experiment-rubric
     role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/EXPERIMENTS/seeded-changes.yaml
+    authority: experiment-rubric
+    role: derived-from
 ---
 
 # Seeded cases
@@ -48,9 +52,19 @@ source_refs:
     affected_nodes: [...]      # полный набор, не пример
     required_checks: [...]     # полный набор
     known_unknowns_expected: false
+    known_unknowns: []         # kind+ref, если expected true
   authored_by: <role>
   rationale: почему именно эти узлы, со ссылкой на рёбра и строки матрицы
 ```
+
+Авторизованный набор: [`seeded-changes.yaml`](seeded-changes.yaml) (версия 1.0.0).
+Граф — `glt.seeded-slice@1`, не bootstrap из четырёх узлов и не intended мета-граф:
+в registry нет `calls` / `reads` / `consumes` / `conflicts_with`, а добавлять их
+туда — зона архитектора. Holdout H01–H05 этим файлом не открывается.
+
+Независимое ревью при одном исполнителе невыполнимо. Ограничение записано в
+каталоге: `independent_review.status: limitation-recorded`. Ground truth в YAML
+выведена по SPEC и id рёбер/строк матрицы, не прогоном engine.
 
 Требования к набору:
 

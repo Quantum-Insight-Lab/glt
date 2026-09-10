@@ -8,6 +8,12 @@
  *
  * Contract: glt-specpack/docs/SPEC/impact.md
  */
-export { computeImpactFromPaths, renderImpactReport } from "./compute.ts";
+export {
+  computeImpactFromPaths,
+  impactGraphFromSnapshot,
+  impactMaxTraversalDepth,
+  loadPropagationMatrix,
+  renderImpactReport,
+} from "./compute.ts";
 export type { ComputeImpactFromPathsOptions } from "./compute.ts";
 export const STEP = "glt.dev.10" as const;

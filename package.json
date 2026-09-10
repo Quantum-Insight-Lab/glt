@@ -23,6 +23,8 @@
     "compile:registry": "tsx control-plane/packages/cli/src/bin.ts compile registry",
     "compile:snapshot": "tsx control-plane/packages/cli/src/bin.ts compile snapshot",
     "impact": "tsx control-plane/packages/cli/src/bin.ts impact",
+    "pretest:seeded": "pnpm gen",
+    "test:seeded": "vitest run control-plane/tests/seeded-failures.test.ts control-plane/tests/seeded-changes.test.ts",
     "resolve": "tsx control-plane/packages/cli/src/bin.ts resolve",
     "deadcode": "knip",
     "check": "pnpm gen && pnpm typecheck && pnpm test"

@@ -1,0 +1,436 @@
+# Seeded change set — DEV-11.
+# Experiment data, not a second registry SoT. Ground truth was walked by hand
+# from SPEC/impact.md, edge ids and matrix row ids. Not from computeImpact.
+# Holdout H01–H05 is sealed and is not this file.
+
+apiVersion: glt.dev/experiments/v1
+kind: SeededChangeSet
+metadata:
+  id: glt.experiments.seeded-changes
+  version: 1.0.0
+  status: authorized-with-limitation
+  authorized_at: 2026-09-10
+
+independent_review:
+  status: limitation-recorded
+  reviewer: none
+  until: second-reviewer
+  reason: >
+    Один исполнитель написал и матрицу, и этот набор. Ground truth выведена
+    по docs/SPEC/impact.md, id рёбер glt.seeded-slice@1 и id строк матрицы
+    glt.prop.change.*, не прогоном computeImpact. Набор не выдаётся за
+    независимо заверенный. Независимое ревью откладывается до второго человека.
+
+# Intended мета-граф не содержит calls/reads/consumes/conflicts_with.
+# Добавлять их в registry/ — зона архитектора. Bootstrap-срез из четырёх узлов
+# даёт recall 1.0 у любой реализации. Поэтому набор живёт на отдельном срезе.
+graph:
+  boundary_id: glt.seeded-slice@1
+  snapshot_id: snap-seeded-slice-001
+  nodes:
+    - { id: glt.seeded.registry.entry, path: glt-specpack/docs/SPEC/registry.md }
+    - { id: glt.seeded.compiler, path: glt-specpack/docs/SPEC/snapshots.md }
+    - { id: glt.seeded.check, path: glt-specpack/docs/SPEC/invariants.md }
+    - { id: glt.seeded.gate, path: glt-specpack/docs/00-governance/pre-code-gate.md }
+    - { id: glt.seeded.cli, path: control-plane/packages/cli }
+    - { id: glt.seeded.dashboard, path: control-plane/packages/dashboard }
+    - { id: glt.seeded.runner, path: control-plane/packages/runner }
+    - { id: glt.seeded.contracts, path: glt-specpack/contracts/schemas/snapshot.schema.json }
+    - { id: glt.seeded.peer, path: glt-specpack/docs/SPEC/topology.md }
+    - { id: glt.seeded.outsider, path: glt-specpack/docs/EXPERIMENTS/seeded-outside.md }
+    - { id: glt.seeded.outsider2, path: glt-specpack/docs/EXPERIMENTS/seeded-outside-2.md }
+    - { id: glt.seeded.writer, path: glt-specpack/docs/EXPERIMENTS/seeded-writer.md }
+  boundary_nodes:
+    - glt.seeded.registry.entry
+    - glt.seeded.compiler
+    - glt.seeded.check
+    - glt.seeded.gate
+    - glt.seeded.cli
+    - glt.seeded.dashboard
+    - glt.seeded.runner
+    - glt.seeded.contracts
+    - glt.seeded.peer
+    - glt.seeded.writer
+  edges:
+    - id: glt.edge.seeded.compiler-depends-entry
+      from: glt.seeded.compiler
+      to: glt.seeded.registry.entry
+      relation: depends_on
+      change: [content, schema, interface, behavior, dependency, configuration, policy, infrastructure]
+    - id: glt.edge.seeded.check-validates-compiler
+      from: glt.seeded.check
+      to: glt.seeded.compiler
+      relation: validates
+      change: [content, schema, interface, behavior, dependency, configuration, policy, infrastructure]
+    - id: glt.edge.seeded.gate-gates-check
+      from: glt.seeded.gate
+      to: glt.seeded.check
+      relation: gates
+      change: []
+    - id: glt.edge.seeded.cli-calls-compiler
+      from: glt.seeded.cli
+      to: glt.seeded.compiler
+      relation: calls
+      change: [schema, interface, behavior, dependency, policy]
+    - id: glt.edge.seeded.dashboard-reads-entry
+      from: glt.seeded.dashboard
+      to: glt.seeded.registry.entry
+      relation: reads
+      change: [content, schema, interface, configuration]
+    - id: glt.edge.seeded.runner-consumes-compiler
+      from: glt.seeded.runner
+      to: glt.seeded.compiler
+      relation: consumes
+      change: [schema, interface, behavior]
+    - id: glt.edge.seeded.peer-conflicts-compiler
+      from: glt.seeded.peer
+      to: glt.seeded.compiler
+      relation: conflicts_with
+      change: []
+    - id: glt.edge.seeded.outsider-depends-entry
+      from: glt.seeded.outsider
+      to: glt.seeded.registry.entry
+      relation: depends_on
+      change: [content, schema, interface, behavior, dependency, configuration, policy, infrastructure]
+    - id: glt.edge.seeded.outsider2-depends-compiler
+      from: glt.seeded.outsider2
+      to: glt.seeded.compiler
+      relation: depends_on
+      change: [content, schema, interface, behavior, dependency, configuration, policy, infrastructure]
+    - id: glt.edge.seeded.writer-writes-entry
+      from: glt.seeded.writer
+      to: glt.seeded.registry.entry
+      relation: writes
+      change: [interface]
+    - id: glt.edge.seeded.compiler-depends-contracts
+      from: glt.seeded.compiler
+      to: glt.seeded.contracts
+      relation: depends_on
+      change: [schema, interface]
+
+cases:
+  - id: C01
+    change:
+      paths: [glt-specpack/docs/SPEC/registry.md]
+      labels: [interface]
+    ground_truth:
+      affected_nodes:
+        - glt.seeded.cli
+        - glt.seeded.compiler
+        - glt.seeded.dashboard
+        - glt.seeded.registry.entry
+        - glt.seeded.runner
+      required_checks: [glt.seeded.check]
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: outside_boundary, ref: glt.seeded.outsider }
+        - { kind: outside_boundary, ref: glt.seeded.outsider2 }
+        - { kind: source_conflict, ref: glt.edge.seeded.peer-conflicts-compiler }
+        - { kind: uncovered_relation, ref: glt.edge.seeded.writer-writes-entry }
+    authored_by: engineering
+    covers:
+      change_classes: [interface]
+      relations: [depends_on, reads, validates, gates]
+    rationale: >
+      Seed glt.seeded.registry.entry. glt.prop.change.dependent-contract на
+      glt.edge.seeded.compiler-depends-entry (against_edge, class interface на
+      ребре) помечает compiler. glt.prop.change.reader на
+      glt.edge.seeded.dashboard-reads-entry — dashboard. glt.prop.change.caller
+      на glt.edge.seeded.cli-calls-compiler и glt.prop.change.consumer на
+      glt.edge.seeded.runner-consumes-compiler — cli и runner. Check
+      glt.prop.change.check-required на glt.edge.seeded.check-validates-compiler
+      идёт в required_checks, не в affected. Gate glt.prop.change.gate-pending
+      на glt.edge.seeded.gate-gates-check — post-pass из required check.
+      glt.edge.seeded.outsider-depends-entry и
+      glt.edge.seeded.outsider2-depends-compiler выходят за boundary.
+      glt.edge.seeded.writer-writes-entry — uncovered_relations/writes.
+      glt.prop.change.conflict на glt.edge.seeded.peer-conflicts-compiler не
+      распространяет impact.
+
+  - id: C02
+    change:
+      paths: [glt-specpack/contracts/schemas/snapshot.schema.json]
+      labels: [schema]
+    ground_truth:
+      affected_nodes:
+        - glt.seeded.cli
+        - glt.seeded.compiler
+        - glt.seeded.contracts
+        - glt.seeded.runner
+      required_checks: [glt.seeded.check]
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: outside_boundary, ref: glt.seeded.outsider2 }
+        - { kind: source_conflict, ref: glt.edge.seeded.peer-conflicts-compiler }
+    authored_by: engineering
+    covers:
+      change_classes: [schema]
+      relations: [depends_on]
+    rationale: >
+      Seed glt.seeded.contracts. glt.prop.change.dependent-contract на
+      glt.edge.seeded.compiler-depends-contracts (schema в change ребра)
+      помечает compiler. Дальше caller/consumer/validates как у изменения
+      compiler. Entry не посещается: outsider и writer не в отчёте.
+      glt.edge.seeded.outsider2-depends-compiler — второй выход за boundary.
+
+  - id: C03
+    change:
+      paths: [glt-specpack/docs/SPEC/registry.md]
+      labels: [content]
+    ground_truth:
+      affected_nodes:
+        - glt.seeded.compiler
+        - glt.seeded.dashboard
+        - glt.seeded.registry.entry
+      required_checks: [glt.seeded.check]
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: outside_boundary, ref: glt.seeded.outsider }
+        - { kind: outside_boundary, ref: glt.seeded.outsider2 }
+        - { kind: source_conflict, ref: glt.edge.seeded.peer-conflicts-compiler }
+        - { kind: uncovered_relation, ref: glt.edge.seeded.writer-writes-entry }
+    authored_by: engineering
+    covers:
+      change_classes: [content]
+      relations: [depends_on, reads]
+    rationale: >
+      Тот же seed, что C01, класс content. glt.prop.change.dependent-contract и
+      glt.prop.change.reader пропускают content (класс есть в строке и на
+      рёбрах glt.edge.seeded.compiler-depends-entry /
+      glt.edge.seeded.dashboard-reads-entry). glt.prop.change.caller и
+      glt.prop.change.consumer content не содержат — cli и runner не
+      затронуты. validates/gates те же: glt.edge.seeded.check-validates-compiler,
+      glt.edge.seeded.gate-gates-check.
+
+  - id: C04
+    change:
+      paths: [glt-specpack/docs/SPEC/snapshots.md]
+      labels: [behavior]
+    ground_truth:
+      affected_nodes:
+        - glt.seeded.cli
+        - glt.seeded.compiler
+        - glt.seeded.runner
+      required_checks: [glt.seeded.check]
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: outside_boundary, ref: glt.seeded.outsider2 }
+        - { kind: source_conflict, ref: glt.edge.seeded.peer-conflicts-compiler }
+    authored_by: engineering
+    covers:
+      change_classes: [behavior]
+      relations: [calls, consumes]
+    rationale: >
+      Seed compiler. glt.prop.change.caller на glt.edge.seeded.cli-calls-compiler
+      (behavior в change ребра) и glt.prop.change.consumer на
+      glt.edge.seeded.runner-consumes-compiler. depends_on от compiler к entry
+      не срабатывает: changed_endpoint to. glt.prop.change.check-required на
+      glt.edge.seeded.check-validates-compiler.
+
+  - id: C05
+    change:
+      paths: [glt-specpack/docs/SPEC/registry.md]
+      labels: [dependency]
+    ground_truth:
+      affected_nodes:
+        - glt.seeded.cli
+        - glt.seeded.compiler
+        - glt.seeded.registry.entry
+      required_checks: [glt.seeded.check]
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: outside_boundary, ref: glt.seeded.outsider }
+        - { kind: outside_boundary, ref: glt.seeded.outsider2 }
+        - { kind: source_conflict, ref: glt.edge.seeded.peer-conflicts-compiler }
+        - { kind: uncovered_relation, ref: glt.edge.seeded.writer-writes-entry }
+    authored_by: engineering
+    covers:
+      change_classes: [dependency]
+      relations: [depends_on, calls]
+    rationale: >
+      Seed entry, класс dependency. glt.prop.change.dependent-contract на
+      glt.edge.seeded.compiler-depends-entry. glt.prop.change.reader dependency
+      не содержит — dashboard нет. glt.prop.change.caller содержит dependency —
+      cli через glt.edge.seeded.cli-calls-compiler. glt.prop.change.consumer
+      dependency не содержит — runner нет.
+
+  - id: C06
+    change:
+      paths: [glt-specpack/docs/SPEC/registry.md]
+      labels: [configuration]
+    ground_truth:
+      affected_nodes:
+        - glt.seeded.compiler
+        - glt.seeded.dashboard
+        - glt.seeded.registry.entry
+      required_checks: [glt.seeded.check]
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: outside_boundary, ref: glt.seeded.outsider }
+        - { kind: outside_boundary, ref: glt.seeded.outsider2 }
+        - { kind: source_conflict, ref: glt.edge.seeded.peer-conflicts-compiler }
+        - { kind: uncovered_relation, ref: glt.edge.seeded.writer-writes-entry }
+    authored_by: engineering
+    covers:
+      change_classes: [configuration]
+      relations: [reads]
+    rationale: >
+      Seed entry, класс configuration. glt.prop.change.reader на
+      glt.edge.seeded.dashboard-reads-entry. glt.prop.change.caller и
+      glt.prop.change.consumer configuration не содержат. depends_on —
+      glt.edge.seeded.compiler-depends-entry.
+
+  - id: C07
+    change:
+      paths: [glt-specpack/docs/SPEC/snapshots.md]
+      labels: [policy]
+    ground_truth:
+      affected_nodes:
+        - glt.seeded.cli
+        - glt.seeded.compiler
+      required_checks: [glt.seeded.check]
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: outside_boundary, ref: glt.seeded.outsider2 }
+        - { kind: source_conflict, ref: glt.edge.seeded.peer-conflicts-compiler }
+    authored_by: engineering
+    covers:
+      change_classes: [policy]
+      relations: [calls]
+    rationale: >
+      Seed compiler, класс policy. glt.prop.change.caller на
+      glt.edge.seeded.cli-calls-compiler пропускает policy.
+      glt.prop.change.consumer policy не содержит — runner нет.
+      glt.prop.change.check-required на glt.edge.seeded.check-validates-compiler.
+
+  - id: C08
+    change:
+      paths: [glt-specpack/docs/SPEC/registry.md]
+      labels: [infrastructure]
+    ground_truth:
+      affected_nodes:
+        - glt.seeded.compiler
+        - glt.seeded.registry.entry
+      required_checks: [glt.seeded.check]
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: outside_boundary, ref: glt.seeded.outsider }
+        - { kind: outside_boundary, ref: glt.seeded.outsider2 }
+        - { kind: source_conflict, ref: glt.edge.seeded.peer-conflicts-compiler }
+        - { kind: uncovered_relation, ref: glt.edge.seeded.writer-writes-entry }
+    authored_by: engineering
+    covers:
+      change_classes: [infrastructure]
+      relations: [depends_on]
+    rationale: >
+      Seed entry, класс infrastructure. Только
+      glt.prop.change.dependent-contract на
+      glt.edge.seeded.compiler-depends-entry: reader/caller/consumer
+      infrastructure не содержат. Check и gate — те же validates/gates рёбра.
+
+  - id: C09
+    change:
+      paths: [glt-specpack/docs/SPEC/snapshots.md]
+      labels: [interface]
+    ground_truth:
+      affected_nodes:
+        - glt.seeded.cli
+        - glt.seeded.compiler
+        - glt.seeded.runner
+      required_checks: [glt.seeded.check]
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: outside_boundary, ref: glt.seeded.outsider2 }
+        - { kind: source_conflict, ref: glt.edge.seeded.peer-conflicts-compiler }
+    authored_by: engineering
+    covers:
+      change_classes: [interface]
+      relations: [validates, gates, calls, consumes]
+    rationale: >
+      Seed compiler, не entry. glt.prop.change.check-required /
+      glt.prop.change.gate-pending на glt.edge.seeded.check-validates-compiler
+      и glt.edge.seeded.gate-gates-check. caller/consumer — cli и runner.
+      Entry и dashboard не в walk. outsider через entry не достигается;
+      glt.edge.seeded.outsider2-depends-compiler — выход за boundary.
+
+  - id: C10
+    change:
+      paths: [glt-specpack/docs/SPEC/topology.md]
+      labels: [interface]
+    ground_truth:
+      affected_nodes: [glt.seeded.peer]
+      required_checks: []
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: source_conflict, ref: glt.edge.seeded.peer-conflicts-compiler }
+    authored_by: engineering
+    covers:
+      change_classes: [interface]
+      relations: [conflicts_with]
+    rationale: >
+      Seed glt.seeded.peer. Единственное ребро —
+      glt.edge.seeded.peer-conflicts-compiler. glt.prop.change.conflict
+      (changed_endpoint either, direction none) поднимает source_conflict и
+      не помечает compiler. required_checks пуст.
+
+  - id: C11
+    change:
+      paths: [control-plane/packages/dashboard]
+      labels: [content]
+    ground_truth:
+      affected_nodes: [glt.seeded.dashboard]
+      required_checks: []
+      known_unknowns_expected: false
+      known_unknowns: []
+    authored_by: engineering
+    covers:
+      change_classes: [content]
+      relations: []
+    rationale: >
+      Seed dashboard. glt.prop.change.reader на
+      glt.edge.seeded.dashboard-reads-entry имеет changed_endpoint to:
+      изменение from не идёт против ребра. Других инцидентных рёбер нет —
+      known_unknowns пуст.
+
+  - id: C12
+    change:
+      paths: [glt-specpack/docs/EXPERIMENTS/seeded-writer.md]
+      labels: [interface]
+    ground_truth:
+      affected_nodes: [glt.seeded.writer]
+      required_checks: []
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: uncovered_relation, ref: glt.edge.seeded.writer-writes-entry }
+    authored_by: engineering
+    covers:
+      change_classes: [interface]
+      relations: []
+    rationale: >
+      Seed writer. glt.edge.seeded.writer-writes-entry несёт writes, которое
+      в spec.uncovered_relations матрицы. Ожидание — known_unknowns.kind
+      uncovered_relation, не тихий пропуск. Строки матрицы на writes нет.
+
+  - id: C13
+    change:
+      paths: [glt-specpack/docs/SPEC/snapshots.md]
+      labels: [schema]
+    ground_truth:
+      affected_nodes:
+        - glt.seeded.cli
+        - glt.seeded.compiler
+        - glt.seeded.runner
+      required_checks: [glt.seeded.check]
+      known_unknowns_expected: true
+      known_unknowns:
+        - { kind: outside_boundary, ref: glt.seeded.outsider2 }
+        - { kind: source_conflict, ref: glt.edge.seeded.peer-conflicts-compiler }
+    authored_by: engineering
+    covers:
+      change_classes: [schema]
+      relations: [consumes, calls]
+    rationale: >
+      Seed compiler, класс schema. glt.prop.change.consumer на
+      glt.edge.seeded.runner-consumes-compiler и glt.prop.change.caller на
+      glt.edge.seeded.cli-calls-compiler (schema в change обоих рёбер).
+      glt.prop.change.check-required на glt.edge.seeded.check-validates-compiler.
