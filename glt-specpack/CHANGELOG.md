@@ -14,7 +14,8 @@ DEV-14: CI attestations collector — факты с pinned commit, stale не в
 
 ### Notes
 
-- Коллектор не решает gate/release. Слияние в snapshot — DEV-18. Чеклист DEV-14 проверен локально; `status` не `accepted` до CI. Покрытие `glt_structural_coverage`: **0.725 (29/40)**.
+- Коллектор не решает gate/release. Слияние в snapshot — DEV-18.
+- Шаг принят: `docs/DEV/14-ci-attestations-collector.md` — `status: accepted`. Покрытие `glt_structural_coverage`: **0.725 (29/40)**.
 
 ## [0.19.0] — 2026-09-10
 

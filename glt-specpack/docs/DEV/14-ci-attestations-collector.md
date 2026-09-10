@@ -2,7 +2,7 @@
 id: glt.dev.14
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 2
 depends_on:
   - glt.dev.13
@@ -76,4 +76,4 @@ source_refs:
 
 ## Статус
 
-в дереве — чеклист проверен локально. `pnpm collect:ci` без commit → код 5 (PROTO-12). Тот же fixture через 2 ч → `freshness: stale`, `current_checks: []` (PROTO-11). Нет файла при pin commit → `partial` + `known_unknowns`. Негатив: `current_checks = checks` всегда — PROTO-11 упал, откат. Команды `glt collect` нет. Шаг не `accepted` до зелёного GitHub CI на `wave2`.
+**сделано** — ветка `wave2`. Коллектор принимает CI-отчёт с pinned commit, не решает gate/release. Без commit → `unknown`, код 5. Просроченный отчёт → `stale`, `current_checks` пуст. Нет файла при pin → `partial` + `known_unknowns`. Команды `glt collect` нет. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34456472462).
