@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.19.0] — 2026-09-10
+
+DEV-13: git collector — materialized-факты с pinned commit, без политики и без новой CLI-команды.
+
+### Added
+
+- Контракт git collector v1 в `docs/SPEC/collectors.md`: факты с дерева commit, не из рабочей копии. `coverage: unknown` при отсутствии commit/git/workspace; нет CODEOWNERS — `file_ownership_hints: null`, не `[]`.
+- Карточка `glt.param.collector.git.freshness_ttl_seconds` (P08, 3600). Пакет `@glt/collectors`: `module_graph` из workspace-манифестов, `source_digests` через `digestOfUtf8`. Шаг CI `git collector`. Команды `glt collect` нет.
+- PROTO-12 снят с отложения S-7: нет commit ≠ установленный пустой граф.
+
+### Notes
+
+- Слияние materialized в snapshot — DEV-18. Golden digest и `collector_versions` снимка не менялись.
+- Чеклист DEV-13 закрыт, шаг не accepted. Покрытие `glt_structural_coverage`: **0.7 (28/40)**.
+
 ## [0.18.0] — 2026-09-10
 
 DEV-12: correctness gate — recall на авторизованном наборе, holdout H01–H05 без false-green.

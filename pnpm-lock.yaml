@@ -51,6 +51,15 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0
 
+  control-plane/packages/collectors:
+    dependencies:
+      '@glt/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@glt/domain':
+        specifier: workspace:*
+        version: link:../domain
+
   control-plane/packages/contracts:
     dependencies:
       ajv:

@@ -6,12 +6,21 @@ import { parse as parseYaml } from "yaml";
  * checkout on Windows and one on Linux produce identical parse input — the same
  * reason .gitattributes pins eol=lf, since source digests are byte-based.
  */
+export function normalizeText(text: string): string {
+  return text.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n");
+}
+
 export function readText(path: string): string {
-  return readFileSync(path, "utf8").replace(/^\uFEFF/, "").replace(/\r\n/g, "\n");
+  return normalizeText(readFileSync(path, "utf8"));
+}
+
+/** YAML from a string already in memory (git show). Same parser as `loadYaml`. */
+export function parseYamlText<T = unknown>(text: string): T {
+  return parseYaml(normalizeText(text)) as T;
 }
 
 export function loadYaml<T = unknown>(path: string): T {
-  return parseYaml(readText(path)) as T;
+  return parseYamlText<T>(readText(path));
 }
 
 export function loadJson<T = unknown>(path: string): T {

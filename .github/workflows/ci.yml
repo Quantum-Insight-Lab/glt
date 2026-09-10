@@ -88,6 +88,10 @@ jobs:
       - name: correctness gate
         run: pnpm test:gate
 
+      # DEV-13: git collector facts from a pinned commit. Does not write the workspace.
+      - name: git collector
+        run: pnpm test:collect
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

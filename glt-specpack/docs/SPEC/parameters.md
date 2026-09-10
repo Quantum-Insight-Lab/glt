@@ -21,6 +21,7 @@ Canonical YAML in [`../../parameters/`](../../parameters/).
 | P05 | audit-retention.yaml | 365 |
 | P06 | witness-staleness.yaml | 7200 |
 | P07 | classifier-threshold.yaml | 0.85 |
+| P08 | collector-git-freshness.yaml | 3600 |
 
 ## Change process
 
@@ -31,4 +32,4 @@ Canonical YAML in [`../../parameters/`](../../parameters/).
 
 ## Product vs reliability
 
-P03 → product review. P01,P04,P05,P06 → SRE/reliability review.
+P03 → product review. P01,P04,P05,P06,P08 → SRE/reliability review.
