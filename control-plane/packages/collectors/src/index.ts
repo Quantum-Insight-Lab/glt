@@ -1,8 +1,7 @@
 /**
- * Git collector — DEV-13.
+ * Collectors — git (DEV-13) and CI attestations (DEV-14).
  *
- * Collects materialized facts from a pinned git commit. Does not decide
- * policy and does not write the workspace.
+ * Facts only. No policy. v1 never writes the workspace.
  *
  * Contract: glt-specpack/docs/SPEC/collectors.md
  */
@@ -30,3 +29,23 @@ export type {
   ModuleNode,
   OwnershipHint,
 } from "./git.ts";
+export {
+  CI_COLLECTOR_ID,
+  CI_COLLECTOR_VERSION,
+  CI_STEP,
+  ciCollectorFreshnessTtl,
+  ciFactsExit,
+  collectCiFacts,
+  collectCiFromPath,
+  renderCiCollectorReport,
+  runCiCollector,
+} from "./ci.ts";
+export type {
+  CiAttestationFact,
+  CiCheckFact,
+  CiCollectorReport,
+  CiCoverage,
+  CiFreshness,
+  CiUnknown,
+  CollectCiFactsInput,
+} from "./ci.ts";

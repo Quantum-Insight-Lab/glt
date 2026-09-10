@@ -27,7 +27,7 @@
       "project": ["src/**/*.ts"]
     },
     "control-plane/packages/collectors": {
-      "entry": ["src/index.ts", "src/bin.ts", "src/**/*.test.ts"],
+      "entry": ["src/index.ts", "src/bin.ts", "src/ci-bin.ts", "src/**/*.test.ts"],
       "project": ["src/**/*.ts"]
     },
     "control-plane/packages/impact": {

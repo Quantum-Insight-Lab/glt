@@ -144,7 +144,6 @@ source_refs:
 
 | ID | until |
 |---|---|
-| PROTO-11 | glt.dev.16 |
 | PROTO-13 | glt.dev.29 |
 | PROTO-14 | glt.dev.29 |
 | PROTO-15 | glt.dev.29 |

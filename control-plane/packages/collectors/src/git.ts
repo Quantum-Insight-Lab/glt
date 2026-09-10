@@ -24,16 +24,17 @@ import {
   parameterValue,
   type ExitCode as GltExitCode,
 } from "@glt/domain";
+import { MATERIALIZED_PLANE, requireMaterializedPlane } from "./plane.ts";
+
+export { MATERIALIZED_PLANE, reportHasPolicyFields, requireMaterializedPlane } from "./plane.ts";
 
 export const STEP = "glt.dev.13" as const;
 export const COLLECTOR_ID = "glt.collector.git@1" as const;
 export const COLLECTOR_VERSION = "1.0.0" as const;
-export const MATERIALIZED_PLANE = "materialized" as const;
 
 const TTL_PARAM = "glt.param.collector.git.freshness_ttl_seconds";
 const WORKSPACE_FILE = "pnpm-workspace.yaml";
 const OWNERSHIP_PATHS = ["CODEOWNERS", ".github/CODEOWNERS", "docs/CODEOWNERS"] as const;
-const POLICY_KEYS = ["release", "required_checks", "gate", "healthy"] as const;
 
 export type GitCoverage = "established" | "partial" | "unknown";
 
@@ -97,17 +98,6 @@ export interface CollectGitFactsInput {
   readonly plane?: string;
   readonly git: GitTree;
   readonly freshnessTtlSeconds: number;
-}
-
-export function requireMaterializedPlane(plane: string): typeof MATERIALIZED_PLANE {
-  if (plane !== MATERIALIZED_PLANE) {
-    throw new GltError({
-      code: ExitCode.Usage,
-      message: "git collector facts are materialized only",
-      refs: [plane],
-    });
-  }
-  return MATERIALIZED_PLANE;
 }
 
 export function gitCollectorFreshnessTtl(override?: number): number {
@@ -234,10 +224,6 @@ export function gitFactsExit(report: GitCollectorReport): GltExitCode {
 
 export function renderGitCollectorReport(report: GitCollectorReport): string {
   return JSON.stringify(report, null, 2);
-}
-
-export function reportHasPolicyFields(report: GitCollectorReport): boolean {
-  return collectKeys(report).some((key) => (POLICY_KEYS as readonly string[]).includes(key));
 }
 
 export function runGitCollector(
@@ -413,14 +399,6 @@ function dirnamePosix(path: string): string {
 
 function sortedRecord(record: Record<string, string>): Record<string, string> {
   return Object.fromEntries(Object.entries(record).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
-}
-
-function collectKeys(value: unknown): string[] {
-  if (Array.isArray(value)) return value.flatMap(collectKeys);
-  if (value !== null && typeof value === "object") {
-    return Object.keys(value).concat(Object.values(value).flatMap(collectKeys));
-  }
-  return [];
 }
 
 function escapeRegex(value: string): string {

@@ -1,0 +1,14 @@
+apiVersion: glt.dev/parameters/v1
+kind: ParameterCard
+metadata:
+  id: glt.param.collector.ci.freshness_ttl_seconds
+  revision: 1
+  owner: reliability
+spec:
+  default: 3600
+  range: { min: 300, max: 86400 }
+  unit: seconds
+  risk_if_low: Fresh CI attestations treated stale while the run is still the pin
+  risk_if_high: Expired CI attestations used as current materialized evidence
+  calibration: Same window as snapshot P01 until DEV-17 measures collector age
+  spec_ref: docs/SPEC/collectors.md

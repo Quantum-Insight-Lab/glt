@@ -90,7 +90,11 @@ jobs:
 
       # DEV-13: git collector facts from a pinned commit. Does not write the workspace.
       - name: git collector
-        run: pnpm test:collect
+        run: pnpm exec vitest run control-plane/packages/collectors/src/git.test.ts control-plane/tests/git-collector.test.ts
+
+      # DEV-14: CI attestations. Stale reports are not treated as current. No glt collect command.
+      - name: ci attestations collector
+        run: pnpm exec vitest run control-plane/packages/collectors/src/ci.test.ts control-plane/tests/ci-collector.test.ts
 
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code

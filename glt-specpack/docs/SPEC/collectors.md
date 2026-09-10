@@ -14,6 +14,10 @@ source_refs:
     path: glt-specpack/docs/SPEC/snapshots.md
     authority: engineering-contract
     role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/parameters/collector-ci-freshness.yaml
+    authority: parameter-values
+    role: derived-from
 ---
 
 # Collectors
@@ -47,6 +51,21 @@ privacy: no_content_payloads
 
 TTL is the parameter card `glt.param.collector.git.freshness_ttl_seconds`, not a literal in `packages/domain`.
 
+```yaml
+id: glt.collector.ci@1
+inputs:
+  commit: required
+  report: required
+outputs:
+  - checks
+  - attestations
+  - freshness
+freshness_ttl_seconds: 3600
+privacy: no_content_payloads
+```
+
+TTL is the parameter card `glt.param.collector.ci.freshness_ttl_seconds`. Age vs TTL uses `snapshotIsStale` (S-4): one stale predicate, not a second clock.
+
 ## v1 scope
 
 - **Wave 1:** Intent (DEV frontmatter, registry)
@@ -74,6 +93,20 @@ Every assertion carries `plane: materialized`. An `intended` plane is rejected, 
 Privacy: paths and digests only. File bodies are not in the report.
 
 The collector is not a `glt` command (S-10). It does not write the workspace.
+
+## CI attestations collector v1 (DEV-14)
+
+Facts from a **pinned commit** plus a CI report document (test conclusions, attestation digests). The collector records what the report contains. It does not decide release, required checks, health or gates.
+
+A report **without `commit` is not accepted** (PROTO-12): `coverage: unknown`, checks empty, exit 5. That is not a green empty check list.
+
+`produced_at` older than the TTL → `freshness: stale`. Historical `checks` stay; `current_checks` is empty so a stale signal cannot enter a current health calculation (PROTO-11). Age vs TTL is `snapshotIsStale`.
+
+Collection failure (missing file, unreadable document) with a commit pin → `coverage: partial` and `known_unknowns`, not `established`. Empty `checks` is not “all tests passed”.
+
+Privacy: names, conclusions and digests only. Log bodies are not in the report.
+
+The collector is not a `glt` command (S-10). It does not write the workspace. Merging into a topology snapshot is DEV-18.
 
 ## DLP
 

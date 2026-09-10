@@ -29,7 +29,8 @@
     "test:gate": "vitest run control-plane/tests/correctness-gate.test.ts control-plane/packages/domain/src/recall.test.ts control-plane/packages/domain/src/freshness.test.ts control-plane/packages/domain/src/audit-chain.test.ts",
     "collect:git": "tsx control-plane/packages/collectors/src/bin.ts",
     "pretest:collect": "pnpm gen",
-    "test:collect": "vitest run control-plane/packages/collectors/src/git.test.ts control-plane/tests/git-collector.test.ts",
+    "test:collect": "vitest run control-plane/packages/collectors/src/git.test.ts control-plane/packages/collectors/src/ci.test.ts control-plane/tests/git-collector.test.ts control-plane/tests/ci-collector.test.ts",
+    "collect:ci": "tsx control-plane/packages/collectors/src/ci-bin.ts",
     "resolve": "tsx control-plane/packages/cli/src/bin.ts resolve",
     "deadcode": "knip",
     "check": "pnpm gen && pnpm typecheck && pnpm test"

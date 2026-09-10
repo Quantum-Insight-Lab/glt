@@ -77,7 +77,7 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | 11 | [Seeded-случаи](11-seeded-failure-tests.md) | 1 | средний | **сделано** |
 | 12 | [Correctness gate](12-correctness-gate.md) | 1 | средний | **сделано** |
 | 13 | [Git collector](13-git-collector.md) | 2 | средний | **сделано** |
-| 14 | [Collector CI-аттестаций](14-ci-attestations-collector.md) | 2 | средний | запланирован |
+| 14 | [Collector CI-аттестаций](14-ci-attestations-collector.md) | 2 | средний | в дереве |
 | 15 | [Связывание checks и gates](15-checks-and-gates-wiring.md) | 2 | средний | запланирован |
 | 16 | [State evaluator](16-state-evaluator.md) | 2 | средний | запланирован |
 | 17 | [Freshness и конфликты](17-freshness-and-conflicts.md) | 2 | высокий | запланирован |

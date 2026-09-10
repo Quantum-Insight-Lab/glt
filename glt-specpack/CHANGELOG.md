@@ -2,6 +2,20 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.20.0] — 2026-09-10
+
+DEV-14: CI attestations collector — факты с pinned commit, stale не входит в current.
+
+### Added
+
+- Контракт `glt.collector.ci@1` в `docs/SPEC/collectors.md`. Отчёт без commit не принимается (PROTO-12). Просроченный отчёт — `freshness: stale`, `current_checks` пуст (PROTO-11, `snapshotIsStale`).
+- Карточка `glt.param.collector.ci.freshness_ttl_seconds` (P09, 3600). Пакет `@glt/collectors`: `collectCiFacts`. Шаг CI `ci attestations collector`. Команды `glt collect` нет.
+- PROTO-11 снят с отложения S-7.
+
+### Notes
+
+- Коллектор не решает gate/release. Слияние в snapshot — DEV-18. Чеклист DEV-14 проверен локально; `status` не `accepted` до CI. Покрытие `glt_structural_coverage`: **0.725 (29/40)**.
+
 ## [0.19.0] — 2026-09-10
 
 DEV-13: git collector — materialized-факты с pinned commit, без политики и без новой CLI-команды.

@@ -21,17 +21,16 @@
     "skipLibCheck": true,
     "noEmit": true,
 
-    "baseUrl": ".",
     "paths": {
-      "@glt/contracts": ["control-plane/packages/contracts/src/index.ts"],
-      "@glt/contracts/*": ["control-plane/packages/contracts/src/*"],
-      "@glt/domain": ["control-plane/packages/domain/src/index.ts"],
-      "@glt/domain/*": ["control-plane/packages/domain/src/*"],
-      "@glt/registry": ["control-plane/packages/registry/src/index.ts"],
-      "@glt/snapshot": ["control-plane/packages/snapshot/src/index.ts"],
-      "@glt/collectors": ["control-plane/packages/collectors/src/index.ts"],
-      "@glt/impact": ["control-plane/packages/impact/src/index.ts"],
-      "@glt/cli": ["control-plane/packages/cli/src/index.ts"]
+      "@glt/contracts": ["./control-plane/packages/contracts/src/index.ts"],
+      "@glt/contracts/*": ["./control-plane/packages/contracts/src/*"],
+      "@glt/domain": ["./control-plane/packages/domain/src/index.ts"],
+      "@glt/domain/*": ["./control-plane/packages/domain/src/*"],
+      "@glt/registry": ["./control-plane/packages/registry/src/index.ts"],
+      "@glt/snapshot": ["./control-plane/packages/snapshot/src/index.ts"],
+      "@glt/collectors": ["./control-plane/packages/collectors/src/index.ts"],
+      "@glt/impact": ["./control-plane/packages/impact/src/index.ts"],
+      "@glt/cli": ["./control-plane/packages/cli/src/index.ts"]
     }
   },
   "include": ["control-plane/**/*.ts", "*.ts"]

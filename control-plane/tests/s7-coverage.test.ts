@@ -25,15 +25,15 @@ describe("S-7 every invariant id has a named test or a visible deferral", () => 
 
   it("S-7 an invariant without a test is reported, not dropped", () => {
     expect(report.uncovered.length).toBeGreaterThan(0);
-    expect(report.uncovered).toContain("PROTO-11");
+    expect(report.uncovered).toContain("PROTO-13");
     expect(report.total).toBe(registry.length);
   });
 
   it("S-7 a deferred invariant is marked with a DEV step and counts as uncovered", () => {
-    const proto11 = deferrals.find((d) => d.id === "PROTO-11");
-    expect(proto11?.until).toBe("glt.dev.16");
-    expect(report.uncovered).toContain("PROTO-11");
-    expect(report.deferred.map((d) => d.id)).toContain("PROTO-11");
+    const proto13 = deferrals.find((d) => d.id === "PROTO-13");
+    expect(proto13?.until).toBe("glt.dev.29");
+    expect(report.uncovered).toContain("PROTO-13");
+    expect(report.deferred.map((d) => d.id)).toContain("PROTO-13");
     expect(report.covered).toBeLessThan(report.total);
   });
 
