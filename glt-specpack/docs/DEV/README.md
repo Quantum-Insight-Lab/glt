@@ -74,7 +74,7 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | 08 | [Компилятор снимков](08-snapshot-compiler.md) | 1 | высокий | **сделано** |
 | 09 | [Bootstrap-срез из четырёх узлов](09-bootstrap-four-node-slice.md) | 1 | средний | **сделано** |
 | 10 | [Impact engine v1](10-impact-engine-v1.md) | 1 | высокий | **сделано** |
-| 11 | [Seeded-случаи](11-seeded-failure-tests.md) | 1 | средний | **в дереве** |
+| 11 | [Seeded-случаи](11-seeded-failure-tests.md) | 1 | средний | **сделано** |
 | 12 | [Correctness gate](12-correctness-gate.md) | 1 | средний | запланирован |
 | 13 | [Git collector](13-git-collector.md) | 2 | средний | запланирован |
 | 14 | [Collector CI-аттестаций](14-ci-attestations-collector.md) | 2 | средний | запланирован |

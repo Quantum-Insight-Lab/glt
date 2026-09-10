@@ -222,7 +222,7 @@ source_refs:
 
 **DEV-10 — сделано.** `glt impact`: обход по матрице, `known_unknowns` на uncovered relation и за boundary, check не в `affected_nodes`. PROTO-07, INV-05 и INV-12 сняты с отложения. S-8 блокирующе: глубина обхода только из `parameters/`.
 
-**DEV-11 — в дереве.** Инъекции S1–S3 в CI; открытый набор seeded changes с ручной ground truth на `glt.seeded-slice@1`. Независимое ревью записано как limitation. Holdout не открывался.
+**DEV-11 — сделано.** Инъекции S1–S3 в CI; открытый набор seeded changes с ручной ground truth на `glt.seeded-slice@1`. Независимое ревью записано как limitation. Holdout не открывался.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

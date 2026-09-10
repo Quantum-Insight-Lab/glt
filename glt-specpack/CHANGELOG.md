@@ -15,7 +15,7 @@ DEV-11: инъекции S1–S3 в CI и открытый набор seeded cha
 ### Notes
 
 - Набор не bootstrap-срез из четырёх узлов и не intended мета-граф: в registry нет `calls`/`reads`/`consumes`/`conflicts_with`. Holdout H01–H05 не открывался.
-- Чеклист `docs/DEV/11-seeded-failure-tests.md` не отмечен до живой приёмки.
+- Шаг принят: `docs/DEV/11-seeded-failure-tests.md` — `status: accepted`.
 
 ## [0.16.0] — 2026-09-09
 
