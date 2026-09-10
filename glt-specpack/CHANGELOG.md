@@ -17,7 +17,7 @@ DEV-12: correctness gate — recall на авторизованном набор
 
 - INV-07 снят с отложения S-7. INV-04 перенесён на DEV-16: у шага нет UI. Usefulness gate остаётся «не проверено».
 - Покрытие `glt_structural_coverage`: **0.675 (27/40)**.
-- Карточка `docs/DEV/12-correctness-gate.md` — в дереве; чеклист не отмечен до живой приёмки.
+- Шаг принят: `docs/DEV/12-correctness-gate.md` — `status: accepted`.
 
 ## [0.17.0] — 2026-09-10
 

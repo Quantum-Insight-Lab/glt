@@ -12,7 +12,7 @@ GLT Control Plane: наблюдаемая архитектура, анализ �
 
 Методология — Possibility-Driven Architecture v1.2. Нормативные контракты живут в `glt-specpack/`, код в `control-plane/`.
 
-Статус: волна 1 (DEV-01…12). DEV-01…11 сделаны. DEV-12: correctness gate, в дереве.
+Статус: волна 1 (DEV-01…12). DEV-01…12 сделаны.
 
 ---
 
