@@ -16,6 +16,7 @@ DEV-20: обе плоскости в одном снимке (pin, не merge) �
 
 - API запросов действий — DEV-21. Дашборд не вызывает компилятор (S-2).
 - Golden digest и `impact-bootstrap.json` не менялись.
+- Шаг принят: `docs/DEV/20-build-plane-acceptance.md` — `status: accepted`. Покрытие `glt_structural_coverage`: **0.75 (30/40)**.
 
 ## [0.25.0] — 2026-09-11
 

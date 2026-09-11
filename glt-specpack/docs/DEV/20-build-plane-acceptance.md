@@ -2,7 +2,7 @@
 id: glt.dev.20
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 2
 depends_on:
   - glt.dev.19
@@ -105,4 +105,4 @@ gate разделён: Correctness gate машинный и UI не исполь
 
 ## Статус
 
-в дереве — ветка `wave2`. Intended снимок пинит git, не сливает `nodes[]`. Change dashboard — только чтение, глифы выключены. GitHub CI ещё не принимал шаг.
+**сделано** — ветка `wave2`. Intended снимок пинит git, не сливает `nodes[]`. Change dashboard — только чтение, глифы выключены. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34568191185).
