@@ -21,6 +21,7 @@ source_refs: []
 |---|---|
 | [architecture.md](architecture.md) | Компоненты, границы, стек |
 | [cli.md](cli.md) | Команды, флаги, exit codes, определённость вывода |
+| [api.md](api.md) | HTTP: те же артефакты, что CLI; без записи в копию |
 | [registry.md](registry.md) | ID, aliases, ActionSpec |
 | [provenance.md](provenance.md) | SourceRef, authority, planes |
 | [topology.md](topology.md) | Node, Edge, state axes |

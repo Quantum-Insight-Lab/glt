@@ -72,6 +72,9 @@ control-plane/
 - `collectors` — no policy decisions
 - `runner` — no registry write
 - `dashboard` — read-only except action requests through API
+- `api` — Fastify composition root (DEV-21). GET returns the same artifacts
+  as the CLI, validated by the same schemas. No workspace write. See
+  [`api.md`](api.md).
 
 ## Build plane (DEV-18)
 

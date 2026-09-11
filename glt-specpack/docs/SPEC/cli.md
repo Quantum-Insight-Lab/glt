@@ -11,7 +11,8 @@ source_refs: []
 
 # CLI surface
 
-The `glt` binary is the wave 1 interface. It is the only entry point before the API exists (DEV-21), and it stays the reference client afterwards.
+The `glt` binary is the wave 1 interface. After DEV-21 the HTTP API is a
+second entry ([`api.md`](api.md)); CLI JSON remains the reference artifact.
 
 Pretty-printed text output is a non-normative projection. The **JSON output is the contract**: it must validate against the schema of the artifact it carries.
 

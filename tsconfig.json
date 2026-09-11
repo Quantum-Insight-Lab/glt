@@ -31,6 +31,7 @@
       "@glt/collectors": ["./control-plane/packages/collectors/src/index.ts"],
       "@glt/impact": ["./control-plane/packages/impact/src/index.ts"],
       "@glt/dashboard": ["./control-plane/packages/dashboard/src/index.ts"],
+      "@glt/api": ["./control-plane/packages/api/src/index.ts"],
       "@glt/cli": ["./control-plane/packages/cli/src/index.ts"]
     }
   },

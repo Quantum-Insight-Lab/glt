@@ -49,3 +49,4 @@ export type {
   CiUnknown,
   CollectCiFactsInput,
 } from "./ci.ts";
+export { intendedSnapshotExtras } from "./intended-pins.ts";

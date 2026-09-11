@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.27.0] — 2026-09-11
+
+DEV-21: HTTP API контрол-плейна. Те же артефакты, что CLI; в копию не пишет.
+
+### Added
+
+- Контракт `docs/SPEC/api.md`. `GET /v1/{registry,snapshot,impact,health,resolve}` отдаёт JSON CLI. Схемы те же. Конверт вокруг артефакта запрещён.
+- Заголовки `GLT-Snapshot-Id`, `GLT-Registry-Version`, `GLT-Snapshot-Digest`, `GLT-Registry-Digest`, `GLT-Exit-Code`. Тело схемы не расширяет.
+- `packages/api` (Fastify). Команды `glt` не расширяются. Шаг CI `api service`.
+
+### Notes
+
+- Хранение — DEV-22. RBAC — DEV-23. События не эмитятся. Action POST — DEV-29.
+- Golden digest и `impact-bootstrap.json` не менялись.
+
 ## [0.26.0] — 2026-09-11
 
 DEV-20: обе плоскости в одном снимке (pin, не merge) и B1 Change dashboard.

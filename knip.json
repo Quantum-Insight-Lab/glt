@@ -37,6 +37,10 @@
     "control-plane/packages/dashboard": {
       "entry": ["src/index.ts"],
       "project": ["src/**/*.ts"]
+    },
+    "control-plane/packages/api": {
+      "entry": ["src/index.ts", "src/bin.ts"],
+      "project": ["src/**/*.ts"]
     }
   },
   "ignoreDependencies": ["ajv-formats"]

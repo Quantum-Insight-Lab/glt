@@ -90,6 +90,15 @@ module.exports = {
       from: { path: `${P}/dashboard` },
       to: { path: `${P}/(?!(dashboard|contracts|api)/)` },
     },
+    {
+      name: "s2-api-no-dashboard",
+      comment:
+        "S-2: api is a composition root and may reach compilers, but not the " +
+        "dashboard — that edge would cycle (dashboard → api → dashboard).",
+      severity: "error",
+      from: { path: `${P}/api` },
+      to: { path: `${P}/dashboard` },
+    },
 
     // ---------------------------------------------------------------- S-5
     {

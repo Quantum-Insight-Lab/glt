@@ -120,6 +120,10 @@ jobs:
       - name: build plane and dashboard
         run: pnpm test:dashboard
 
+      # DEV-21: HTTP API returns CLI artifacts. No workspace write. No new glt command.
+      - name: api service
+        run: pnpm test:api
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

@@ -1,0 +1,21 @@
+{
+  "name": "@glt/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@glt/cli": "workspace:*",
+    "@glt/collectors": "workspace:*",
+    "@glt/contracts": "workspace:*",
+    "@glt/domain": "workspace:*",
+    "@glt/impact": "workspace:*",
+    "@glt/registry": "workspace:*",
+    "@glt/snapshot": "workspace:*",
+    "fastify": "^5.2.1"
+  }
+}
