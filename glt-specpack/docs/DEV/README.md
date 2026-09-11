@@ -82,7 +82,7 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | 16 | [State evaluator](16-state-evaluator.md) | 2 | средний | **сделано** |
 | 17 | [Freshness и конфликты](17-freshness-and-conflicts.md) | 2 | высокий | **сделано** |
 | 18 | [Расширение build-плоскости](18-topology-expansion.md) | 2 | средний | **сделано** |
-| 19 | [Coverage manifest](19-coverage-manifest.md) | 2 | средний | **в дереве** |
+| 19 | [Coverage manifest](19-coverage-manifest.md) | 2 | средний | **сделано** |
 | 20 | [Build-плоскость и B1 dashboard](20-build-plane-acceptance.md) | 2 | средний | запланирован |
 | 21 | [API-сервис](21-api-service.md) | 3 | средний | запланирован |
 | 22 | [Хранилище PostgreSQL](22-postgresql-storage.md) | 3 | средний | запланирован |

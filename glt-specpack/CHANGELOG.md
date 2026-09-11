@@ -16,6 +16,7 @@ DEV-19: boundary-манифест — данные покрытия, не спи
 - Не путать с S-7 `coverage.ts` (сверка инвариантов с тестами).
 - Intended YAML не расширяется: собранный мета-граф по-прежнему из frontmatter.
 - Golden digest и `impact-bootstrap.json` не менялись.
+- Шаг принят: `docs/DEV/19-coverage-manifest.md` — `status: accepted`. Покрытие `glt_structural_coverage`: **0.75 (30/40)**.
 
 ## [0.24.0] — 2026-09-11
 

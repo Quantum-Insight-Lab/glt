@@ -2,7 +2,7 @@
 id: glt.dev.19
 owner: engineering
 normativity: normative
-status: review
+status: accepted
 wave: 2
 depends_on:
   - glt.dev.18
@@ -60,4 +60,4 @@ source_refs:
 
 ## Статус
 
-в дереве — ветка `wave2`. `rejectCompleteImpact` запрещает «полное влияние» вне манифеста. Флаг выводится. Bootstrap YAML сходится с `compileRegistry`. GitHub CI ещё не принимал шаг.
+**сделано** — ветка `wave2`. Манифест — данные покрытия. `coverage_not_established` выводится. «Полное влияние» вне манифеста запрещено. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34566915191).
