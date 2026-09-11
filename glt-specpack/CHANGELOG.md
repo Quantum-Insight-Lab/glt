@@ -2,6 +2,20 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.24.0] — 2026-09-11
+
+DEV-18: build-плоскость — intended и materialized сравниваются, не сливаются.
+
+### Added
+
+- Контракт `comparePlanes` в `docs/SPEC/architecture.md`. Две плоскости остаются двумя списками. Совпадение по SourceRef path — `aligned`. Плановый узел с `expected_from_step` — `expected` (PROTO-05). Иной разъезд — `plane_drift`, не поломка.
+- `packages/domain/src/planes.ts`. Команды `glt` не расширяются. Снимок с обеими плоскостями — DEV-20.
+- Шаг CI `topology expansion`.
+
+### Notes
+
+- `accepted` после зелёного GitHub CI на `wave2`. Покрытие S-7 без нового ID: PROTO-05 уже в реестре.
+
 ## [0.23.0] — 2026-09-11
 
 DEV-17: freshness и конфликты — stale блокирует write, просроченный сигнал не в health.

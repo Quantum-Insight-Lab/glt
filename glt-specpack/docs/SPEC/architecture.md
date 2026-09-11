@@ -73,6 +73,22 @@ control-plane/
 - `runner` — no registry write
 - `dashboard` — read-only except action requests through API
 
+## Build plane (DEV-18)
+
+Intended and materialized are two lists. `comparePlanes` joins them by
+SourceRef path (or by id when a path is absent). It does not merge them into
+one node and it does not rewrite a plane assertion.
+
+| Presence | `expected_from_step` | Class |
+|---|---|---|
+| both | — | `aligned` |
+| intended only | present | `expected` — planned, not broken (PROTO-05) |
+| intended only or materialized only | absent | `plane_drift` — a class, not a failure |
+
+`plane_drift` is not `source_conflict`, not `unhealthy`, and not a schema
+error. A planned DEV step without a package stays `expected` while it carries
+`expected_from_step`. Putting both planes into one snapshot is DEV-20.
+
 ## Diagram
 
 См. [`../PDA/06-architectural-blueprint.md`](../PDA/06-architectural-blueprint.md).

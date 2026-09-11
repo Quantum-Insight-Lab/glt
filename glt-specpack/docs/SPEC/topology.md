@@ -98,6 +98,13 @@ Every axis value carries a provenance class from [provenance.md](provenance.md):
 source conflict, and an **observed** healthy runtime. Absence of a runtime
 signal is exit 5. `source_conflict` is exit 6.
 
+## Build plane (DEV-18)
+
+`comparePlanes` reads an intended list and a materialized list. It compares.
+It does not merge. See [architecture.md](architecture.md). A planned node
+with `expected_from_step` is `expected`, not broken (PROTO-05). A mismatch
+without that field is `plane_drift`.
+
 ## Schemas
 
 - [`../../contracts/schemas/node.schema.json`](../../contracts/schemas/node.schema.json)

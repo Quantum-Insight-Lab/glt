@@ -116,6 +116,18 @@ export {
   type IntendedStepCard,
 } from "./intended.ts";
 export {
+  PLANES_STEP,
+  comparePlanes,
+  planeNodesFromGitModules,
+  planeNodesFromRegistryEntries,
+  type PlaneComparison,
+  type PlaneDelta,
+  type PlaneDeltaClass,
+  type PlaneName,
+  type PlaneNode,
+  type PlanePresence,
+} from "./planes.ts";
+export {
   aggregateScores,
   recallIsComplete,
   recallPrecision,

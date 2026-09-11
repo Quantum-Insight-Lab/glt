@@ -108,6 +108,10 @@ jobs:
       - name: freshness and conflicts
         run: pnpm test:fresh
 
+      # DEV-18: intended and materialized compared, not merged. expected ≠ broken.
+      - name: topology expansion
+        run: pnpm test:planes
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode
