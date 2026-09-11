@@ -222,7 +222,7 @@ source_refs:
 
 **DEV-12 — сделано.** Correctness gate: E02a/E02b recall 1.0 на авторизованном наборе, E03 holdout H01–H05 без false-green, E05a `known_unknowns` вне boundary. Precision публикуется. INV-07 снят с отложения (разрыв `prev_hash`). Usefulness остаётся «не проверено».
 
-**DEV-16.** State evaluator: оси независимы; `unknown` ≠ `healthy`; inferred не становится observation (INV-04 снят с отложения). `glt health` не пишет в копию.
+**DEV-16 — сделано.** State evaluator: оси независимы; `unknown` ≠ `healthy`; inferred не становится observation (INV-04 снят с отложения). `glt health` не пишет в копию.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

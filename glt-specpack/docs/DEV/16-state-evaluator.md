@@ -2,7 +2,7 @@
 id: glt.dev.16
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 2
 depends_on:
   - glt.dev.15
@@ -82,4 +82,4 @@ source_refs:
 
 ## Статус
 
-в дереве — чеклист проверен локально. `glt health` на golden: `runtime: unknown` ≠ `healthy`, код 5 (PROTO-12). Delivery — `declaration` со снимка. Негатив: inferred → observation — INV-04 упал, откат. `createEvidence` отвергается. Шаг не `accepted` до зелёного GitHub CI на `wave2`.
+**сделано** — ветка `wave2`. `evaluateState` классифицирует оси, не создаёт evidence. `runtime: unknown` ≠ `healthy`. Inferred не становится observation. `glt health` не пишет в копию. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34563496798).

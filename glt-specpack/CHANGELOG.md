@@ -14,7 +14,8 @@ DEV-16: state evaluator — независимые оси, inferred ≠ observat
 
 ### Notes
 
-- `source_conflict` и блокировка write — DEV-17. Чеклист DEV-16 проверен локально; `status` не `accepted` до CI. Покрытие `glt_structural_coverage`: **0.75 (30/40)**.
+- `source_conflict` и блокировка write — DEV-17.
+- Шаг принят: `docs/DEV/16-state-evaluator.md` — `status: accepted`. Покрытие `glt_structural_coverage`: **0.75 (30/40)**.
 
 ## [0.21.0] — 2026-09-11
 
