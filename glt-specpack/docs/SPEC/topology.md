@@ -81,14 +81,22 @@ independently. It does not create evidence, merge, or write the workspace.
 | `change` | `unchanged` until a change descriptor arrives |
 | `coverage` | `unknown` |
 | `delivery` | `declaration` from the snapshot, if present; else `planned` |
-| `conflict` | `none` until two authorities disagree (DEV-17) |
+| `conflict` | `none` until two authorities disagree |
+
+`evaluateState` also reports the DEV-17 ceiling from
+[degradation.md](degradation.md): `write_blocked` and `actions_above: read`.
+Stale snapshot or `source_conflict` blocks write/runner. Read stays allowed.
+An aged runtime signal past P01 is dropped before it becomes a current
+observation (PROTO-11). `glt health` warns on stderr when the snapshot is
+stale; exit 6 when `conflict` is `source_conflict`.
 
 Every axis value carries a provenance class from [provenance.md](provenance.md):
 `declaration`, `discovery`, `observation`, `inference`. Computed axes are
 `inference`. An inferred fact is never rewritten as `observation` (INV-04).
 
-`glt health` emits the classification. Exit 0 requires a current snapshot and
-an **observed** healthy runtime. Absence of a runtime signal is exit 5.
+`glt health` emits the classification. Exit 0 requires a current snapshot, no
+source conflict, and an **observed** healthy runtime. Absence of a runtime
+signal is exit 5. `source_conflict` is exit 6.
 
 ## Schemas
 

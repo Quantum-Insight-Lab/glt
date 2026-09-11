@@ -104,6 +104,10 @@ jobs:
       - name: state evaluator
         run: pnpm test:health
 
+      # DEV-17: stale blocks write; expired signals out of health; source_conflict. Thresholds from P01.
+      - name: freshness and conflicts
+        run: pnpm test:fresh
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

@@ -48,6 +48,9 @@ not relabel it (INV-04).
 See [`../../trust/authority-map.yaml`](../../trust/authority-map.yaml).
 
 Conflict within same class → `conflict: source_conflict`, block actions > read.
+`detectFactConflict` compares digests of one fact class. It names the
+disagreement. It does not choose a winner (DEV-17). INV-01 remains the
+owner-uniqueness check; the two tasks are not the same mechanism.
 
 ## Planes
 

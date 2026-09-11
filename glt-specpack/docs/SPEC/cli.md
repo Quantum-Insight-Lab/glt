@@ -30,7 +30,7 @@ Pretty-printed text output is a non-normative projection. The **JSON output is t
 | `glt resolve <ref>` | inventory | DEV-07 | Resolve an alias, node id or SourceRef |
 | `glt inventory` | inventory | DEV-06 | List entries, nodes and edges |
 | `glt impact` | inventory | DEV-10 | Change impact or incident propagation report |
-| `glt health` | health | DEV-16 | Control plane self health and snapshot freshness |
+| `glt health` | health | DEV-16 | Control plane self health, snapshot freshness, write block and source conflict |
 | `glt typecheck` | typecheck | wave 4 | Delegated build action, through the runner |
 | `glt test` | test | wave 4 | Delegated build action, through the runner |
 

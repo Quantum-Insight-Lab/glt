@@ -123,6 +123,20 @@ export {
 } from "./recall.ts";
 export { snapshotIsStale } from "./freshness.ts";
 export {
+  DEGRADE_STEP,
+  actionPermitted,
+  assessDegradation,
+  currentSignal,
+  detectFactConflict,
+  writeBlocked,
+  type ActionKind,
+  type AgedSignal,
+  type DegradationAssessment,
+  type DegradationInput,
+  type FactClaim,
+  type FactConflict,
+} from "./degrade.ts";
+export {
   STATE_STEP,
   asObservation,
   axisKeys,

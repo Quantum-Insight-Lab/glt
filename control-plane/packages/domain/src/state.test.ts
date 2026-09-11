@@ -101,7 +101,46 @@ describe("DEV-16 state evaluator", () => {
     const report = evaluateState(base({ ageSeconds: TTL + 1 }));
     expect(report.snapshot_freshness).toBe("stale");
     expect(report.nodes[0]!.axes.freshness.value).toBe("stale");
+    expect(report.write_blocked).toBe(true);
+    expect(report.actions_above).toBe("read");
     expect(healthExit(report)).toBe(ExitCode.EvidenceInsufficient);
+  });
+
+  it("PROTO-11 a stale observed runtime is excluded from current health", () => {
+    const report = evaluateState(
+      base({
+        nodes: [
+          draft("glt.controlplane.compiler", {
+            runtime: { value: "healthy", provenance: "observation", ageSeconds: TTL + 1 },
+          }),
+        ],
+      }),
+    );
+    expect(report.nodes[0]!.axes.runtime.value).toBe("unknown");
+    expect(asObservation(report.nodes[0]!.axes.runtime)).toBeUndefined();
+    expect(report.known_unknowns.some((item) => item.kind === "missing_runtime")).toBe(true);
+    expect(healthExit(report)).toBe(ExitCode.EvidenceInsufficient);
+  });
+
+  it("two authoritative digests of one fact class are source_conflict", () => {
+    const report = evaluateState(
+      base({
+        nodes: [
+          draft("glt.controlplane.compiler", {
+            runtime: { value: "healthy", provenance: "observation" },
+          }),
+        ],
+        claims: [
+          { fact_class: "observed-runtime", digest: "sha256:aaa", ref: "collector-a" },
+          { fact_class: "observed-runtime", digest: "sha256:bbb", ref: "collector-b" },
+        ],
+      }),
+    );
+    expect(report.conflict).toBe("source_conflict");
+    expect(report.nodes[0]!.axes.conflict.value).toBe("source_conflict");
+    expect(report.write_blocked).toBe(true);
+    expect(asObservation(report.nodes[0]!.axes.runtime)).toBe("healthy");
+    expect(healthExit(report)).toBe(ExitCode.SourceConflict);
   });
 
   it("an observed healthy runtime on a current snapshot is success", () => {
@@ -115,6 +154,8 @@ describe("DEV-16 state evaluator", () => {
       }),
     );
     expect(asObservation(report.nodes[0]!.axes.runtime)).toBe("healthy");
+    expect(report.write_blocked).toBe(false);
+    expect(report.conflict).toBe("none");
     expect(healthExit(report)).toBe(ExitCode.Success);
   });
 });

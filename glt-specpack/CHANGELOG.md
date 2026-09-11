@@ -2,6 +2,20 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.23.0] — 2026-09-11
+
+DEV-17: freshness и конфликты — stale блокирует write, просроченный сигнал не в health.
+
+### Added
+
+- Контракт `assessDegradation` в `docs/SPEC/degradation.md`. Снимок старше P01: warn, `write_blocked`, read разрешён. Два дайджеста одного класса: `source_conflict`, код 6, победитель не выбирается.
+- `packages/domain/src/degrade.ts`. `currentSignal` отсекает возраст через `snapshotIsStale` (PROTO-11, S-4). Порог только из карточки P01 (S-8). `glt health` не расширяет поверхность CLI.
+- Шаг CI `freshness and conflicts`.
+
+### Notes
+
+- `accepted` после зелёного GitHub CI на `wave2`. Покрытие S-7 без нового ID: PROTO-11 и S-8 уже в реестре.
+
 ## [0.22.0] — 2026-09-11
 
 DEV-16: state evaluator — независимые оси, inferred ≠ observation.

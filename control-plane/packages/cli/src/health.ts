@@ -1,8 +1,11 @@
 /**
- * `glt health` — DEV-16. Snapshot freshness and node axes. Classifies only.
- * Does not write the workspace.
+ * `glt health` — DEV-16/17. Snapshot freshness, node axes, write block and
+ * source conflict. Classifies only. Does not write the workspace.
  *
- * Contract: glt-specpack/docs/SPEC/cli.md, topology.md
+ * Stale snapshot: warn on stderr; artifact on stdout; write/runner blocked.
+ * Threshold is P01 from the parameter card (S-8).
+ *
+ * Contract: glt-specpack/docs/SPEC/cli.md, topology.md, degradation.md
  */
 
 import { existsSync } from "node:fs";
@@ -55,6 +58,12 @@ export interface HealthReport extends TopologyState {
 export function runHealth(writer: Writer, options: HealthCliOptions = {}): number {
   try {
     const report = collectHealth(options);
+    if (report.snapshot_freshness === "stale") {
+      writer.warn("snapshot older than P01; write and runner blocked");
+    }
+    if (report.conflict === "source_conflict") {
+      writer.warn("source_conflict; actions above read are blocked");
+    }
     writer.artifact(report, renderHealthReport);
     return healthExit(report);
   } catch (error) {
@@ -82,6 +91,9 @@ export function collectHealth(options: HealthCliOptions = {}): HealthReport {
     age_seconds: age,
     stale_after_seconds: staleAfterSeconds,
     snapshot_freshness: classified.snapshot_freshness,
+    conflict: classified.conflict,
+    write_blocked: classified.write_blocked,
+    actions_above: classified.actions_above,
     nodes: classified.nodes,
     known_unknowns: classified.known_unknowns,
   };
@@ -91,6 +103,7 @@ export function renderHealthReport(report: HealthReport): string {
   return [
     `health ${report.snapshot_id} ${report.snapshot_digest}`,
     `freshness ${report.snapshot_freshness} age ${String(report.age_seconds)} ttl ${String(report.stale_after_seconds)}`,
+    `write_blocked ${String(report.write_blocked)} conflict ${report.conflict}`,
     `nodes ${String(report.nodes.length)} unknowns ${String(report.known_unknowns.length)}`,
   ].join("\n");
 }

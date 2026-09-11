@@ -80,7 +80,7 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | 14 | [Collector CI-аттестаций](14-ci-attestations-collector.md) | 2 | средний | **сделано** |
 | 15 | [Связывание checks и gates](15-checks-and-gates-wiring.md) | 2 | средний | **сделано** |
 | 16 | [State evaluator](16-state-evaluator.md) | 2 | средний | **сделано** |
-| 17 | [Freshness и конфликты](17-freshness-and-conflicts.md) | 2 | высокий | запланирован |
+| 17 | [Freshness и конфликты](17-freshness-and-conflicts.md) | 2 | высокий | в дереве |
 | 18 | [Расширение build-плоскости](18-topology-expansion.md) | 2 | средний | запланирован |
 | 19 | [Coverage manifest](19-coverage-manifest.md) | 2 | средний | запланирован |
 | 20 | [Build-плоскость и B1 dashboard](20-build-plane-acceptance.md) | 2 | средний | запланирован |
