@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.26.0] — 2026-09-11
+
+DEV-20: обе плоскости в одном снимке (pin, не merge) и B1 Change dashboard.
+
+### Added
+
+- Контракт: intended `nodes[]` не принимает git-модули. Снимок intended boundary пинит `collector_versions.git` и `source_digests.git.*`. Golden bootstrap не меняется (PROTO-03).
+- `projectChangeSurface`: проекция режима Change. P03 режет карту. Слой глифов заблокирован (E04). Статус с дашборда не пишется (S-5).
+- Пакет `@glt/dashboard` (React, только чтение). Команды `glt` не расширяются. Шаг CI `build plane and dashboard`.
+
+### Notes
+
+- API запросов действий — DEV-21. Дашборд не вызывает компилятор (S-2).
+- Golden digest и `impact-bootstrap.json` не менялись.
+
 ## [0.25.0] — 2026-09-11
 
 DEV-19: boundary-манифест — данные покрытия, не список узлов снимка.

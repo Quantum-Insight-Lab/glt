@@ -7,7 +7,7 @@ apiVersion: glt.dev/specpack/v1
 kind: SpecPack
 metadata:
   id: glt.specpack
-  version: 0.25.0
+  version: 0.26.0
   status: pre-code
   created: 2026-08-14
   revised: 2026-09-11

@@ -39,6 +39,12 @@ export function isUnfrozenPlaceholder(digest: string): boolean {
   return digest === `${DIGEST_PREFIX}${UNFROZEN_HEX}`;
 }
 
+export function isDigest(value: string): boolean {
+  if (!value.startsWith(DIGEST_PREFIX)) return false;
+  const hex = value.slice(DIGEST_PREFIX.length);
+  return hex.length === UNFROZEN_HEX.length && /^[0-9a-f]+$/.test(hex);
+}
+
 function omitMember(value: unknown, key: string): unknown {
   if (!value || typeof value !== "object" || Array.isArray(value)) return value;
   const copy: Record<string, unknown> = { ...(value as Record<string, unknown>) };

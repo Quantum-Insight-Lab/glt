@@ -86,7 +86,7 @@ Outputs at this step:
 | `file_ownership_hints` | `CODEOWNERS` / `.github/CODEOWNERS` / `docs/CODEOWNERS` | file absent → `null` plus `missing_ownership`, not `[]` as “unowned” |
 | `source_digests` | `digestOfUtf8` of those manifests and the ownership file, after newline normalization | only hashed files; not the whole tree |
 
-v1 hashes **workspace manifests and ownership files**, not every blob. Full-tree identity stays a later expansion. Snapshot `collector_versions` and golden digests are not rewritten here; merging materialized facts into a topology snapshot is DEV-18.
+v1 hashes **workspace manifests and ownership files**, not every blob. Full-tree identity stays a later expansion. Snapshot `collector_versions` and golden digests are not rewritten here. DEV-20 pins git facts on an intended snapshot (`collector_versions.git`, `source_digests.git.*`) without folding module ids into `nodes[]`.
 
 Every assertion carries `plane: materialized`. An `intended` plane is rejected, not stored.
 
@@ -106,7 +106,7 @@ Collection failure (missing file, unreadable document) with a commit pin → `co
 
 Privacy: names, conclusions and digests only. Log bodies are not in the report.
 
-The collector is not a `glt` command (S-10). It does not write the workspace. Merging into a topology snapshot is DEV-18.
+The collector is not a `glt` command (S-10). It does not write the workspace. Pinning CI facts onto a topology snapshot is not this step.
 
 ## DLP
 

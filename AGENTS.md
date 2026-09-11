@@ -12,7 +12,7 @@ GLT Control Plane: наблюдаемая архитектура, анализ �
 
 Методология — Possibility-Driven Architecture v1.2. Нормативные контракты живут в `glt-specpack/`, код в `control-plane/`.
 
-Статус: волна 2. DEV-01…19 сделаны. DEV-20 следующий.
+Статус: волна 2. DEV-01…19 сделаны. DEV-20 в дереве. DEV-21 следующий.
 
 ---
 
@@ -69,6 +69,7 @@ control-plane/packages/
 | Freshness и конфликты | `assessDegradation`, `currentSignal`, `detectFactConflict`; stale только `snapshotIsStale` | `packages/domain/src/degrade.ts` |
 | Build-плоскость | `comparePlanes`; intended и materialized не сливаются | `packages/domain/src/planes.ts` |
 | Coverage manifest | `reconcileCoverageManifest`, `coverageNotEstablished`; «полное влияние» вне манифеста запрещено | `packages/domain/src/coverage-manifest.ts` |
+| Change dashboard | `projectChangeSurface`; React, только чтение; глифы выключены | `packages/domain/src/change-surface.ts`, `packages/dashboard/src/ChangeDashboard.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |

@@ -105,6 +105,11 @@ It does not merge. See [architecture.md](architecture.md). A planned node
 with `expected_from_step` is `expected`, not broken (PROTO-05). A mismatch
 without that field is `plane_drift`.
 
+DEV-20 pins materialized collector facts on an intended snapshot
+(`collector_versions.git`, `source_digests.git.*`) without copying git module
+ids into `nodes[]`. `projectChangeSurface` is the Change-mode projection:
+it clips by P03, never enables the glyph layer, and never writes status.
+
 ## Schemas
 
 - [`../../contracts/schemas/node.schema.json`](../../contracts/schemas/node.schema.json)

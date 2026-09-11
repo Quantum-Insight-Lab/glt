@@ -9,9 +9,42 @@ depends_on:
 spec_refs:
   - ../SPEC/collectors.md
   - ../SPEC/dashboard.md
+  - ../SPEC/snapshots.md
+  - ../SPEC/architecture.md
+  - ../SPEC/topology.md
+  - ../SPEC/structural-invariants.md
+  - ../../parameters/dashboard-max-nodes.yaml
 risk: medium
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/collectors.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/dashboard.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/snapshots.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/architecture.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/topology.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/structural-invariants.md
+    authority: structural-invariants
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/parameters/dashboard-max-nodes.yaml
+    authority: parameter-values
+    role: derived-from
 ---
 
 # 20 — Приёмка build-плоскости и B1 dashboard
@@ -20,8 +53,8 @@ source_refs: []
 
 ## Что делаем
 
-- Build-плоскость: intended и materialized в одном снимке
-- B1 dashboard, режим Change, только чтение
+- Build-плоскость: intended в `nodes[]`, materialized — pin коллектора, не merge
+- B1 dashboard, режим Change, только чтение. Глифы выключены. Команды `glt` не расширяются.
 
 ## Почему dashboard именно здесь
 
@@ -44,26 +77,26 @@ gate разделён: Correctness gate машинный и UI не исполь
 
 ### Build-плоскость
 
-- [ ] Intended и materialized хранятся раздельно и сравниваются
-- [ ] Drift между плоскостями отображается как отдельный класс, а не как поломка
-- [ ] Snapshot остаётся детерминированным после добавления build-фактов
+- [x] Intended и materialized хранятся раздельно и сравниваются
+- [x] Drift между плоскостями отображается как отдельный класс, а не как поломка
+- [x] Snapshot остаётся детерминированным после добавления build-фактов
 
 ### Dashboard
 
-- [ ] Dashboard ничего не пишет, кроме запросов действий через API (S-5)
-- [ ] Ручная правка статуса на дашборде невозможна
-- [ ] `unknown` визуально отличается от `healthy`
-- [ ] Цвет не единственный канал передачи смысла
-- [ ] Всё доступно с клавиатуры и читается скринридером
-- [ ] Слой глифов **не** включён: E04 не измерен
-- [ ] Каждый зелёный статус раскрывается в «на основании чего»
+- [x] Dashboard ничего не пишет, кроме запросов действий через API (S-5)
+- [x] Ручная правка статуса на дашборде невозможна
+- [x] `unknown` визуально отличается от `healthy`
+- [x] Цвет не единственный канал передачи смысла
+- [x] Всё доступно с клавиатуры и читается скринридером
+- [x] Слой глифов **не** включён: E04 не измерен
+- [x] Каждый зелёный статус раскрывается в «на основании чего»
 
 ### Общее
 
-- [ ] CI зелёный на шагах, от которых зависит этот
-- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
-- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
-- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+- [x] CI зелёный на шагах, от которых зависит этот
+- [x] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [x] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [x] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
 
 ## Спецификация
 
@@ -72,4 +105,4 @@ gate разделён: Correctness gate машинный и UI не исполь
 
 ## Статус
 
-запланирован
+в дереве — ветка `wave2`. Intended снимок пинит git, не сливает `nodes[]`. Change dashboard — только чтение, глифы выключены. GitHub CI ещё не принимал шаг.

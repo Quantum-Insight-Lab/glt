@@ -87,7 +87,12 @@ one node and it does not rewrite a plane assertion.
 
 `plane_drift` is not `source_conflict`, not `unhealthy`, and not a schema
 error. A planned DEV step without a package stays `expected` while it carries
-`expected_from_step`. Putting both planes into one snapshot is DEV-20.
+`expected_from_step`.
+
+A topology snapshot may **pin** both planes (DEV-20): intended nodes stay in
+`nodes[]`; materialized facts are sealed as `collector_versions.git` and
+`source_digests.git.*`. The two lists are not merged into one node. Golden
+bootstrap (`glt.bootstrap-slice@1`) stays the four-node digest oracle.
 
 ## Diagram
 

@@ -98,6 +98,19 @@ Same inputs → same digest. The pinned input set is exactly:
 
 Anything not in this list must not influence the output. Dynamic observations **do not** rewrite historical snapshots.
 
+## Build facts (DEV-20)
+
+An intended-boundary compile may pin git collector facts:
+
+- `collector_versions.git` — collector version, not a guessed graph;
+- `source_digests.git.*` — digests of the collector's hashed manifests plus a
+  digest of the materialized module id list.
+
+`nodes[]` remains the intended list. Materialized module ids are not appended.
+That would merge planes. Bootstrap golden compile does not add these keys;
+its digest stays the freeze oracle (PROTO-03). Same pin + same git tree →
+same digest after the facts are added.
+
 ## Storage
 
 - Wave 1: filesystem `snapshots/<snapshot_id>.json`

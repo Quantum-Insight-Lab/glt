@@ -42,6 +42,8 @@ export interface CompileSnapshotOptions {
   readonly asOf?: string;
   readonly pinnedTo?: SnapshotPin;
   readonly snapshotId?: string;
+  readonly extraSourceDigests?: Readonly<Record<string, string>>;
+  readonly extraCollectorVersions?: Readonly<Record<string, string>>;
 }
 
 const COLLECTOR_VERSIONS = { intent: "1.0.0", registry: "1.0.0" } as const;
@@ -69,6 +71,11 @@ export function compileSnapshotFromPaths(
     boundary: digestOfUtf8(readText(loaded.boundaryPath)),
     propagation_matrix: digestOfUtf8(readText(matrixPath)),
     registry: loaded.registryDigest,
+    ...options.extraSourceDigests,
+  };
+  const collectorVersions = {
+    ...COLLECTOR_VERSIONS,
+    ...options.extraCollectorVersions,
   };
 
   const asOf = truncateAsOf(options.asOf ?? new Date().toISOString());
@@ -77,7 +84,7 @@ export function compileSnapshotFromPaths(
     makeSnapshotId(asOf, {
       as_of: asOf,
       boundary_id: loaded.compiled.boundary,
-      collector_versions: COLLECTOR_VERSIONS,
+      collector_versions: collectorVersions,
       config_profile: CONFIG_PROFILE,
       matrix_version: matrixVersion,
       registry_version: loaded.compiled.version,
@@ -90,7 +97,7 @@ export function compileSnapshotFromPaths(
     registryVersion: loaded.compiled.version,
     boundaryId: loaded.compiled.boundary,
     sourceDigests,
-    collectorVersions: COLLECTOR_VERSIONS,
+    collectorVersions,
     pinnedTo: options.pinnedTo ?? defaultPin(sourceDigests.registry),
     nodes: nodeDrafts(loaded.bundleDoc, loaded.compiled.entries.map((e) => e.id)),
     edges: edgeDrafts(loaded.bundleDoc, loaded.compiled.edges.map((e) => e.id)),

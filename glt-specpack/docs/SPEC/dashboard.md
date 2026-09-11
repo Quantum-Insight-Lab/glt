@@ -30,6 +30,23 @@ source_refs:
 - Top: project, env, git SHA, snapshot freshness, conflict count
 - Bottom drawer: impact report / check results (on demand)
 
+The Change surface is a **projection**. `projectChangeSurface` clips the
+topology to `dashboard.max_top_level_nodes` (P03). It does not compile, does
+not write the workspace, and does not accept a status edit.
+
+| Rule | Mechanism |
+|---|---|
+| Read-only (S-5) | no status control; no `fetch`/workspace write; action requests wait for the API (DEV-21) |
+| `unknown` ≠ `healthy` | distinct `data-runtime` and a visible text label, not color alone |
+| Color is not the only channel | every axis value is written as text |
+| Keyboard and screen reader | `main`, radiogroup for the plane, list of nodes, evidence `region` |
+| Glyph layer off | `glyph_layer: blocked` until E04; no glyph rendering |
+| Green has a basis | each non-unknown axis shows provenance (`на основании: …`) |
+
+Plane toggle filters `comparePlanes` rows. It does not rewrite a plane
+assertion. Combined shows `aligned`, `expected` and `plane_drift` as classes,
+not as breakage.
+
 ## Glyph layer (G treatment)
 
 - Identity in glyph; state in contour/fill/badge

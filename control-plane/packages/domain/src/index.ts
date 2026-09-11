@@ -1,5 +1,5 @@
 export { canonicalize } from "./canonical.ts";
-export { digestOf, digestOfUtf8, isUnfrozenPlaceholder } from "./digest.ts";
+export { digestOf, digestOfUtf8, isDigest, isUnfrozenPlaceholder } from "./digest.ts";
 export {
   reconcileCoverage,
   parseRegistryIds,
@@ -127,6 +127,16 @@ export {
   type IntendedSourceRef,
   type IntendedStepCard,
 } from "./intended.ts";
+export {
+  CHANGE_SURFACE_STEP,
+  materializedGraphDigest,
+  pinBuildFacts,
+  projectChangeSurface,
+  type ChangeAxisView,
+  type ChangeNodeView,
+  type ChangePlaneFilter,
+  type ChangeSurface,
+} from "./change-surface.ts";
 export {
   PLANES_STEP,
   comparePlanes,

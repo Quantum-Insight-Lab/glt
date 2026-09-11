@@ -13,6 +13,7 @@ export default defineConfig({
       "@glt/snapshot": pkg("snapshot"),
       "@glt/collectors": pkg("collectors"),
       "@glt/impact": pkg("impact"),
+      "@glt/dashboard": pkg("dashboard"),
       "@glt/cli": pkg("cli"),
     },
   },

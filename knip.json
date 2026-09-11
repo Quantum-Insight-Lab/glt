@@ -33,6 +33,10 @@
     "control-plane/packages/impact": {
       "entry": ["src/index.ts"],
       "project": ["src/**/*.ts"]
+    },
+    "control-plane/packages/dashboard": {
+      "entry": ["src/index.ts"],
+      "project": ["src/**/*.ts"]
     }
   },
   "ignoreDependencies": ["ajv-formats"]

@@ -116,6 +116,10 @@ jobs:
       - name: coverage manifest
         run: pnpm test:coverage
 
+      # DEV-20: intended snapshot pins git facts; Change dashboard is read-only. Glyphs stay blocked.
+      - name: build plane and dashboard
+        run: pnpm test:dashboard
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

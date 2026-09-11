@@ -30,6 +30,17 @@ describe("DEV-18 intended vs materialized on this repository", () => {
     expect(domain?.presence).toBe("both");
     expect(domain?.class).toBe("aligned");
 
+    const dashboard = report.rows.find((row) => row.id === "glt.controlplane.dashboard");
+    const materializedDashboard = report.materialized_ids.includes("control-plane/packages/dashboard");
+    expect(dashboard).toBeDefined();
+    if (materializedDashboard) {
+      expect(dashboard?.presence).toBe("both");
+      expect(dashboard?.class).toBe("aligned");
+    } else {
+      expect(dashboard?.presence).toBe("intended");
+      expect(dashboard?.class).toBe("plane_drift");
+    }
+
     const nineteen = report.rows.find((row) => row.id === "glt.dev.19");
     expect(nineteen?.class).toBe("expected");
     expect(nineteen?.presence).toBe("intended");
