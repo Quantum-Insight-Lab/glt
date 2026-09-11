@@ -16,6 +16,7 @@ DEV-21: HTTP API контрол-плейна. Те же артефакты, чт
 
 - Хранение — DEV-22. RBAC — DEV-23. События не эмитятся. Action POST — DEV-29.
 - Golden digest и `impact-bootstrap.json` не менялись.
+- Шаг принят: `docs/DEV/21-api-service.md` — `status: accepted`. Покрытие `glt_structural_coverage`: **0.75 (30/40)**.
 
 ## [0.26.0] — 2026-09-11
 

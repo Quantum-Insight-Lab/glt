@@ -2,7 +2,7 @@
 id: glt.dev.21
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 3
 depends_on:
   - glt.dev.20
@@ -73,4 +73,4 @@ source_refs:
 
 ## Статус
 
-в дереве — ветка `wave3`. Fastify, GET-only. GitHub CI ещё не принимал шаг.
+**сделано** — ветка `wave3`. Fastify, GET-only. Тело = артефакт CLI. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34570203335).
