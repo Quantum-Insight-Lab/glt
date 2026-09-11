@@ -2,6 +2,19 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.21.0] — 2026-09-11
+
+DEV-15: связывание checks и gates — вычислитель состояния, без merge.
+
+### Added
+
+- Контракт `evaluateGate` в `docs/SPEC/gates.md`. Обязательный check без сигнала → `unknown` (PROTO-12). Упавший check → `blocked`. Каждый результат несёт evidence. `merge` отвергается.
+- `packages/domain/src/gate.ts`. Команды `glt gate` нет. `glt health` остаётся DEV-16. Шаг CI `checks and gates wiring`.
+
+### Notes
+
+- Коллектор по-прежнему не решает gate. Слияние в snapshot — DEV-18. Чеклист DEV-15 проверен локально; `status` не `accepted` до CI. Покрытие `glt_structural_coverage`: **0.725 (29/40)**.
+
 ## [0.20.0] — 2026-09-10
 
 DEV-14: CI attestations collector — факты с pinned commit, stale не входит в current.

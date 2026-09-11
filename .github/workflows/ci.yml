@@ -96,6 +96,10 @@ jobs:
       - name: ci attestations collector
         run: pnpm exec vitest run control-plane/packages/collectors/src/ci.test.ts control-plane/tests/ci-collector.test.ts
 
+      # DEV-15: gate state from checks. Evaluate only; no merge. No glt gate command.
+      - name: checks and gates wiring
+        run: pnpm test:eval
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

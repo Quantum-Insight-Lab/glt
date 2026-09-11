@@ -123,6 +123,21 @@ export {
 } from "./recall.ts";
 export { snapshotIsStale } from "./freshness.ts";
 export {
+  GATE_STEP,
+  evaluateGate,
+  gatedChecks,
+  gatedChecksFromSnapshot,
+  gateEvaluationExit,
+  type CheckSignal,
+  type CheckState,
+  type EvaluateGateInput,
+  type GateEdgeView,
+  type GateEvaluation,
+  type GateEvidence,
+  type GateState,
+  type GateUnknown,
+} from "./gate.ts";
+export {
   hashAuditRecord,
   verifyAuditChain,
   type AuditChainLink,
