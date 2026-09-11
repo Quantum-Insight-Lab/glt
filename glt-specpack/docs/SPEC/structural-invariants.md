@@ -226,7 +226,7 @@ source_refs:
 
 **DEV-17 — сделано.** Stale (P01 / `snapshotIsStale`) блокирует write/runner; просроченный сигнал не входит в current health (PROTO-11); два дайджеста одного класса → `source_conflict`, код 6. Порог только из карточки (S-8).
 
-**DEV-18 — в дереве.** `comparePlanes`: intended и materialized не сливаются. Расхождение — `plane_drift` или `expected`, не поломка. Плановый шаг с `expected_from_step` не broken (PROTO-05).
+**DEV-18 — сделано.** `comparePlanes`: intended и materialized не сливаются. Расхождение — `plane_drift` или `expected`, не поломка. Плановый шаг с `expected_from_step` не broken (PROTO-05).
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

@@ -2,7 +2,7 @@
 id: glt.dev.18
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 2
 depends_on:
   - glt.dev.17
@@ -76,4 +76,4 @@ source_refs:
 
 ## Статус
 
-в дереве — ветка `wave2`. Живой intended-снимок: `glt.dev.19` planned + `expectedFromStep`; ребро держит `intended: asserted` и `materialized: not_observed` раздельно. Сравнение на HEAD: `glt.controlplane.domain` aligned, `glt.controlplane.runner` `plane_drift` (не broken), `glt.dev.19` expected. Негатив: expected → plane_drift → PROTO-05 падает. `accepted` после зелёного GitHub CI.
+**сделано** — ветка `wave2`. `comparePlanes` не сливает плоскости. Плановый шаг с `expected_from_step` — `expected`, не broken. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34565357987).

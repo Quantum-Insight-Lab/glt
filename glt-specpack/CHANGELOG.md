@@ -14,7 +14,7 @@ DEV-18: build-плоскость — intended и materialized сравниваю
 
 ### Notes
 
-- `accepted` после зелёного GitHub CI на `wave2`. Покрытие S-7 без нового ID: PROTO-05 уже в реестре.
+- Шаг принят: `docs/DEV/18-topology-expansion.md` — `status: accepted`. Покрытие `glt_structural_coverage`: **0.75 (30/40)**.
 
 ## [0.23.0] — 2026-09-11
 
