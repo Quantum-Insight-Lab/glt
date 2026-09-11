@@ -2,7 +2,7 @@
 id: glt.dev.17
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 2
 depends_on:
   - glt.dev.16
@@ -87,4 +87,4 @@ source_refs:
 
 ## Статус
 
-в дереве — ветка `wave2`. Живой `glt health`: current `write_blocked: false`, ttl 3600 из P01; as-of +2h → stale, warn, `write_blocked: true`, код 5. Негатив: снять отсечение сигнала → PROTO-11 падает; `writeBlocked` всегда false → тесты write-block падают. `accepted` после зелёного GitHub CI.
+**сделано** — ветка `wave2`. Stale блокирует write/runner; просроченный сигнал не в current health; два дайджеста одного класса → `source_conflict`. Порог только из P01. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34564228507).

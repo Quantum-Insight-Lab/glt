@@ -14,7 +14,7 @@ DEV-17: freshness и конфликты — stale блокирует write, пр
 
 ### Notes
 
-- `accepted` после зелёного GitHub CI на `wave2`. Покрытие S-7 без нового ID: PROTO-11 и S-8 уже в реестре.
+- Шаг принят: `docs/DEV/17-freshness-and-conflicts.md` — `status: accepted`. Покрытие `glt_structural_coverage`: **0.75 (30/40)**.
 
 ## [0.22.0] — 2026-09-11
 

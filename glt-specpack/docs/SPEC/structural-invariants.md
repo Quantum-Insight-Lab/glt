@@ -224,7 +224,7 @@ source_refs:
 
 **DEV-16 — сделано.** State evaluator: оси независимы; `unknown` ≠ `healthy`; inferred не становится observation (INV-04 снят с отложения). `glt health` не пишет в копию.
 
-**DEV-17 — в дереве.** Stale (P01 / `snapshotIsStale`) блокирует write/runner; просроченный сигнал не входит в current health (PROTO-11); два дайджеста одного класса → `source_conflict`, код 6. Порог только из карточки (S-8).
+**DEV-17 — сделано.** Stale (P01 / `snapshotIsStale`) блокирует write/runner; просроченный сигнал не входит в current health (PROTO-11); два дайджеста одного класса → `source_conflict`, код 6. Порог только из карточки (S-8).
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 
