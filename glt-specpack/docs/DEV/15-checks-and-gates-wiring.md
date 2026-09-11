@@ -2,7 +2,7 @@
 id: glt.dev.15
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 2
 depends_on:
   - glt.dev.14
@@ -77,4 +77,4 @@ source_refs:
 
 ## Статус
 
-в дереве — чеклист проверен локально. Golden snapshot без сигналов → `unknown`, не `passed` (PROTO-12). Failed check → `blocked`. Passed → `closed_gate` + check report. `merge: true` → код 1. Негатив: merge принят — тест упал, откат. Команды `glt gate` нет. Шаг не `accepted` до зелёного GitHub CI на `wave2`.
+**сделано** — ветка `wave2`. `evaluateGate` считает состояние из `gates`-рёбер и сигналов check. Без сигнала → `unknown`, не `passed`. Failed / explicit block → `blocked`. `merge` отвергается. Команды `glt gate` нет. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34558325174).

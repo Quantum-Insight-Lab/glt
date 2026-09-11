@@ -13,7 +13,8 @@ DEV-15: связывание checks и gates — вычислитель сост
 
 ### Notes
 
-- Коллектор по-прежнему не решает gate. Слияние в snapshot — DEV-18. Чеклист DEV-15 проверен локально; `status` не `accepted` до CI. Покрытие `glt_structural_coverage`: **0.725 (29/40)**.
+- Коллектор по-прежнему не решает gate. Слияние в snapshot — DEV-18.
+- Шаг принят: `docs/DEV/15-checks-and-gates-wiring.md` — `status: accepted`. Покрытие `glt_structural_coverage`: **0.725 (29/40)**.
 
 ## [0.20.0] — 2026-09-10
 
