@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.25.0] — 2026-09-11
+
+DEV-19: boundary-манифест — данные покрытия, не список узлов снимка.
+
+### Added
+
+- Контракт покрытия в `docs/SPEC/impact.md`. Список узлов и рёбер сверяется с реестром. `coverage_not_established` выводится из `outside_boundary` / `unmapped_source`. Формулировка «полное влияние» вне манифеста запрещена (INV-05).
+- `packages/domain/src/coverage-manifest.ts`. `glt impact` берёт covered set из манифеста. Команды `glt` не расширяются. Шаг CI `coverage manifest`.
+
+### Notes
+
+- Не путать с S-7 `coverage.ts` (сверка инвариантов с тестами).
+- Intended YAML не расширяется: собранный мета-граф по-прежнему из frontmatter.
+- Golden digest и `impact-bootstrap.json` не менялись.
+
 ## [0.24.0] — 2026-09-11
 
 DEV-18: build-плоскость — intended и materialized сравниваются, не сливаются.

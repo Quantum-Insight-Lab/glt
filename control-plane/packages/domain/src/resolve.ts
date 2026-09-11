@@ -6,6 +6,7 @@
  * Unknown or ambiguous never becomes a guess (INV-02).
  */
 
+import { reconcileCoverageManifest } from "./coverage-manifest.ts";
 import { digestOf } from "./digest.ts";
 import { contractInvalid, invariantViolated } from "./errors.ts";
 
@@ -57,7 +58,10 @@ export function compileRegistry(input: CompileRegistryInput): CompiledRegistry {
   rejectSemanticChangeWithoutRevision(input.entries);
   const aliases = uniqueAliasBindings(input.entries, input.version);
   rejectReassignment(aliases, input.version, input.previous);
-  rejectBoundaryDivergence(input);
+  reconcileCoverageManifest(
+    { nodes: input.boundaryNodes, edges: input.boundaryEdges },
+    { nodes: input.entries.map((entry) => entry.id), edges: input.edges.map((edge) => edge.id) },
+  );
 
   return {
     version: input.version,
@@ -185,23 +189,6 @@ function rejectSemanticChangeWithoutRevision(entries: readonly RegistryEntryView
     }
     throw contractInvalid(`registry id ${id} is declared more than once`, [id]);
   }
-}
-
-function rejectBoundaryDivergence(input: CompileRegistryInput): void {
-  const bundleNodes = input.entries.map((e) => e.id);
-  const bundleEdges = input.edges.map((e) => e.id);
-  const nodeDrift = setDrift(bundleNodes, input.boundaryNodes);
-  const edgeDrift = setDrift(bundleEdges, input.boundaryEdges);
-  if (nodeDrift.length === 0 && edgeDrift.length === 0) return;
-  throw contractInvalid("bundle and boundary manifest diverge", [...nodeDrift, ...edgeDrift]);
-}
-
-function setDrift(left: readonly string[], right: readonly string[]): string[] {
-  const a = new Set(left);
-  const b = new Set(right);
-  const extra = left.filter((id) => !b.has(id)).map((id) => `bundle:${id}`);
-  const missing = right.filter((id) => !a.has(id)).map((id) => `boundary:${id}`);
-  return [...extra, ...missing].sort();
 }
 
 function nfc(value: string): string {

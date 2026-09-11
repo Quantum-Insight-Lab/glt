@@ -16,10 +16,12 @@ import {
 import {
   compileRegistry,
   contractInvalid,
+  coverageManifestFromDoc,
   isIntendedBoundaryRef,
   usageError,
   type AliasBinding,
   type CompiledRegistry,
+  type CoverageManifest,
   type RegistryEdgeView,
   type RegistryEntryView,
 } from "@glt/domain";
@@ -62,15 +64,7 @@ export function compileRegistryFromPaths(
 
   const bundle = asBundle(bundleDoc);
   const boundaryRef = options.boundaryRef ?? bundle.boundary;
-  const boundaryDoc = loadBoundary(boundaryRef);
-  const boundaryErrors = validateAgainst(ajv, "boundary-manifest", boundaryDoc);
-  if (boundaryErrors.length > 0) {
-    throw contractInvalid(
-      boundaryErrors.map((e) => `${e.path} ${e.message}`).join("; "),
-      [boundaryRef],
-    );
-  }
-  const boundary = asBoundary(boundaryDoc);
+  const boundary = loadCoverageManifest(boundaryRef, ajv);
 
   return compileRegistry({
     version: bundle.version,
@@ -92,8 +86,20 @@ export function resolveBundlePath(flag: string | undefined): string {
   return resolve(PACK_ROOT, flag);
 }
 
-function loadBoundary(ref: string): unknown {
-  return loadDocument(resolveBoundaryPath(ref));
+export function loadCoverageManifest(
+  ref: string,
+  ajv = createValidator(),
+): CoverageManifest {
+  const path = resolveBoundaryPath(ref);
+  const doc = loadDocument(path);
+  const errors = validateAgainst(ajv, "boundary-manifest", doc);
+  if (errors.length > 0) {
+    throw contractInvalid(
+      errors.map((e) => `${e.path} ${e.message}`).join("; "),
+      [ref],
+    );
+  }
+  return coverageManifestFromDoc(doc);
 }
 
 function asBundle(doc: unknown): {
@@ -124,18 +130,6 @@ function asBundle(doc: unknown): {
     boundary,
     entries: entriesRaw.map(viewEntry),
     edges: edgesRaw.map(viewEdge),
-  };
-}
-
-function asBoundary(doc: unknown): { nodes: string[]; edges: string[] } {
-  if (!isRecord(doc)) throw contractInvalid("boundary manifest is not an object");
-  const spec = doc["spec"];
-  if (!isRecord(spec) || !Array.isArray(spec["nodes"]) || !Array.isArray(spec["edges"])) {
-    throw contractInvalid("boundary manifest spec.nodes/edges missing");
-  }
-  return {
-    nodes: spec["nodes"].filter((n): n is string => typeof n === "string"),
-    edges: spec["edges"].filter((n): n is string => typeof n === "string"),
   };
 }
 

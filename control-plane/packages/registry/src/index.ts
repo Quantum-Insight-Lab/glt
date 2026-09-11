@@ -10,7 +10,12 @@
  * Contract: glt-specpack/docs/SPEC/registry.md
  */
 
-export { compileRegistryFromPaths, resolveBoundaryPath, resolveBundlePath } from "./compile.ts";
+export {
+  compileRegistryFromPaths,
+  loadCoverageManifest,
+  resolveBoundaryPath,
+  resolveBundlePath,
+} from "./compile.ts";
 export type { CompileRegistryPaths } from "./compile.ts";
 export { compileIntendedFromPack } from "./intended.ts";
 export type { CompiledIntended } from "./intended.ts";

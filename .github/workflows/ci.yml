@@ -112,6 +112,10 @@ jobs:
       - name: topology expansion
         run: pnpm test:planes
 
+      # DEV-19: boundary manifest is coverage data. Flag is derived. Complete impact outside is forbidden.
+      - name: coverage manifest
+        run: pnpm test:coverage
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

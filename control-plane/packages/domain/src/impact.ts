@@ -8,6 +8,7 @@
  * visited set; an execution-order cycle is PROTO-07.
  */
 
+import { coverageNotEstablished } from "./coverage-manifest.ts";
 import { findCycles } from "./graph.ts";
 import { contractInvalid, invariantViolated } from "./errors.ts";
 
@@ -127,10 +128,11 @@ export function computeImpact(input: ComputeImpactInput): ImpactReportView {
     throw contractInvalid("impact change labels must not be empty");
   }
 
+  if (input.boundaryNodes.length === 0) {
+    throw contractInvalid("coverage manifest nodes are required", [input.boundaryId]);
+  }
   const nodeIds = new Set(input.nodes.map((node) => node.id));
-  const boundary = new Set(
-    input.boundaryNodes.length > 0 ? input.boundaryNodes : input.nodes.map((node) => node.id),
-  );
+  const boundary = new Set(input.boundaryNodes);
   const knownUnknowns: ImpactUnknown[] = [];
   const mapped = new Set<string>();
   for (const source of input.sources) {
@@ -225,9 +227,7 @@ export function computeImpact(input: ComputeImpactInput): ImpactReportView {
     throw invariantViolated("PROTO-07", "execution graph is cyclic", cycles[0]);
   }
 
-  const coverageNotEstablished = knownUnknowns.some(
-    (item) => item.kind === "unmapped_source" || item.kind === "outside_boundary",
-  );
+  const coverageGap = coverageNotEstablished(knownUnknowns);
 
   const report: ImpactReportView = {
     report_id: input.reportId,
@@ -245,7 +245,7 @@ export function computeImpact(input: ComputeImpactInput): ImpactReportView {
     candidate_paths: sortPaths(paths),
     required_checks: [...requiredChecks].sort(compare),
     known_unknowns: sortUnknowns(knownUnknowns),
-    coverage_not_established: coverageNotEstablished,
+    coverage_not_established: coverageGap,
   };
 
   const gate = [...gates].sort(compare)[0];

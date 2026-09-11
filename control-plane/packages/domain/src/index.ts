@@ -10,6 +10,18 @@ export {
   type Deferral,
 } from "./coverage.ts";
 export {
+  COVERAGE_STEP,
+  OUTSIDE_BOUNDARY_POLICY,
+  completeImpactAllowed,
+  coverageManifestFromDoc,
+  coverageNotEstablished,
+  reconcileCoverageManifest,
+  rejectCompleteImpact,
+  type CoverageHonestyInput,
+  type CoverageManifest,
+  type CoverageRegistryIds,
+} from "./coverage-manifest.ts";
+export {
   parseMechanismRegistry,
   listedPaths,
   extraSha256HashCalls,

@@ -35,6 +35,8 @@
     "test:fresh": "vitest run control-plane/packages/domain/src/degrade.test.ts control-plane/packages/domain/src/state.test.ts control-plane/tests/freshness-conflicts.test.ts",
     "pretest:planes": "pnpm gen",
     "test:planes": "vitest run control-plane/packages/domain/src/planes.test.ts control-plane/tests/topology-expansion.test.ts",
+    "pretest:coverage": "pnpm gen",
+    "test:coverage": "vitest run control-plane/packages/domain/src/coverage-manifest.test.ts control-plane/tests/coverage-manifest.test.ts",
     "collect:git": "tsx control-plane/packages/collectors/src/bin.ts",
     "pretest:collect": "pnpm gen",
     "test:collect": "vitest run control-plane/packages/collectors/src/git.test.ts control-plane/packages/collectors/src/ci.test.ts control-plane/tests/git-collector.test.ts control-plane/tests/ci-collector.test.ts",

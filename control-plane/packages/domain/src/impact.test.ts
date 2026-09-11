@@ -145,6 +145,7 @@ describe("DEV-10 impact engine", () => {
     expect(report.known_unknowns.find((item) => item.kind === "uncovered_relation")?.ref).toBe(
       "glt.edge.compiler-writes-registry",
     );
+    expect(report.coverage_not_established).toBe(false);
   });
 
   it("INV-05 a change that leaves the boundary lists known_unknowns", () => {

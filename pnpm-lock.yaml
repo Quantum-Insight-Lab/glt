@@ -82,6 +82,9 @@ importers:
       '@glt/domain':
         specifier: workspace:*
         version: link:../domain
+      '@glt/registry':
+        specifier: workspace:*
+        version: link:../registry
       '@glt/snapshot':
         specifier: workspace:*
         version: link:../snapshot

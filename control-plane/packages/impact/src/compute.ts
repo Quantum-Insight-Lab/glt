@@ -34,6 +34,7 @@ import {
   type ImpactSource,
   type SnapshotPin,
 } from "@glt/domain";
+import { loadCoverageManifest } from "@glt/registry";
 import { compileSnapshotFromPaths } from "@glt/snapshot";
 
 const DEPTH_PARAM = "glt.param.impact.max_traversal_depth";
@@ -102,7 +103,7 @@ export function computeImpactFromPaths(
     boundaryId: snapshot.boundary_id,
     nodes: graph.nodes,
     edges: graph.edges,
-    boundaryNodes: graph.nodes.map((node) => node.id),
+    boundaryNodes: loadCoverageManifest(options.boundary ?? snapshot.boundary_id).nodes,
     matrix,
     sources,
     maxDepth,

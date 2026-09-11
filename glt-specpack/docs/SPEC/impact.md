@@ -84,6 +84,17 @@ The report is a derived projection and must pin every input version it was compu
 
 **Forbidden:** empty `known_unknowns` when the change touches anything outside the boundary or an uncovered relation.
 
+## Coverage manifest (DEV-19)
+
+The boundary document is the coverage certificate. Impact does not treat `snapshot.nodes` as the covered set.
+
+- Nodes and edges in the manifest are reconciled with the registry bundle (`reconcileCoverageManifest`). Divergence is a contract error, not a silent skip.
+- `coverage_not_established` is derived from `known_unknowns` of kind `outside_boundary` or `unmapped_source`. It is not a caller-supplied bit.
+- An `uncovered_relation` is still a known unknown. It does not by itself flip `coverage_not_established`: that flag is about the certificate, not about a missing matrix row.
+- A complete-impact claim is forbidden when the flag is set or when those gap kinds are present (INV-05). `rejectCompleteImpact` is the machine stop.
+
+The intended YAML lists certified components. Assembled DEV steps are compiled as the intended registry list; they are not silently added to the published coverage certificate.
+
 ## Language
 
 Use «path of possible spread», «candidate source». Causality requires trace-parentage or explicit causal evidence.

@@ -2,8 +2,8 @@
 
 Переносимый specpack для standalone-проекта **GLT Control Plane**: наблюдаемая архитектура, анализ влияния изменений и контролируемые read/build-действия.
 
-**Версия пакета:** 0.24.0 · 11.09.2026  
-**Статус:** DEV-01…18 сделаны. S-1…S-8, S-10, `glt lint docs`, `glt lint authority`, `glt compile registry`, `glt verify`, `glt validate`, `glt resolve`, `glt compile snapshot`, `glt impact`, `glt health`, seeded failures, correctness gate, collectors и gate evaluator в CI; S-9 — предупреждение  
+**Версия пакета:** 0.25.0 · 11.09.2026  
+**Статус:** DEV-01…18 сделаны. DEV-19 в дереве. S-1…S-8, S-10, `glt lint docs`, `glt lint authority`, `glt compile registry`, `glt verify`, `glt validate`, `glt resolve`, `glt compile snapshot`, `glt impact`, `glt health`, seeded failures, correctness gate, collectors и gate evaluator в CI; S-9 — предупреждение  
 **Методология:** [Possibility-Driven Architecture (PDA)](../archive/Possibility-Driven_Architecture_Methodology_ru_v1_1.docx.md) v1.1 + [патч v1.2](../archive/PDA_patch_v1.2_structural_integrity.md)
 
 ---
