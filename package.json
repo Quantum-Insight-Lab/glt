@@ -29,6 +29,8 @@
     "test:gate": "vitest run control-plane/tests/correctness-gate.test.ts control-plane/packages/domain/src/recall.test.ts control-plane/packages/domain/src/freshness.test.ts control-plane/packages/domain/src/audit-chain.test.ts",
     "pretest:eval": "pnpm gen",
     "test:eval": "vitest run control-plane/packages/domain/src/gate.test.ts control-plane/tests/gate-wiring.test.ts",
+    "pretest:health": "pnpm gen",
+    "test:health": "vitest run control-plane/packages/domain/src/state.test.ts control-plane/tests/state-evaluator.test.ts",
     "collect:git": "tsx control-plane/packages/collectors/src/bin.ts",
     "pretest:collect": "pnpm gen",
     "test:collect": "vitest run control-plane/packages/collectors/src/git.test.ts control-plane/packages/collectors/src/ci.test.ts control-plane/tests/git-collector.test.ts control-plane/tests/ci-collector.test.ts",

@@ -68,6 +68,28 @@ conflict: none | source_conflict
 
 Dashboard color = projection, not lossy single enum.
 
+## State evaluator v1 (DEV-16)
+
+`evaluateState` reads a snapshot and optional signals. It classifies each axis
+independently. It does not create evidence, merge, or write the workspace.
+
+| Axis | Missing signal |
+|---|---|
+| `verification` | `unknown` |
+| `runtime` | `unknown` — never `healthy` (PROTO-12) |
+| `freshness` | `stale` if age > P01 (`snapshotIsStale`); else `current` |
+| `change` | `unchanged` until a change descriptor arrives |
+| `coverage` | `unknown` |
+| `delivery` | `declaration` from the snapshot, if present; else `planned` |
+| `conflict` | `none` until two authorities disagree (DEV-17) |
+
+Every axis value carries a provenance class from [provenance.md](provenance.md):
+`declaration`, `discovery`, `observation`, `inference`. Computed axes are
+`inference`. An inferred fact is never rewritten as `observation` (INV-04).
+
+`glt health` emits the classification. Exit 0 requires a current snapshot and
+an **observed** healthy runtime. Absence of a runtime signal is exit 5.
+
 ## Schemas
 
 - [`../../contracts/schemas/node.schema.json`](../../contracts/schemas/node.schema.json)

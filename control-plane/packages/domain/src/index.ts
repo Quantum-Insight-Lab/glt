@@ -123,6 +123,30 @@ export {
 } from "./recall.ts";
 export { snapshotIsStale } from "./freshness.ts";
 export {
+  STATE_STEP,
+  asObservation,
+  axisKeys,
+  bindAxis,
+  evaluateNode,
+  evaluateState,
+  healthExit,
+  type AxisValue,
+  type ChangeState,
+  type ConflictState,
+  type CoverageState,
+  type DeliveryState,
+  type EvaluateStateInput,
+  type FreshnessState,
+  type NodeAxes,
+  type NodeState,
+  type NodeStateDraft,
+  type ProvenanceClass,
+  type RuntimeState,
+  type StateUnknown,
+  type TopologyState,
+  type VerificationState,
+} from "./state.ts";
+export {
   GATE_STEP,
   evaluateGate,
   gatedChecks,

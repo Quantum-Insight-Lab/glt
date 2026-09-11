@@ -39,6 +39,10 @@ Navigation-only refs may omit `commit` and `digest`. Approval/gate evidence **mu
 | `observation` | Live signal | Observed |
 | `inference` | Computed | Must badge as inferred |
 
+The state evaluator (DEV-16) is the filter: an `inference` fact cannot be
+surfaced as `observation`. Dashboard color later projects the class; it does
+not relabel it (INV-04).
+
 ## Authority by fact class
 
 See [`../../trust/authority-map.yaml`](../../trust/authority-map.yaml).

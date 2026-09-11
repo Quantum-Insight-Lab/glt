@@ -2,6 +2,20 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.22.0] — 2026-09-11
+
+DEV-16: state evaluator — независимые оси, inferred ≠ observation.
+
+### Added
+
+- Контракт `evaluateState` в `docs/SPEC/topology.md`. Оси не схлопываются в один цвет. `runtime: unknown` никогда не `healthy` (PROTO-12). Inferred не переписывается в observation (INV-04).
+- `packages/domain/src/state.ts` и `glt health`. Свежесть снимка через `snapshotIsStale` и P01. Evaluator не создаёт evidence. Шаг CI `state evaluator`.
+- INV-04 снят с отложения S-7.
+
+### Notes
+
+- `source_conflict` и блокировка write — DEV-17. Чеклист DEV-16 проверен локально; `status` не `accepted` до CI. Покрытие `glt_structural_coverage`: **0.75 (30/40)**.
+
 ## [0.21.0] — 2026-09-11
 
 DEV-15: связывание checks и gates — вычислитель состояния, без merge.

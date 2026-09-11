@@ -10,6 +10,7 @@ import { createWriter, defaultFormat, type OutputFormat, type Writer } from "./o
 import { runResolve } from "./resolve.ts";
 import { runValidate } from "./validate.ts";
 import { runVerify } from "./verify.ts";
+import { runHealth } from "./health.ts";
 
 export { COMMANDS, ALLOWED_CAPABILITIES, FORBIDDEN_COMMANDS } from "./commands.ts";
 export type { CommandSpec, Capability } from "./commands.ts";
@@ -18,6 +19,8 @@ export type { Finding, FindingKind, LintReport } from "./lint-docs.ts";
 export { lintAuthority, runLintAuthority, renderAuthorityReport } from "./lint-authority.ts";
 export { runCompileRegistry, renderCompiledRegistry } from "./compile-registry.ts";
 export { runImpact } from "./impact.ts";
+export { runHealth, collectHealth, renderHealthReport } from "./health.ts";
+export type { HealthCliOptions, HealthReport } from "./health.ts";
 export { runCompileSnapshot } from "./compile-snapshot.ts";
 export { runResolve } from "./resolve.ts";
 export { verifyBootstrap } from "./verify.ts";
@@ -64,6 +67,7 @@ const HANDLERS: Readonly<Record<string, Handler>> = {
   "compile snapshot": (writer, _paths, options) => runCompileSnapshot(writer, options),
   resolve: (writer, paths, options) => runResolve(writer, paths[0], options),
   impact: (writer, _paths, options) => runImpact(writer, options),
+  health: (writer, _paths, options) => runHealth(writer, options),
 };
 
 /**
