@@ -16,4 +16,8 @@ export { compileSnapshotFromPaths, renderCompiledSnapshot } from "./compile.ts";
 export type { CompileSnapshotOptions } from "./compile.ts";
 export { ioFromOptions, renderResolved, resolveRef } from "./resolve.ts";
 export type { ResolveIo, ResolveOptions } from "./resolve.ts";
+export { SNAPSHOT_SCHEMA } from "./schema.ts";
+export { STORE_STEP, applySnapshotSchema, createSnapshotStore } from "./store.ts";
+export type { SnapshotStore } from "./store.ts";
+export type { SqlExec } from "./sql.ts";
 export const STEP = "glt.dev.08" as const;

@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.28.0] — 2026-09-14
+
+DEV-22: PostgreSQL JSONB для снимков и audit. Снимок неизменяем; audit только append.
+
+### Added
+
+- Контракт хранения в `docs/SPEC/snapshots.md` и `docs/SPEC/audit.md`. Blob адресуется digest. `UPDATE`/`DELETE` запрещены в SQL.
+- `packages/snapshot` store и `packages/audit` store. Digest после чтения — `digestOf` (PROTO-03). Цепочка — `hashAuditRecord` / `verifyAuditChain` (INV-07).
+- P05 не удаляет записи. Команды `glt` не расширяются. Шаг CI `postgresql storage`.
+
+### Notes
+
+- API по-прежнему компилирует на лету: write-маршрут не добавляется. События не эмитятся (DEV-24).
+- Golden digest и `impact-bootstrap.json` не менялись.
+
 ## [0.27.0] — 2026-09-11
 
 DEV-21: HTTP API контрол-плейна. Те же артефакты, что CLI; в копию не пишет.

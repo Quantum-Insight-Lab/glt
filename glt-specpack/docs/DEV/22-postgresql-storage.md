@@ -9,9 +9,37 @@ depends_on:
 spec_refs:
   - ../SPEC/snapshots.md
   - ../SPEC/audit.md
+  - ../SPEC/architecture.md
+  - ../SPEC/api.md
+  - ../SPEC/structural-invariants.md
+  - ../../parameters/audit-retention.yaml
 risk: medium
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/snapshots.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/audit.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/architecture.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/api.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/structural-invariants.md
+    authority: structural-invariants
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/parameters/audit-retention.yaml
+    authority: parameter-values
+    role: derived-from
 ---
 
 # 22 — Хранилище PostgreSQL
@@ -20,26 +48,31 @@ source_refs: []
 
 ## Что делаем
 
-- Хранение снимков и audit-записей
+- Хранение снимков и audit-записей в PostgreSQL JSONB
+- Снимок неизменяем после записи. Audit — только append. Команды `glt` не расширяются
+
+## Почему store именно здесь
+
+API (DEV-21) компилирует на лету и в копию не пишет. Persistence — отдельный
+механизм: не файл в `snapshots/`, не второй digest, не событие. Compose
+(DEV-25) подключит процесс к серверу; этот шаг закрепляет схему и инварианты.
 
 ## Чеклист приёмки
 
-Отмечать только то, что проверено. Непроверенный пункт остаётся пустым —
-именно из-за преждевременных галочек в 0.1.0 «DAG ацикличен» стоял
-пройденным при живом цикле.
+Отмечать только то, что проверено. Непроверенный пункт остаётся пустым.
 
 ### По шагу
 
-- [ ] Снимок неизменяем после записи
-- [ ] Digest, посчитанный после чтения из БД, совпадает с записанным (PROTO-03)
-- [ ] Audit-таблица работает как append-only, удаление невозможно
+- [x] Снимок неизменяем после записи
+- [x] Digest, посчитанный после чтения из БД, совпадает с записанным (PROTO-03)
+- [x] Audit-таблица работает как append-only, удаление невозможно
 
 ### Общее
 
-- [ ] CI зелёный на всех шагах, от которых зависит этот
-- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
-- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
-- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+- [x] CI зелёный на всех шагах, от которых зависит этот
+- [x] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [x] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [x] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
 
 ## Спецификация
 
@@ -48,4 +81,4 @@ source_refs: []
 
 ## Статус
 
-запланирован
+в дереве — ветка `wave3`. JSONB store. GitHub CI ещё не принимал шаг.

@@ -113,8 +113,21 @@ same digest after the facts are added.
 
 ## Storage
 
-- Wave 1: filesystem `snapshots/<snapshot_id>.json`
-- Wave 3: PostgreSQL JSONB + content-addressed blob store
+- Wave 1: filesystem `snapshots/<snapshot_id>.json` is **not** written by v1 CLI
+- Wave 3 (DEV-22): PostgreSQL JSONB + content-addressed blob store
+
+A snapshot is sealed at `put`. `snapshot_id` is the identity; `digest` is the
+content address (`digestOf` with the `digest` member omitted). Two writes of
+the same id and digest are idempotent. A second body under the same id is
+rejected (PROTO-03). `UPDATE` and `DELETE` on the blob and identity tables
+fail in SQL, not only in the caller.
+
+Reading recomputes the digest from the JSONB body. A mismatch with the stored
+digest is a broken store, not a new snapshot.
+
+The store is a library (`packages/snapshot`). It does not add a `glt` command
+and it does not write the workspace. The HTTP API still compiles on the fly
+(DEV-21); persistence is not a new write route.
 
 ## Pinning for approval
 

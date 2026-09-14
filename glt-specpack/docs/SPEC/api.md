@@ -88,7 +88,8 @@ Failure bodies are the CLI stderr object: `code`, `message`, optional
 
 ## Out of scope
 
-- Persistence (DEV-22)
+- Persistence write routes (DEV-22 store is a library; GET still compiles)
+
 - RBAC (DEV-23). Bind `127.0.0.1`.
 - Event emit (names stay in the event registry; this step does not emit)
 - New CLI verbs, workspace writes, action POST

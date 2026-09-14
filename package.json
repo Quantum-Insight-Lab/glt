@@ -43,6 +43,8 @@
     "pretest:api": "pnpm gen",
     "test:api": "vitest run control-plane/tests/api-service.test.ts",
     "api": "tsx control-plane/packages/api/src/bin.ts",
+    "pretest:store": "pnpm gen",
+    "test:store": "vitest run control-plane/tests/postgresql-storage.test.ts",
     "collect:git": "tsx control-plane/packages/collectors/src/bin.ts",
     "pretest:collect": "pnpm gen",
     "test:collect": "vitest run control-plane/packages/collectors/src/git.test.ts control-plane/packages/collectors/src/ci.test.ts control-plane/tests/git-collector.test.ts control-plane/tests/ci-collector.test.ts",
@@ -52,9 +54,12 @@
     "check": "pnpm gen && pnpm typecheck && pnpm test"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@types/node": "^22.10.2",
     "dependency-cruiser": "^16.9.0",
     "json-schema-to-typescript": "^15.0.4",

@@ -75,6 +75,9 @@ control-plane/
 - `api` — Fastify composition root (DEV-21). GET returns the same artifacts
   as the CLI, validated by the same schemas. No workspace write. See
   [`api.md`](api.md).
+- `snapshot` / `audit` — PostgreSQL JSONB store (DEV-22). Snapshots are
+  immutable after put. Audit is insert-only. Digest after read is
+  `digestOf` (PROTO-03).
 
 ## Build plane (DEV-18)
 

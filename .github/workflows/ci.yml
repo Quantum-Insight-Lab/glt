@@ -124,6 +124,10 @@ jobs:
       - name: api service
         run: pnpm test:api
 
+      # DEV-22: snapshots immutable in JSONB; audit append-only. Digest after read is digestOf.
+      - name: postgresql storage
+        run: pnpm test:store
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

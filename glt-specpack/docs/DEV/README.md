@@ -85,7 +85,7 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | 19 | [Coverage manifest](19-coverage-manifest.md) | 2 | средний | **сделано** |
 | 20 | [Build-плоскость и B1 dashboard](20-build-plane-acceptance.md) | 2 | средний | **сделано** |
 | 21 | [API-сервис](21-api-service.md) | 3 | средний | **сделано** |
-| 22 | [Хранилище PostgreSQL](22-postgresql-storage.md) | 3 | средний | запланирован |
+| 22 | [Хранилище PostgreSQL](22-postgresql-storage.md) | 3 | средний | **в дереве** |
 | 23 | [RBAC](23-rbac.md) | 3 | высокий | запланирован |
 | 24 | [OTel и экспорт audit](24-otel-and-audit-export.md) | 3 | средний | запланирован |
 | 25 | [Развёртывание через Compose](25-compose-deployment.md) | 3 | средний | запланирован |

@@ -11,6 +11,7 @@ export default defineConfig({
       "@glt/domain": pkg("domain"),
       "@glt/registry": pkg("registry"),
       "@glt/snapshot": pkg("snapshot"),
+      "@glt/audit": pkg("audit"),
       "@glt/collectors": pkg("collectors"),
       "@glt/impact": pkg("impact"),
       "@glt/dashboard": pkg("dashboard"),
