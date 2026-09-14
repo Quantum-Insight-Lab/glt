@@ -2,7 +2,7 @@
 id: glt.dev.24
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 3
 depends_on:
   - glt.dev.22
@@ -76,4 +76,4 @@ source_refs:
 
 ## Статус
 
-запланирован
+**сделано** — ветка `wave3`. Метрики «Сборка» публикуются; скруб до экспорта. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34807813381).

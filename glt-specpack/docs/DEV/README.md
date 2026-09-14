@@ -87,7 +87,7 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | 21 | [API-сервис](21-api-service.md) | 3 | средний | **сделано** |
 | 22 | [Хранилище PostgreSQL](22-postgresql-storage.md) | 3 | средний | **сделано** |
 | 23 | [RBAC](23-rbac.md) | 3 | высокий | **сделано** |
-| 24 | [OTel и экспорт audit](24-otel-and-audit-export.md) | 3 | средний | запланирован |
+| 24 | [OTel и экспорт audit](24-otel-and-audit-export.md) | 3 | средний | **сделано** |
 | 25 | [Развёртывание через Compose](25-compose-deployment.md) | 3 | средний | запланирован |
 | 26 | [Drift и инциденты](26-drift-and-incidents.md) | 3 | средний | запланирован |
 | 27 | [Dogfood собственной топологии](27-self-topology-dogfood.md) | 3 | высокий | запланирован |

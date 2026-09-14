@@ -16,6 +16,7 @@ DEV-24: OTel-экспорт метрик слоя «Сборка» и audit-це
 - Новых имён событий нет. OTel SDK не добавляется: документ OTLP-shaped JSON, collector — DEV-25.
 - Golden digest и `impact-bootstrap.json` не менялись.
 - PROTO-18 и INV-11 сняты с отложения. Покрытие `glt_structural_coverage`: **0.825 (33/40)**.
+- Шаг принят: `docs/DEV/24-otel-and-audit-export.md` — `status: accepted`.
 
 ## [0.29.0] — 2026-09-14
 

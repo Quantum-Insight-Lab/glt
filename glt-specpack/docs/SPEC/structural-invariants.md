@@ -235,7 +235,7 @@ source_refs:
 
 **DEV-23 — сделано.** `authorize`: deny by default; `read` ≠ `request_action`; автор и runtime не одобряют свой plan/release (INV-09 снят с отложения).
 
-**DEV-24.** `exportOtel` публикует метрики слоя «Сборка»; скруб до экспорта (INV-11, PROTO-18 сняты с отложения). `exportAuditChain` эмитит `glt.audit.appended`.
+**DEV-24 — сделано.** `exportOtel` публикует метрики слоя «Сборка»; скруб до экспорта (INV-11, PROTO-18 сняты с отложения). `exportAuditChain` эмитит `glt.audit.appended`.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 
