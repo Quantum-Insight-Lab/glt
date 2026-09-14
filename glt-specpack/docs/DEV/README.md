@@ -89,7 +89,7 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | 23 | [RBAC](23-rbac.md) | 3 | высокий | **сделано** |
 | 24 | [OTel и экспорт audit](24-otel-and-audit-export.md) | 3 | средний | **сделано** |
 | 25 | [Развёртывание через Compose](25-compose-deployment.md) | 3 | средний | **сделано** |
-| 26 | [Drift и инциденты](26-drift-and-incidents.md) | 3 | средний | запланирован |
+| 26 | [Drift и инциденты](26-drift-and-incidents.md) | 3 | средний | **сделано** |
 | 27 | [Dogfood собственной топологии](27-self-topology-dogfood.md) | 3 | высокий | запланирован |
 | 28 | [Интеграция внешнего witness](28-external-witness-integration.md) | 3 | высокий | запланирован |
 | 29 | [ActionSpec и planner](29-actionspec-and-planner.md) | 4 | высокий | запланирован |

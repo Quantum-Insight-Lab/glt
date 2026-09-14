@@ -16,6 +16,7 @@ DEV-26: классификаторы drift и incident-обхода. Change и i
 - Схема ImpactReport не меняется: labels инцидента не пишутся в `change.labels` как новый enum. События не эмитятся.
 - Golden digest и `impact-bootstrap.json` не менялись.
 - Покрытие `glt_structural_coverage` без изменения: **0.825 (33/40)**.
+- Шаг принят: `docs/DEV/26-drift-and-incidents.md` — `status: accepted`.
 
 ## [0.31.0] — 2026-09-14
 

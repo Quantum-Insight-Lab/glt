@@ -89,11 +89,11 @@ describe("DEV-09 golden freeze and intended boundary", () => {
 
   it("PROTO-05 planned DEV step without code has expected_from_step", () => {
     const compiled = compileIntendedFromPack();
-    const twentySix = compiled.compiled.entries.find((e) => e.id === "glt.dev.26");
-    expect(twentySix).toBeDefined();
-    const spec = twentySix!.spec as { node?: { lifecycle?: string; delivery?: { expectedFromStep?: string } } };
+    const twentySeven = compiled.compiled.entries.find((e) => e.id === "glt.dev.27");
+    expect(twentySeven).toBeDefined();
+    const spec = twentySeven!.spec as { node?: { lifecycle?: string; delivery?: { expectedFromStep?: string } } };
     expect(spec.node?.lifecycle).toBe("planned");
-    expect(spec.node?.delivery?.expectedFromStep).toBe("glt.dev.26");
+    expect(spec.node?.delivery?.expectedFromStep).toBe("glt.dev.27");
   });
 
   it("glt compile snapshot --boundary intended succeeds and does not write the workspace", async () => {

@@ -2,7 +2,7 @@
 id: glt.dev.26
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 3
 depends_on:
   - glt.dev.25
@@ -59,7 +59,7 @@ source_refs:
 
 ### Общее
 
-- [ ] CI зелёный на всех шагах, от которых зависит этот
+- [x] CI зелёный на всех шагах, от которых зависит этот
 - [x] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
 - [x] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
 - [x] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
@@ -70,4 +70,4 @@ source_refs:
 
 ## Статус
 
-запланирован — классификаторы в дереве. Accept после зелёного CI.
+**сделано** — ветка `wave3`. Incident отдельно от change; hash mismatch — drift. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34810665642).
