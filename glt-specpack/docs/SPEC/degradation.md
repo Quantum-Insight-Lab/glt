@@ -50,6 +50,29 @@ v1 has no write command. The write/runner block is still a required
 predicate: a stale or conflicted snapshot must report `write_blocked: true`
 and `actions_above: read`.
 
+## Drift and incidents (DEV-26)
+
+Incident walk uses the **incident** rows of the propagation matrix. Change
+rows do not match. Incident class labels are explicit; they are not derived
+from a file path. See [`impact.md`](impact.md).
+
+| Path evidence | Class |
+|---|---|
+| materialized, any | `candidate` |
+| observed, no trace-parentage | `candidate` |
+| observed + trace-parentage | `confirmed` |
+
+A candidate is a path of possible spread. It is not a causal claim (INV-04).
+
+| Build hash vs deployment hash | Class |
+|---|---|
+| equal, both present | `aligned` |
+| different | `drift` |
+| either side empty | `drift` |
+
+Silence (implicit aligned) is forbidden (PROTO-12). `classifyDeployDrift`
+names the class. It does not pick which hash is true.
+
 ## Graceful UI
 
 Always show: snapshot age, boundary id, classifier version, known_unknowns count.

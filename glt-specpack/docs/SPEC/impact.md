@@ -95,9 +95,23 @@ The boundary document is the coverage certificate. Impact does not treat `snapsh
 
 The intended YAML lists certified components. Assembled DEV steps are compiled as the intended registry list; they are not silently added to the published coverage certificate.
 
+## Incident vs change (DEV-26)
+
+`mode` selects matrix rows. Change rules never match an incident walk;
+incident rules never match a change walk. Mixing `availability_failure`
+with a schema change is a contract error, not a union.
+
+Incident labels are explicit incident classes. `classifyChange` (path shape)
+does not run in incident mode.
+
 ## Language
 
-Use «path of possible spread», «candidate source». Causality requires trace-parentage or explicit causal evidence.
+Use «path of possible spread», «candidate source». Causality requires
+trace-parentage or explicit causal evidence.
+
+`classifyIncidentPath`: a materialized path is `candidate`. `confirmed`
+requires the observed plane **and** trace-parentage. Candidate is not
+rewritten as observation (INV-04).
 
 ## Schema
 

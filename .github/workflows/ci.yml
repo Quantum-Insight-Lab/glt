@@ -140,6 +140,10 @@ jobs:
       - name: compose deployment
         run: pnpm test:compose
 
+      # DEV-26: incident matrix stays separate; candidate ≠ confirmed; hash mismatch is drift.
+      - name: drift and incidents
+        run: pnpm test:drift
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

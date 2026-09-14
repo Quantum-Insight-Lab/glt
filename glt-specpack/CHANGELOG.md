@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.32.0] — 2026-09-14
+
+DEV-26: классификаторы drift и incident-обхода. Change и incident не смешиваются.
+
+### Added
+
+- Контракт в `docs/SPEC/degradation.md` и `docs/SPEC/impact.md`. Incident-строки матрицы не участвуют в change-обходе. Materialized-путь — `candidate`; `confirmed` только при observed + trace-parentage (INV-04).
+- `classifyIncidentPath` и `classifyDeployDrift` в `packages/domain`. Расхождение или пустой hash — `drift`, не молчание (PROTO-12). Команды `glt` не расширяются. Шаг CI `drift and incidents`.
+
+### Notes
+
+- Схема ImpactReport не меняется: labels инцидента не пишутся в `change.labels` как новый enum. События не эмитятся.
+- Golden digest и `impact-bootstrap.json` не менялись.
+- Покрытие `glt_structural_coverage` без изменения: **0.825 (33/40)**.
+
 ## [0.31.0] — 2026-09-14
 
 DEV-25: self-host через Docker Compose. Образы по digest. Секреты снаружи репозитория.

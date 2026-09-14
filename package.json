@@ -51,6 +51,8 @@
     "test:otel": "vitest run control-plane/packages/domain/src/telemetry.test.ts control-plane/tests/otel-audit-export.test.ts",
     "pretest:compose": "pnpm gen",
     "test:compose": "vitest run control-plane/tests/compose-deployment.test.ts",
+    "pretest:drift": "pnpm gen",
+    "test:drift": "vitest run control-plane/packages/domain/src/drift.test.ts control-plane/packages/domain/src/impact.test.ts control-plane/tests/drift-incidents.test.ts",
     "collect:git": "tsx control-plane/packages/collectors/src/bin.ts",
     "pretest:collect": "pnpm gen",
     "test:collect": "vitest run control-plane/packages/collectors/src/git.test.ts control-plane/packages/collectors/src/ci.test.ts control-plane/tests/git-collector.test.ts control-plane/tests/ci-collector.test.ts",

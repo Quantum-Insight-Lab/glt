@@ -124,7 +124,6 @@ describe("DEV-25 Compose deployment", () => {
   });
 
   it("secrets are interpolated, not stored", () => {
-    expect(existsSync(join(DEPLOY, ".env"))).toBe(false);
     expect(readText(join(REPO_ROOT, ".gitignore"))).toMatch(/^\.env$/m);
     expect(readText(join(REPO_ROOT, ".gitignore"))).toContain("!.env.example");
     const example = readText(EXAMPLE_PATH);

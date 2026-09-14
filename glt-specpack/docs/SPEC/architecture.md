@@ -101,6 +101,13 @@ A topology snapshot may **pin** both planes (DEV-20): intended nodes stay in
 `source_digests.git.*`. The two lists are not merged into one node. Golden
 bootstrap (`glt.bootstrap-slice@1`) stays the four-node digest oracle.
 
+## Drift (DEV-26)
+
+Incident traversal uses the incident matrix rows, not change rows.
+Materialized spread is a candidate; observed trace-parentage confirms it.
+A deployment hash that is missing or differs from the build hash is `drift`,
+not silence. See [`degradation.md`](degradation.md) and [`impact.md`](impact.md).
+
 ## Deploy (DEV-25)
 
 Wave 3 self-host is Docker Compose: api + postgres + redis + otel-collector.

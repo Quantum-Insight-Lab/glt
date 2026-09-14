@@ -131,6 +131,16 @@ export {
   type SnapshotPin,
 } from "./snapshot.ts";
 export {
+  DRIFT_STEP,
+  classifyDeployDrift,
+  classifyIncidentPath,
+  type DeployBuildPin,
+  type DeployDriftClass,
+  type IncidentPathClass,
+  type IncidentPathEvidence,
+  type IncidentPlane,
+} from "./drift.ts";
+export {
   CLASSIFIER_VERSION,
   classifyChange,
   computeImpact,

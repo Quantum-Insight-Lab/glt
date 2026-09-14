@@ -245,4 +245,86 @@ describe("DEV-10 impact engine", () => {
     expect(report.change.classifier_version).toBe(CLASSIFIER_VERSION);
     expect(report.change.matrix_version).toBe("1.0.0");
   });
+
+  it("incident mode does not walk change-matrix rows", () => {
+    const incidentDepends: ImpactRuleView = {
+      id: "incident-depends",
+      mode: "incident",
+      relation: "depends_on",
+      changed_endpoint: "to",
+      incident_classes: ["availability"],
+      planes: ["materialized", "observed"],
+      direction: "against_edge",
+      edge_filter: "propagation.incident",
+      effects: ["mark_affected"],
+      stop: ["max_depth", "visited", "boundary"],
+    };
+    const unusedIncident: ImpactRuleView = {
+      ...incidentDepends,
+      id: "incident-calls",
+      relation: "calls",
+    };
+    const edges = BOOTSTRAP_EDGES.map((item) =>
+      item.relation === "depends_on"
+        ? {
+            ...item,
+            incident: ["availability"],
+            assertions: [
+              ...item.assertions,
+              { plane: "materialized", status: "asserted" },
+            ],
+          }
+        : item,
+    );
+    const changeWalk = computeImpact(base({ labels: ["interface"] }));
+    const incidentOnChangeRules = computeImpact(
+      base({
+        mode: "incident",
+        labels: ["availability"],
+        edges,
+        matrix: matrix([depends, validates, gates, unusedIncident]),
+      }),
+    );
+    const incidentWalk = computeImpact(
+      base({
+        mode: "incident",
+        labels: ["availability"],
+        edges,
+        matrix: matrix([depends, validates, gates, incidentDepends]),
+      }),
+    );
+    expect(changeWalk.affected_nodes).toContain(COMPILER);
+    expect(incidentOnChangeRules.affected_nodes).toEqual([ENTRY]);
+    expect(incidentOnChangeRules.candidate_paths).toEqual([]);
+    expect(incidentWalk.affected_nodes).toContain(COMPILER);
+    expect(incidentWalk.candidate_paths).toContainEqual([ENTRY, COMPILER]);
+  });
+
+  it("mixing a change class into incident mode is a contract error", () => {
+    const unusedIncident: ImpactRuleView = {
+      id: "incident-calls",
+      mode: "incident",
+      relation: "calls",
+      changed_endpoint: "to",
+      incident_classes: ["availability"],
+      planes: ["materialized"],
+      direction: "against_edge",
+      edge_filter: "propagation.incident",
+      effects: ["mark_affected"],
+      stop: ["visited"],
+    };
+    try {
+      computeImpact(
+        base({
+          mode: "incident",
+          labels: ["interface"],
+          matrix: matrix([depends, validates, gates, unusedIncident]),
+        }),
+      );
+      throw new Error("expected GltError");
+    } catch (error) {
+      expect(error).toBeInstanceOf(GltError);
+      expect((error as GltError).code).toBe(2);
+    }
+  });
 });

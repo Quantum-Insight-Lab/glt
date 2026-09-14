@@ -121,15 +121,15 @@ export function classifyChange(path: string): string[] {
 }
 
 export function computeImpact(input: ComputeImpactInput): ImpactReportView {
+  if (input.boundaryNodes.length === 0) {
+    throw contractInvalid("coverage manifest nodes are required", [input.boundaryId]);
+  }
+
   const mode = input.mode ?? "change";
   const classifierVersion = input.classifierVersion ?? CLASSIFIER_VERSION;
   const labels = deterministicLabels(input);
   if (labels.length === 0) {
     throw contractInvalid("impact change labels must not be empty");
-  }
-
-  if (input.boundaryNodes.length === 0) {
-    throw contractInvalid("coverage manifest nodes are required", [input.boundaryId]);
   }
   const nodeIds = new Set(input.nodes.map((node) => node.id));
   const boundary = new Set(input.boundaryNodes);
@@ -261,10 +261,33 @@ export function computeImpact(input: ComputeImpactInput): ImpactReportView {
 function deterministicLabels(input: ComputeImpactInput): string[] {
   // llmLabels are review-only and never become gate input (INV-12).
   void input.llmLabels;
+  const mode = input.mode ?? "change";
   if (input.labels !== undefined && input.labels.length > 0) {
-    return uniqueSorted(input.labels);
+    const labels = uniqueSorted(input.labels);
+    const allowed = labelsForMode(input.matrix, mode);
+    const mixed = labels.filter((label) => !allowed.has(label));
+    if (mixed.length > 0) {
+      throw contractInvalid("impact labels do not belong to this matrix mode", mixed);
+    }
+    return labels;
+  }
+  if (mode === "incident") {
+    throw contractInvalid("incident mode requires explicit incident class labels");
   }
   return uniqueSorted(input.sources.flatMap((source) => classifyChange(source.path)));
+}
+
+function labelsForMode(
+  matrix: ImpactMatrixView,
+  mode: "change" | "incident",
+): Set<string> {
+  const allowed = new Set<string>();
+  for (const rule of matrix.rules) {
+    if (rule.mode !== mode) continue;
+    const classes = mode === "change" ? rule.change_classes : rule.incident_classes;
+    for (const cls of classes ?? []) allowed.add(cls);
+  }
+  return allowed;
 }
 
 function matchSource(nodes: readonly ImpactNodeView[], source: ImpactSource): string | undefined {

@@ -8,9 +8,33 @@ depends_on:
   - glt.dev.25
 spec_refs:
   - ../SPEC/degradation.md
+  - ../SPEC/impact.md
+  - ../SPEC/architecture.md
+  - ../SPEC/structural-invariants.md
+  - ../PDA/04-invariants.md
 risk: medium
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/degradation.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/impact.md
+    authority: impact-propagation-rules
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/architecture.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/structural-invariants.md
+    authority: structural-invariants
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/04-invariants.md
+    authority: methodology-pda
+    role: derived-from
 ---
 
 # 26 — Drift и инциденты
@@ -29,16 +53,16 @@ source_refs: []
 
 ### По шагу
 
-- [ ] Incident-обход идёт по отдельной матрице, не смешиваясь с change
-- [ ] Materialized-путь помечается кандидатом, observed trace-parentage — подтверждением
-- [ ] Расхождение deployment и build hash даёт drift, а не молчание
+- [x] Incident-обход идёт по отдельной матрице, не смешиваясь с change
+- [x] Materialized-путь помечается кандидатом, observed trace-parentage — подтверждением
+- [x] Расхождение deployment и build hash даёт drift, а не молчание
 
 ### Общее
 
 - [ ] CI зелёный на всех шагах, от которых зависит этот
-- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
-- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
-- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+- [x] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [x] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [x] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
 
 ## Спецификация
 
@@ -46,4 +70,4 @@ source_refs: []
 
 ## Статус
 
-запланирован
+запланирован — классификаторы в дереве. Accept после зелёного CI.
