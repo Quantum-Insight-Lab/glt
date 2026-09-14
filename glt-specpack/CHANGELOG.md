@@ -16,6 +16,7 @@ DEV-22: PostgreSQL JSONB для снимков и audit. Снимок неизм
 
 - API по-прежнему компилирует на лету: write-маршрут не добавляется. События не эмитятся (DEV-24).
 - Golden digest и `impact-bootstrap.json` не менялись.
+- Шаг принят: `docs/DEV/22-postgresql-storage.md` — `status: accepted`. Покрытие `glt_structural_coverage`: **0.75 (30/40)**.
 
 ## [0.27.0] — 2026-09-11
 

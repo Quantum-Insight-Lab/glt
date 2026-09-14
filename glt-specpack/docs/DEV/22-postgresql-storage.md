@@ -2,7 +2,7 @@
 id: glt.dev.22
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 3
 depends_on:
   - glt.dev.21
@@ -81,4 +81,4 @@ API (DEV-21) компилирует на лету и в копию не пише
 
 ## Статус
 
-в дереве — ветка `wave3`. JSONB store. GitHub CI ещё не принимал шаг.
+**сделано** — ветка `wave3`. Снимок неизменяем; audit только append. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34804109590).
