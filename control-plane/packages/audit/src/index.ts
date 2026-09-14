@@ -16,3 +16,5 @@ export {
 } from "./store.ts";
 export type { AuditStore } from "./store.ts";
 export type { SqlExec } from "./sql.ts";
+export { EXPORT_STEP, auditAppendedEvent, exportAuditChain } from "./export.ts";
+export type { AuditAppendedEvent, AuditChainExport } from "./export.ts";

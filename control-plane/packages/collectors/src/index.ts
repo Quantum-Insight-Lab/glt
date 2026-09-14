@@ -50,3 +50,5 @@ export type {
   CollectCiFactsInput,
 } from "./ci.ts";
 export { intendedSnapshotExtras } from "./intended-pins.ts";
+export { OTEL_COLLECTOR_ID, OTEL_STEP, exportOtel } from "./otel.ts";
+export type { ExportOtelInput, OtelExport, OtelResource } from "./otel.ts";

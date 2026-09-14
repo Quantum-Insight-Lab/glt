@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.30.0] — 2026-09-14
+
+DEV-24: OTel-экспорт метрик слоя «Сборка» и audit-цепочки. Скруб до экспорта.
+
+### Added
+
+- Контракт публикации в `docs/OBSERVABILITY/metrics.md` и `docs/SPEC/collectors.md`. Все шесть Build-метрик всегда есть в `exportOtel`. Canary `glt-dlp-canary` дропается (INV-11). Сырой PII нет в traces (PROTO-18).
+- `exportAuditChain` эмитит `EventType.AuditAppended` (уже в реестре). Команды `glt` не расширяются. Шаг CI `otel and audit export`.
+
+### Notes
+
+- Новых имён событий нет. OTel SDK не добавляется: документ OTLP-shaped JSON, collector — DEV-25.
+- Golden digest и `impact-bootstrap.json` не менялись.
+- PROTO-18 и INV-11 сняты с отложения. Покрытие `glt_structural_coverage`: **0.825 (33/40)**.
+
 ## [0.29.0] — 2026-09-14
 
 DEV-23: RBAC. Deny by default. `read` и `request_action` — разные права. Автор плана не одобряет сам себя.

@@ -29,8 +29,12 @@ source_refs: []
 ## DLP
 
 - Allowlist telemetry schema before export
-- Scrub/drop at collector boundary
+- Scrub/drop at collector boundary (`scrubTelemetry` in domain, before `exportOtel`)
 - Canary secret injection tests in CI
+- Canary token: `glt-dlp-canary`. Presence → drop + `glt_dlp_canary_leak_total`
+
+Allowed trace attributes: `service.name`, `glt.registry_version`,
+`glt.snapshot_id`, `glt.boundary_id`, `glt.trace_id`. Opaque trace ids only.
 
 ## Correlation
 

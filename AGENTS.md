@@ -73,6 +73,8 @@ control-plane/packages/
 | HTTP API | Fastify; тело = артефакт CLI; в копию не пишет | `packages/api/src/server.ts` |
 | Снимки и audit в БД | PostgreSQL JSONB; снимок immutable; audit только INSERT | `packages/snapshot/src/store.ts`, `packages/audit/src/store.ts` |
 | Политика доступа (RBAC) | `authorize`, deny by default | `packages/domain/src/policy.ts` |
+| Скруб телеметрии | `scrubTelemetry`, allowlist + canary | `packages/domain/src/telemetry.ts` |
+| Экспорт метрик и audit | `exportOtel`, `exportAuditChain` | `packages/collectors/src/otel.ts`, `packages/audit/src/export.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |

@@ -1,7 +1,7 @@
 /**
  * Audit store — DEV-22. PostgreSQL JSONB, insert-only.
  * Hash is hashAuditRecord (S-4). Verify-on-read is verifyAuditChain (INV-07).
- * P05 does not delete. This step does not emit events.
+ * P05 does not delete. Export emits EventType.AuditAppended (DEV-24).
  *
  * Contract: glt-specpack/docs/SPEC/audit.md
  */

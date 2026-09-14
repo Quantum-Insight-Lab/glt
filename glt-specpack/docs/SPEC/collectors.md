@@ -108,9 +108,20 @@ Privacy: names, conclusions and digests only. Log bodies are not in the report.
 
 The collector is not a `glt` command (S-10). It does not write the workspace. Pinning CI facts onto a topology snapshot is not this step.
 
+## OTel collector v1 (DEV-24)
+
+Aggregates only. `exportOtel` publishes the Build metrics from
+[`../OBSERVABILITY/metrics.md`](../OBSERVABILITY/metrics.md) and optional
+trace attributes. Resource: `service.name=glt-controlplane`.
+
+The collector does not decide policy. It does not write the workspace. It is
+not a `glt` command. Trace bodies, prompts and user ids are not inputs.
+
 ## DLP
 
 Scrub before export. Allowlist schema only. Canary tests mandatory (INV-11).
+The canary token is `glt-dlp-canary`. A hit increments `glt_dlp_canary_leak_total`
+and the field is dropped. See [`../SECURITY/privacy.md`](../SECURITY/privacy.md).
 
 ## Registry entries
 

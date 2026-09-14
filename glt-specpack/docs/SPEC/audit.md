@@ -43,10 +43,16 @@ as every other hash (S-4). The first `prev_hash` is the genesis digest
 `hashAuditRecord({ record_id: "genesis", prev_hash: "" })`. Verify-on-read
 uses `verifyAuditChain`.
 
-`event_type` is a generated constant from the event registry. This step
-does not emit `glt.audit.appended` (DEV-24).
+`event_type` is a generated constant from the event registry.
 
-The store is `packages/audit`. No `glt` command. No workspace write.
+## Export (DEV-24)
+
+`exportAuditChain` projects the stored records. Each record yields one
+`glt.audit.appended` via `EventType.AuditAppended` (not a string literal).
+Payload is `record_id` and `prev_hash` only. The projection is scrubbed
+before return (INV-11). No `glt` command. No workspace write.
+
+The store is `packages/audit`.
 
 ## Verification
 

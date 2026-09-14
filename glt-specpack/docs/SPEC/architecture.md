@@ -69,7 +69,8 @@ control-plane/
 ## Boundaries
 
 - `domain` — no I/O. `authorize` (DEV-23) lives here: deny by default.
-- `collectors` — no policy decisions
+- `collectors` — no policy decisions. `exportOtel` (DEV-24) publishes Build
+  metrics after scrub. See [`collectors.md`](collectors.md).
 - `runner` — no registry write
 - `dashboard` — read-only except action requests through API
 - `api` — Fastify composition root (DEV-21). GET returns the same artifacts
@@ -77,7 +78,7 @@ control-plane/
   (DEV-23). No workspace write. See [`api.md`](api.md).
 - `snapshot` / `audit` — PostgreSQL JSONB store (DEV-22). Snapshots are
   immutable after put. Audit is insert-only. Digest after read is
-  `digestOf` (PROTO-03).
+  `digestOf` (PROTO-03). `exportAuditChain` emits `glt.audit.appended` (DEV-24).
 
 ## Build plane (DEV-18)
 

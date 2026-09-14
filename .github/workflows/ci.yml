@@ -132,6 +132,10 @@ jobs:
       - name: rbac
         run: pnpm test:rbac
 
+      # DEV-24: publish Build metrics; scrub before export; emit audit.appended.
+      - name: otel and audit export
+        run: pnpm test:otel
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

@@ -18,5 +18,6 @@ source_refs: []
 | [runner-unknown-outcome.md](runbooks/runner-unknown-outcome.md) | unknown_outcome |
 | [witness-stale.md](runbooks/witness-stale.md) | staleness > P06 |
 | [bootstrap-trust-fail.md](runbooks/bootstrap-trust-fail.md) | verifier fail at start |
+| [telemetry-leak.md](runbooks/telemetry-leak.md) | dlp_canary_leak |
 
 Each runbook: detect → mitigate → escalate → postmortem template.

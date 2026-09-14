@@ -52,6 +52,21 @@ source_refs: []
 
 Кода нет, поэтому: `structural_coverage` = 0 при 40 ID в реестрах (18 PROTO + 12 INV + 10 S), `registry_drift` = 0 при 10 событиях в реестре и 0 в коде, остальные — 0. Стартовый аудит одной строкой: **40 инвариантов в реестрах, 0 в тестах, 0 событий мимо реестра.**
 
+## Publishing (DEV-24)
+
+Build-layer gauges and counters leave the process only through `exportOtel`
+in `packages/collectors`. The function always emits every name in the Build
+table above, including an empty `glt_graph_change_lead_time` histogram.
+Values arrive already computed (S-7 coverage, S-3 drift, S-4 census, S-6
+cycles). The exporter does not invent a second coverage number.
+
+Scrub runs **before** the document is returned (INV-11). A canary token in
+attributes is dropped and counted as `glt_dlp_canary_leak_total`. Raw PII
+does not appear in traces (PROTO-18).
+
+The document is OTLP-shaped JSON. Compose (DEV-25) ships it to the collector.
+There is no second metrics SDK and no new `glt` command.
+
 ## OTel
 
 Resource: `service.name=glt-controlplane`, attributes `glt.registry_version`, `glt.snapshot_id`.

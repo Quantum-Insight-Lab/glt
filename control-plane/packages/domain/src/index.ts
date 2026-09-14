@@ -70,6 +70,21 @@ export {
   type Principal,
 } from "./policy.ts";
 export {
+  BUILD_METRIC_NAMES,
+  BuildMetric,
+  DLP_CANARY,
+  DLP_LEAK_METRIC,
+  SERVICE_NAME,
+  TELEMETRY_STEP,
+  containsRawPii,
+  publishBuildMetrics,
+  scrubTelemetry,
+  type BuildMetricName,
+  type BuildMetricValues,
+  type MetricPoint,
+  type ScrubResult,
+} from "./telemetry.ts";
+export {
   compileRegistry,
   resolveAlias,
   type AliasBinding,

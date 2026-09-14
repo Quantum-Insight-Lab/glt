@@ -149,10 +149,8 @@ source_refs:
 | PROTO-15 | glt.dev.29 |
 | PROTO-16 | glt.dev.33 |
 | PROTO-17 | glt.dev.29 |
-| PROTO-18 | glt.dev.24 |
 | INV-06 | glt.dev.29 |
 | INV-08 | glt.dev.29 |
-| INV-11 | glt.dev.24 |
 
 Исходный разрыв на момент 0.3.0: **8 из 18** PROTO имеют sheet, **0 из 40** ID имеют тест, потому что кода нет. Это база, к которой возвращаются.
 
@@ -236,6 +234,8 @@ source_refs:
 **DEV-22 — сделано.** Снимки в JSONB по digest; повтор с другим телом отвергается. Audit только append; P05 не удаляет. Digest после чтения — `digestOf`.
 
 **DEV-23 — сделано.** `authorize`: deny by default; `read` ≠ `request_action`; автор и runtime не одобряют свой plan/release (INV-09 снят с отложения).
+
+**DEV-24.** `exportOtel` публикует метрики слоя «Сборка»; скруб до экспорта (INV-11, PROTO-18 сняты с отложения). `exportAuditChain` эмитит `glt.audit.appended`.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 
