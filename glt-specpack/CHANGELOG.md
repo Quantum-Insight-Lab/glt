@@ -17,6 +17,7 @@ DEV-25: self-host через Docker Compose. Образы по digest. Секр�
 - API по-прежнему компилирует на лету: write-маршрут не добавляется. События не эмитятся. OTel SDK не добавляется.
 - Golden digest и `impact-bootstrap.json` не менялись.
 - Покрытие `glt_structural_coverage` без изменения: **0.825 (33/40)**.
+- Шаг принят: `docs/DEV/25-compose-deployment.md` — `status: accepted`.
 
 ## [0.30.0] — 2026-09-14
 
