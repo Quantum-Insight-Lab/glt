@@ -4,9 +4,15 @@ import { describe, expect, it } from "vitest";
 import { API_HEADER, API_STEP, assertSchema, buildApi } from "@glt/api";
 import { collectHealth } from "@glt/cli";
 import { REPO_ROOT, createValidator, validateAgainst } from "@glt/contracts";
+import { Role } from "@glt/domain";
 import { computeImpactFromPaths } from "@glt/impact";
 import { compileRegistryFromPaths } from "@glt/registry";
 import { compileSnapshotFromPaths, ioFromOptions, resolveRef } from "@glt/snapshot";
+
+const READER = {
+  [API_HEADER.actor]: "dev21-reader@local",
+  [API_HEADER.role]: Role.Reader,
+} as const;
 
 const AS_OF = "2026-08-14T10:00:00Z";
 const GOLDEN = "glt-specpack/contracts/examples/golden/bootstrap-snapshot.json";
@@ -29,7 +35,11 @@ describe("DEV-21 HTTP API", () => {
   it("S-4 GET /v1/snapshot body equals glt compile snapshot JSON", async () => {
     const expected = compileSnapshotFromPaths({ asOf: AS_OF });
     await withApi(async (app) => {
-      const res = await app.inject({ method: "GET", url: `/v1/snapshot?as-of=${AS_OF}` });
+      const res = await app.inject({
+        method: "GET",
+        url: `/v1/snapshot?as-of=${AS_OF}`,
+        headers: READER,
+      });
       expect(res.statusCode).toBe(200);
       expect(res.json()).toEqual(expected);
       expect(res.headers[API_HEADER.snapshotId]).toBe(expected.snapshot_id);
@@ -43,7 +53,11 @@ describe("DEV-21 HTTP API", () => {
   it("validates the snapshot with the same schema as CLI", async () => {
     const ajv = createValidator();
     await withApi(async (app) => {
-      const res = await app.inject({ method: "GET", url: `/v1/snapshot?as-of=${AS_OF}` });
+      const res = await app.inject({
+        method: "GET",
+        url: `/v1/snapshot?as-of=${AS_OF}`,
+        headers: READER,
+      });
       expect(validateAgainst(ajv, "snapshot", res.json())).toEqual([]);
     });
   });
@@ -63,7 +77,11 @@ describe("DEV-21 HTTP API", () => {
   it("S-4 GET /v1/impact body equals glt impact JSON", async () => {
     const expected = computeImpactFromPaths({ snapshot: GOLDEN });
     await withApi(async (app) => {
-      const res = await app.inject({ method: "GET", url: `/v1/impact?snapshot=${GOLDEN}` });
+      const res = await app.inject({
+        method: "GET",
+        url: `/v1/impact?snapshot=${GOLDEN}`,
+        headers: READER,
+      });
       expect(res.statusCode).toBe(200);
       expect(res.json()).toEqual(expected);
       expect(res.headers[API_HEADER.snapshotId]).toBe(expected.snapshot_id);
@@ -75,7 +93,7 @@ describe("DEV-21 HTTP API", () => {
   it("S-4 GET /v1/registry body equals glt compile registry JSON", async () => {
     const expected = compileRegistryFromPaths();
     await withApi(async (app) => {
-      const res = await app.inject({ method: "GET", url: "/v1/registry" });
+      const res = await app.inject({ method: "GET", url: "/v1/registry", headers: READER });
       expect(res.statusCode).toBe(200);
       expect(res.json()).toEqual(expected);
       expect(res.headers[API_HEADER.registryVersion]).toBe(expected.version);
@@ -88,6 +106,7 @@ describe("DEV-21 HTTP API", () => {
       const res = await app.inject({
         method: "GET",
         url: `/v1/health?snapshot=${GOLDEN}&as-of=${AS_OF}`,
+        headers: READER,
       });
       expect(res.statusCode).toBe(200);
       expect(res.json()).toEqual(expected);
@@ -100,7 +119,11 @@ describe("DEV-21 HTTP API", () => {
     const ref = "glt-specpack/docs/SPEC/registry.md";
     const expected = resolveRef(ref, ioFromOptions());
     await withApi(async (app) => {
-      const res = await app.inject({ method: "GET", url: `/v1/resolve?ref=${encodeURIComponent(ref)}` });
+      const res = await app.inject({
+        method: "GET",
+        url: `/v1/resolve?ref=${encodeURIComponent(ref)}`,
+        headers: READER,
+      });
       expect(res.statusCode).toBe(200);
       expect(res.json()).toEqual(expected);
     });

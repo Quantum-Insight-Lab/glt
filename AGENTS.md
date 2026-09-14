@@ -72,6 +72,7 @@ control-plane/packages/
 | Change dashboard | `projectChangeSurface`; React, только чтение; глифы выключены | `packages/domain/src/change-surface.ts`, `packages/dashboard/src/ChangeDashboard.ts` |
 | HTTP API | Fastify; тело = артефакт CLI; в копию не пишет | `packages/api/src/server.ts` |
 | Снимки и audit в БД | PostgreSQL JSONB; снимок immutable; audit только INSERT | `packages/snapshot/src/store.ts`, `packages/audit/src/store.ts` |
+| Политика доступа (RBAC) | `authorize`, deny by default | `packages/domain/src/policy.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |

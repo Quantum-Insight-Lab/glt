@@ -68,13 +68,13 @@ control-plane/
 
 ## Boundaries
 
-- `domain` — no I/O
+- `domain` — no I/O. `authorize` (DEV-23) lives here: deny by default.
 - `collectors` — no policy decisions
 - `runner` — no registry write
 - `dashboard` — read-only except action requests through API
 - `api` — Fastify composition root (DEV-21). GET returns the same artifacts
-  as the CLI, validated by the same schemas. No workspace write. See
-  [`api.md`](api.md).
+  as the CLI, validated by the same schemas. GET/HEAD require `read`
+  (DEV-23). No workspace write. See [`api.md`](api.md).
 - `snapshot` / `audit` — PostgreSQL JSONB store (DEV-22). Snapshots are
   immutable after put. Audit is insert-only. Digest after read is
   `digestOf` (PROTO-03).

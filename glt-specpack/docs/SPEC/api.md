@@ -7,6 +7,7 @@ depends_on:
   - glt.doc.spec.architecture
   - glt.doc.spec.cli
   - glt.doc.spec.structural-invariants
+  - glt.doc.spec.policy
 source_refs:
   - repository: glt-controlplane
     path: glt-specpack/docs/SPEC/cli.md
@@ -19,6 +20,10 @@ source_refs:
   - repository: glt-controlplane
     path: glt-specpack/docs/SPEC/structural-invariants.md
     authority: structural-invariants
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/policy.md
+    authority: policy-approval
     role: derived-from
 ---
 
@@ -63,6 +68,8 @@ false`. Input identity travels in headers:
 | `GLT-Snapshot-Digest` | `sha256:<hex>` of the snapshot |
 | `GLT-Registry-Digest` | `sha256:<hex>` of the compiled registry, via `digestOf` |
 | `GLT-Exit-Code` | The CLI exit code for the same inputs |
+| `GLT-Actor` | Presented identity (DEV-23) |
+| `GLT-Role` | Role token from [policy.md](policy.md) |
 
 A snapshot response always carries all four identity headers. Registry-only
 and resolve responses carry registry identity; they do not invent a snapshot.
@@ -70,6 +77,15 @@ and resolve responses carry registry identity; they do not invent a snapshot.
 `GLT-Exit-Code` may be 5 on `GET /v1/health` while the body is still 200:
 the artifact was produced, the graph said evidence is insufficient. That is
 the same split as CLI stdout + exit 5.
+
+## Access (DEV-23)
+
+Deny by default. `authorize` in domain is the only decision. GET and HEAD
+require `read`. A missing, empty, or unknown role is 403 (exit 4). The
+artifact body is not wrapped. `request_action` and `approve` are not `read`.
+
+The process still binds `127.0.0.1`. No new dependency. Actor binding by
+signature is DEV-30.
 
 ## Errors
 
@@ -89,7 +105,6 @@ Failure bodies are the CLI stderr object: `code`, `message`, optional
 ## Out of scope
 
 - Persistence write routes (DEV-22 store is a library; GET still compiles)
-
-- RBAC (DEV-23). Bind `127.0.0.1`.
 - Event emit (names stay in the event registry; this step does not emit)
 - New CLI verbs, workspace writes, action POST
+- OIDC / signed actor binding (DEV-30)

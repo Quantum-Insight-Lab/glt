@@ -128,6 +128,10 @@ jobs:
       - name: postgresql storage
         run: pnpm test:store
 
+      # DEV-23: deny by default; read ≠ request_action; author cannot approve own plan.
+      - name: rbac
+        run: pnpm test:rbac
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

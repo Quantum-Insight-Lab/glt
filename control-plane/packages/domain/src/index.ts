@@ -52,11 +52,23 @@ export {
   contractInvalid,
   evidenceInsufficient,
   invariantViolated,
+  policyDenied,
   sourceConflict,
   usageError,
   type GltErrorInit,
   type InvariantId,
 } from "./errors.ts";
+export {
+  Capability,
+  POLICY_STEP,
+  RUNTIME_IDENTITY,
+  Role,
+  authorize,
+  capabilitiesFor,
+  type AuthorizeInput,
+  type PlanSubject,
+  type Principal,
+} from "./policy.ts";
 export {
   compileRegistry,
   resolveAlias,

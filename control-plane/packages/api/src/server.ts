@@ -9,13 +9,16 @@ import { collectHealth } from "@glt/cli";
 import { intendedSnapshotExtras } from "@glt/collectors";
 import { createValidator, validateAgainst, type SchemaName } from "@glt/contracts";
 import {
+  Capability,
   ExitCode,
   GltError,
+  authorize,
   digestOf,
   healthExit,
   isIntendedBoundaryRef,
   usageError,
   type CompiledSnapshot,
+  type Principal,
 } from "@glt/domain";
 import { computeImpactFromPaths } from "@glt/impact";
 import { compileRegistryFromPaths } from "@glt/registry";
@@ -29,6 +32,8 @@ export const API_HEADER = {
   snapshotDigest: "glt-snapshot-digest",
   registryDigest: "glt-registry-digest",
   exitCode: "glt-exit-code",
+  actor: "glt-actor",
+  role: "glt-role",
 } as const;
 
 export interface InputVersions {
@@ -54,14 +59,16 @@ export function buildApi(): FastifyInstance {
   const ajv = createValidator();
 
   app.addHook("onRequest", async (request, reply) => {
-    if (request.method === "GET" || request.method === "HEAD") return;
-    return reply
-      .code(405)
-      .header("allow", "GET, HEAD")
-      .send({
-        code: ExitCode.Usage,
-        message: "API is read-only; nothing writes the workspace",
-      });
+    if (request.method !== "GET" && request.method !== "HEAD") {
+      return reply
+        .code(405)
+        .header("allow", "GET, HEAD")
+        .send({
+          code: ExitCode.Usage,
+          message: "API is read-only; nothing writes the workspace",
+        });
+    }
+    authorize({ principal: principalOf(request), capability: Capability.Read });
   });
 
   app.setErrorHandler((error: Error, _request, reply) => {
@@ -252,6 +259,19 @@ function queryOf(request: FastifyRequest): QueryBag {
 function str(rec: Record<string, unknown>, key: string): string | undefined {
   const value = rec[key];
   return typeof value === "string" && value.length > 0 ? value : undefined;
+}
+
+function principalOf(request: FastifyRequest): Principal | undefined {
+  const actor = headerValue(request.headers[API_HEADER.actor]);
+  const role = headerValue(request.headers[API_HEADER.role]);
+  if (actor === undefined || role === undefined) return undefined;
+  return { actor, role };
+}
+
+function headerValue(value: string | string[] | undefined): string | undefined {
+  if (typeof value !== "string") return undefined;
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : undefined;
 }
 
 function parseDepth(raw: string): number {

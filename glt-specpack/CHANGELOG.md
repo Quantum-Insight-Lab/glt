@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.29.0] — 2026-09-14
+
+DEV-23: RBAC. Deny by default. `read` и `request_action` — разные права. Автор плана не одобряет сам себя.
+
+### Added
+
+- Контракт ролей и capabilities в `docs/SPEC/policy.md`. Неизвестная роль не получает ничего. HTTP представляет principal в `GLT-Actor` / `GLT-Role` (`docs/SPEC/api.md`).
+- `authorize` в `packages/domain`. API GET/HEAD требуют `read`. Команды `glt` не расширяются. Шаг CI `rbac`.
+
+### Notes
+
+- Криптографическая привязка актора и повторная проверка envelope — DEV-30. События не эмитятся. Action POST — DEV-29.
+- Golden digest и `impact-bootstrap.json` не менялись.
+- INV-09 снят с отложения: автор и `glt-cp-runtime@internal` не одобряют. Покрытие `glt_structural_coverage`: **0.775 (31/40)**.
+
 ## [0.28.0] — 2026-09-14
 
 DEV-22: PostgreSQL JSONB для снимков и audit. Снимок неизменяем; audit только append.

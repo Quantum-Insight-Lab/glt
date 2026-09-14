@@ -82,6 +82,19 @@ export const invariantViolated = (
 export const evidenceInsufficient = (message: string, refs?: readonly string[]): GltError =>
   new GltError({ code: ExitCode.EvidenceInsufficient, message, ...(refs ? { refs } : {}) });
 
+/** Access or gate said no. HTTP 403. */
+export const policyDenied = (
+  message: string,
+  refs?: readonly string[],
+  invariant?: InvariantId,
+): GltError =>
+  new GltError({
+    code: ExitCode.PolicyDenied,
+    message,
+    ...(invariant ? { invariant } : {}),
+    ...(refs ? { refs } : {}),
+  });
+
 /** Two authoritative sources of one fact class disagree. Actions above read are blocked. */
 export const sourceConflict = (
   message: string,
