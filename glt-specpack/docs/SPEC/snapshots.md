@@ -127,7 +127,8 @@ digest is a broken store, not a new snapshot.
 
 The store is a library (`packages/snapshot`). It does not add a `glt` command
 and it does not write the workspace. The HTTP API still compiles on the fly
-(DEV-21); persistence is not a new write route.
+(DEV-21); persistence is not a new write route. Compose (DEV-25) runs the
+PostgreSQL server; it does not add a write route.
 
 ## Pinning for approval
 

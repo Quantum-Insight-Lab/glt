@@ -2,6 +2,22 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.31.0] — 2026-09-14
+
+DEV-25: self-host через Docker Compose. Образы по digest. Секреты снаружи репозитория.
+
+### Added
+
+- Контракт в `docs/SPEC/self-hosting.md` и `docs/SPEC/architecture.md`. Стек: api + postgres + redis + otel-collector. Файл — `deploy/compose.yaml`. `glt deploy` нет (S-10).
+- Pulled-образы и `FROM` закреплены `@sha256:` + 64 hex (PROTO-10). Хост публикует API только на `127.0.0.1`. Пароль — `deploy/.env`, не в дереве.
+- Шаг CI `compose deployment`. Команды `glt` не расширяются.
+
+### Notes
+
+- API по-прежнему компилирует на лету: write-маршрут не добавляется. События не эмитятся. OTel SDK не добавляется.
+- Golden digest и `impact-bootstrap.json` не менялись.
+- Покрытие `glt_structural_coverage` без изменения: **0.825 (33/40)**.
+
 ## [0.30.0] — 2026-09-14
 
 DEV-24: OTel-экспорт метрик слоя «Сборка» и audit-цепочки. Скруб до экспорта.

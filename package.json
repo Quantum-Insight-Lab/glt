@@ -49,6 +49,8 @@
     "test:rbac": "vitest run control-plane/packages/domain/src/policy.test.ts control-plane/tests/rbac.test.ts",
     "pretest:otel": "pnpm gen",
     "test:otel": "vitest run control-plane/packages/domain/src/telemetry.test.ts control-plane/tests/otel-audit-export.test.ts",
+    "pretest:compose": "pnpm gen",
+    "test:compose": "vitest run control-plane/tests/compose-deployment.test.ts",
     "collect:git": "tsx control-plane/packages/collectors/src/bin.ts",
     "pretest:collect": "pnpm gen",
     "test:collect": "vitest run control-plane/packages/collectors/src/git.test.ts control-plane/packages/collectors/src/ci.test.ts control-plane/tests/git-collector.test.ts control-plane/tests/ci-collector.test.ts",

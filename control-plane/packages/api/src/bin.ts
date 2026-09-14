@@ -1,9 +1,10 @@
 /**
- * Serves the read-only HTTP API on 127.0.0.1. Does not write the workspace.
+ * Serves the read-only HTTP API. Default bind is 127.0.0.1.
+ * Compose sets HOST=0.0.0.0 and publishes 127.0.0.1 on the host.
  */
-import { buildApi } from "./server.ts";
+import { apiBind, buildApi } from "./server.ts";
 
-const port = Number(process.env["PORT"] ?? "4174");
+const { host, port } = apiBind();
 const app = buildApi();
-await app.listen({ host: "127.0.0.1", port });
-process.stderr.write(`api http://127.0.0.1:${String(port)}/\n`);
+await app.listen({ host, port });
+process.stderr.write(`api http://${host}:${String(port)}/\n`);

@@ -23,6 +23,7 @@ coverage/
 !glt-specpack/trust/seed-public-keys/*.pub
 .env
 .env.*
+!.env.example
 
 # tooling caches
 .turbo/

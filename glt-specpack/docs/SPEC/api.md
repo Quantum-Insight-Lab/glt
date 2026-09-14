@@ -84,8 +84,9 @@ Deny by default. `authorize` in domain is the only decision. GET and HEAD
 require `read`. A missing, empty, or unknown role is 403 (exit 4). The
 artifact body is not wrapped. `request_action` and `approve` are not `read`.
 
-The process still binds `127.0.0.1`. No new dependency. Actor binding by
-signature is DEV-30.
+The process defaults to `127.0.0.1`. Compose sets `HOST=0.0.0.0` inside the
+container and publishes only `127.0.0.1:4174` on the host. No new dependency.
+Actor binding by signature is DEV-30.
 
 ## Errors
 

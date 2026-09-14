@@ -12,7 +12,7 @@ GLT Control Plane: наблюдаемая архитектура, анализ �
 
 Методология — Possibility-Driven Architecture v1.2. Нормативные контракты живут в `glt-specpack/`, код в `control-plane/`.
 
-Статус: волна 3. DEV-01…24 сделаны. DEV-25 следующий.
+Статус: волна 3. DEV-01…25 сделаны. DEV-26 следующий.
 
 ---
 
@@ -75,6 +75,7 @@ control-plane/packages/
 | Политика доступа (RBAC) | `authorize`, deny by default | `packages/domain/src/policy.ts` |
 | Скруб телеметрии | `scrubTelemetry`, allowlist + canary | `packages/domain/src/telemetry.ts` |
 | Экспорт метрик и audit | `exportOtel`, `exportAuditChain` | `packages/collectors/src/otel.ts`, `packages/audit/src/export.ts` |
+| Развёртывание self-host | Docker Compose | `deploy/compose.yaml` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |

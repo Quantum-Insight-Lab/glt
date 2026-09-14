@@ -31,7 +31,7 @@ source_refs: []
 | [gates.md](gates.md) | Check, Gate, delivery |
 | [runner.md](runner.md) | Plan, policy, sandbox v1 |
 | [dashboard.md](dashboard.md) | B1/G UI, glyph layer |
-| [self-hosting.md](self-hosting.md) | Bootstrap, witness, anti-cycle |
+| [self-hosting.md](self-hosting.md) | Bootstrap, witness, anti-cycle, Compose |
 | [degradation.md](degradation.md) | Failure modes |
 | [invariants.md](invariants.md) | 18 protocol rules, `PROTO-xx` |
 | [structural-invariants.md](structural-invariants.md) | Инварианты сборки `S-x` |

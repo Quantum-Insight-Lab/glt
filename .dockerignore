@@ -1,0 +1,12 @@
+.git
+.github
+.cursor
+node_modules
+**/node_modules
+coverage
+**/*.tsbuildinfo
+deploy/.env
+**/.env
+archive
+.turbo
+.vite

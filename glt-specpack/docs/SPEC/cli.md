@@ -37,7 +37,7 @@ Pretty-printed text output is a non-normative projection. The **JSON output is t
 
 v1 exposes exactly the allowed capabilities: `inventory`, `validate`, `compile`, `typecheck`, `test`, `health`.
 
-**No command in v1 writes to the workspace.** `commit`, `push`, `deploy` and `self-upgrade` are not commands and must not appear as flags, aliases or hidden subcommands. Adding one is a contract violation, not a feature.
+**No command in v1 writes to the workspace.** `commit`, `push`, `deploy` and `self-upgrade` are not commands and must not appear as flags, aliases or hidden subcommands. Adding one is a contract violation, not a feature. Self-host is `docker compose -f deploy/compose.yaml` (DEV-25), not a CLI verb.
 
 ---
 

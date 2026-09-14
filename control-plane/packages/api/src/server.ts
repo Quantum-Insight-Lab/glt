@@ -26,6 +26,15 @@ import { compileSnapshotFromPaths, ioFromOptions, resolveRef } from "@glt/snapsh
 
 export const API_STEP = "glt.dev.21" as const;
 
+export function apiBind(
+  env: Readonly<Record<string, string | undefined>> = process.env,
+): { host: string; port: number } {
+  return {
+    host: env["HOST"] ?? "127.0.0.1",
+    port: Number(env["PORT"] ?? "4174"),
+  };
+}
+
 export const API_HEADER = {
   snapshotId: "glt-snapshot-id",
   registryVersion: "glt-registry-version",

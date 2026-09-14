@@ -136,6 +136,10 @@ jobs:
       - name: otel and audit export
         run: pnpm test:otel
 
+      # DEV-25: Compose pins images by digest; secrets stay outside the repo. No deploy verb.
+      - name: compose deployment
+        run: pnpm test:compose
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

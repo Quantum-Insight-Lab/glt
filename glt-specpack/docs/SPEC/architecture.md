@@ -101,6 +101,14 @@ A topology snapshot may **pin** both planes (DEV-20): intended nodes stay in
 `source_digests.git.*`. The two lists are not merged into one node. Golden
 bootstrap (`glt.bootstrap-slice@1`) stays the four-node digest oracle.
 
+## Deploy (DEV-25)
+
+Wave 3 self-host is Docker Compose: api + postgres + redis + otel-collector.
+The file is `deploy/compose.yaml`. Pulled images are pinned by digest, not by
+tag. Secrets come from `deploy/.env` on the machine; they are not in the
+repository. The host publishes the API on `127.0.0.1` only. The CLI has no deploy verb.
+See [`self-hosting.md`](self-hosting.md).
+
 ## Diagram
 
 См. [`../PDA/06-architectural-blueprint.md`](../PDA/06-architectural-blueprint.md).

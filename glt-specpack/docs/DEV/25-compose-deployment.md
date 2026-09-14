@@ -8,9 +8,43 @@ depends_on:
   - glt.dev.24
 spec_refs:
   - ../SPEC/self-hosting.md
+  - ../SPEC/architecture.md
+  - ../SPEC/api.md
+  - ../SPEC/cli.md
+  - ../SPEC/snapshots.md
+  - ../SPEC/structural-invariants.md
+  - ../PDA/06-architectural-blueprint.md
 risk: medium
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/self-hosting.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/architecture.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/api.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/snapshots.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/structural-invariants.md
+    authority: structural-invariants
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/06-architectural-blueprint.md
+    authority: methodology-pda
+    role: derived-from
 ---
 
 # 25 — Развёртывание через Compose
@@ -30,15 +64,15 @@ source_refs: []
 ### По шагу
 
 - [ ] Поднимается с нуля на чистой машине по документации
-- [ ] Версии образов закреплены digest, а не тегом
-- [ ] Секреты приходят извне, в репозитории их нет
+- [x] Версии образов закреплены digest, а не тегом
+- [x] Секреты приходят извне, в репозитории их нет
 
 ### Общее
 
 - [ ] CI зелёный на всех шагах, от которых зависит этот
-- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
-- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
-- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+- [x] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [x] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [x] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
 
 ## Спецификация
 
@@ -46,4 +80,4 @@ source_refs: []
 
 ## Статус
 
-запланирован
+запланирован — файлы в `deploy/`, тесты pin/секретов зелёные. `compose up` на этой машине не прогнан: демон Docker не запущен. Accept после живого подъёма и зелёного CI.
