@@ -16,6 +16,7 @@ DEV-23: RBAC. Deny by default. `read` и `request_action` — разные пр�
 - Криптографическая привязка актора и повторная проверка envelope — DEV-30. События не эмитятся. Action POST — DEV-29.
 - Golden digest и `impact-bootstrap.json` не менялись.
 - INV-09 снят с отложения: автор и `glt-cp-runtime@internal` не одобряют. Покрытие `glt_structural_coverage`: **0.775 (31/40)**.
+- Шаг принят: `docs/DEV/23-rbac.md` — `status: accepted`.
 
 ## [0.28.0] — 2026-09-14
 

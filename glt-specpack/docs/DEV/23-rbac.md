@@ -2,7 +2,7 @@
 id: glt.dev.23
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 3
 depends_on:
   - glt.dev.21
@@ -83,4 +83,4 @@ source_refs:
 
 ## Статус
 
-запланирован
+**сделано** — ветка `wave3`. Deny by default; `read` ≠ `request_action`. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/34807031948).

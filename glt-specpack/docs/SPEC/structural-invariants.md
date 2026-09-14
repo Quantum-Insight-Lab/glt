@@ -235,7 +235,7 @@ source_refs:
 
 **DEV-22 — сделано.** Снимки в JSONB по digest; повтор с другим телом отвергается. Audit только append; P05 не удаляет. Digest после чтения — `digestOf`.
 
-**DEV-23.** `authorize`: deny by default; `read` ≠ `request_action`; автор и runtime не одобряют свой plan/release (INV-09 снят с отложения).
+**DEV-23 — сделано.** `authorize`: deny by default; `read` ≠ `request_action`; автор и runtime не одобряют свой plan/release (INV-09 снят с отложения).
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 
