@@ -16,6 +16,7 @@ DEV-35: sealed acceptance и DR.
 - Живой `release_trust_roots.allowed` остаётся пустым: печать на pack падает, пока оператор не добавит T0. `glt-dev-only-2026` не становится корнем. Новых имён событий нет.
 - Golden digest и `impact-bootstrap.json` не менялись.
 - Покрытие `glt_structural_coverage` без изменения: **1.0 (40/40)**.
+- Шаг принят: `docs/DEV/35-sealed-acceptance-dr-doc.md` — `status: accepted`. Живой `allowed` пуст; verifier/witness на диске placeholder — эти две галочки не ставились.
 
 ## [0.40.0] — 2026-09-16
 
