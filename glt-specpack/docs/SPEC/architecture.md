@@ -116,6 +116,15 @@ tag. Secrets come from `deploy/.env` on the machine; they are not in the
 repository. The host publishes the API on `127.0.0.1` only. The CLI has no deploy verb.
 See [`self-hosting.md`](self-hosting.md).
 
+## Dogfood (DEV-27)
+
+The live subject is this repository, described by
+`registry/glt-controlplane.yaml`. Observation compiles that bundle,
+collects git facts from the same repo, and classifies a seeded
+deploy/build pin. Intended and materialized stay two lists
+(`comparePlanes`). The observation does not approve a control-plane
+release (INV-09). See [`self-hosting.md`](self-hosting.md).
+
 ## Diagram
 
 См. [`../PDA/06-architectural-blueprint.md`](../PDA/06-architectural-blueprint.md).

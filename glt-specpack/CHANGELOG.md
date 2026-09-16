@@ -2,6 +2,22 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.33.0] — 2026-09-14
+
+DEV-27: контрол-плейн наблюдает свой репозиторий через `registry/glt-controlplane.yaml`.
+
+### Added
+
+- Контракт самонаблюдения в `docs/SPEC/self-hosting.md` и `docs/SPEC/architecture.md`. Предмет — этот репозиторий; описание — существующий бандл. Команды `glt` не расширяются (S-10).
+- `observeSelfTopology` в `packages/domain`. Класс drift — `classifyDeployDrift` (S-4). Время до обнаружения seeded drift записывается как `detect_seconds` (E05). Самонаблюдение не выдаёт `approve` (INV-09).
+- Метрика `glt_self_observation_drift_detect_seconds`. Шаг CI `self topology dogfood`.
+
+### Notes
+
+- Реестр, схемы и trust не менялись: новые узлы `glt.controlplane.*` по-прежнему зона архитектора.
+- События не эмитятся. Golden digest и `impact-bootstrap.json` не менялись.
+- Покрытие `glt_structural_coverage` без изменения: **0.825 (33/40)**.
+
 ## [0.32.0] — 2026-09-14
 
 DEV-26: классификаторы drift и incident-обхода. Change и incident не смешиваются.

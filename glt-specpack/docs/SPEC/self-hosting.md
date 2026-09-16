@@ -90,6 +90,39 @@ on all host interfaces is forbidden.
 4. `docker compose -f deploy/compose.yaml --env-file deploy/.env up --build`
 5. `GET http://127.0.0.1:4174/v1/health` with `GLT-Actor` and `GLT-Role: reader`.
 
+## Self-topology (DEV-27)
+
+The control plane observes **this** repository. The description is
+[`../../registry/glt-controlplane.yaml`](../../registry/glt-controlplane.yaml).
+The namespace is `glt.controlplane`. Compile and git collection stay
+read-only. No `glt` verb is added (S-10). The registry YAML is not a
+second graph: new nodes still go through the architect (S-4).
+
+`observeSelfTopology` in `packages/domain` is the one composition. It
+does not compile and does not talk to git. Registry ids, deploy/build
+hashes and `detect_seconds` arrive already parsed. Drift class is
+`classifyDeployDrift` — a second hash compare would be a second
+mechanism. `detect_seconds` is already in seconds (S-8); millisecond
+arithmetic lives outside domain.
+
+### Seeded drift (E05)
+
+A seed is a deploy/build pin that is not aligned. Detection is
+`drift`, not silence (PROTO-12). Time to detect is recorded on the
+observation as `detect_seconds` and published as
+`glt_self_observation_drift_detect_seconds`. An aligned pin is not a
+detection: `requireSeededDriftDetected` reports evidence insufficient.
+
+### Self-observation ≠ approval (INV-09)
+
+The observation never grants `approve`. `grants_approve` is always
+false. Seeing own topology, compiling own snapshot, or collecting own
+git facts is not a release approval. `glt-cp-runtime@internal` still
+cannot approve. External identity is still required for a
+`glt.controlplane.*` release. See [`policy.md`](policy.md).
+
+Anchor of the audit head is DEV-28, not this step.
+
 ## External witness
 
 Independent service anchors audit chain head. Staleness: param P06.

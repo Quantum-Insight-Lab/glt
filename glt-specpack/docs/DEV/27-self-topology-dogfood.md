@@ -8,9 +8,53 @@ depends_on:
   - glt.dev.26
 spec_refs:
   - ../SPEC/self-hosting.md
+  - ../SPEC/architecture.md
+  - ../SPEC/policy.md
+  - ../SPEC/cli.md
+  - ../SPEC/structural-invariants.md
+  - ../PDA/04-invariants.md
+  - ../PDA/08-experiments.md
+  - ../OBSERVABILITY/metrics.md
+  - ../SECURITY/approvals.md
 risk: high
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/self-hosting.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/architecture.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/policy.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/structural-invariants.md
+    authority: structural-invariants
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/04-invariants.md
+    authority: methodology-pda
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/08-experiments.md
+    authority: experiment-rubric
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/OBSERVABILITY/metrics.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SECURITY/approvals.md
+    authority: policy-approval
+    role: derived-from
 ---
 
 # 27 — Dogfood собственной топологии
@@ -19,7 +63,9 @@ source_refs: []
 
 ## Что делаем
 
-- Контрол-плейн наблюдает свой репозиторий
+- Контрол-плейн наблюдает свой репозиторий через `registry/glt-controlplane.yaml`
+- Seeded drift обнаруживается, время до обнаружения измеряется (E05)
+- Самонаблюдение не одобряет релиз (INV-09)
 
 ## Чеклист приёмки
 
@@ -44,6 +90,11 @@ source_refs: []
 
 - [self-hosting.md](../SPEC/self-hosting.md)
 
+Предмет наблюдения — этот репозиторий. Описание — существующий бандл,
+не второй реестр. `observeSelfTopology` классифицирует pin через
+`classifyDeployDrift` и всегда ставит `grants_approve: false`.
+`detect_seconds` приходит уже в секундах. Команды `glt` не добавляются.
+
 ## Статус
 
-запланирован
+в работе — ветка `wave3`. Чеклист пуст до живой проверки и зелёного CI.

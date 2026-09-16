@@ -30,4 +30,5 @@ Any change to: plan, registry revision, environment, snapshot digest, ActionSpec
 
 Self-approval attempts → deny + audit + alert (T2/T3).
 DEV-23 `authorize` denies the author of a plan and `glt-cp-runtime@internal`
-(INV-09). Envelope re-check at run is DEV-30.
+(INV-09). DEV-27 self-observation does not grant `approve`. Envelope
+re-check at run is DEV-30.

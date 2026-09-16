@@ -30,6 +30,7 @@ source_refs: []
 | `glt_task_time_seconds` | E01 |
 | `glt_check_recall` | E02 |
 | `glt_false_green_total` | E03 |
+| `glt_self_observation_drift_detect_seconds` | E05 |
 
 ## Build (structural integrity)
 

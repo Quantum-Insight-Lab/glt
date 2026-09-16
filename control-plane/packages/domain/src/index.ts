@@ -141,6 +141,15 @@ export {
   type IncidentPlane,
 } from "./drift.ts";
 export {
+  SELF_TOPOLOGY_NAMESPACE,
+  SELF_TOPOLOGY_STEP,
+  assertObservationDoesNotApprove,
+  observeSelfTopology,
+  requireSeededDriftDetected,
+  type SelfObservation,
+  type SelfObservationInput,
+} from "./self-topology.ts";
+export {
   CLASSIFIER_VERSION,
   classifyChange,
   computeImpact,

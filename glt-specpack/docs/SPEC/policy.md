@@ -64,7 +64,9 @@ in as read; action POST waits for DEV-29.
 
 A principal cannot approve a plan they authored. `glt-cp-runtime@internal`
 cannot approve. A plan that affects a `glt.controlplane.*` release requires
-an identity outside the runtime. See [approvals.md](../SECURITY/approvals.md)
+an identity outside the runtime. Self-observation (DEV-27) does not
+grant `approve`: compiling or watching own topology is not a release
+approval. See [approvals.md](../SECURITY/approvals.md)
 and [self-hosting.md](self-hosting.md).
 
 ## Approval envelope digests

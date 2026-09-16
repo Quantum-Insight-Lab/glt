@@ -29,7 +29,7 @@ Frozen до UI/runner: Correctness gate, Usefulness gate и Safety gate. Дет�
 | E02b | Затронутые узлы не теряются | ground truth | Recall = 1.0 | машинно |
 | E03 | Unknown visible | ground truth | False green = 0 | машинно |
 | E04 | Glyphs neutral/helpful | B1 text | Task success, time | людьми — отложен |
-| E05 | Self-observation drift | — | Time to detect seeded drift | машинно |
+| E05 | Self-observation drift | — | Time to detect seeded drift | машинно, DEV-27 |
 | E05a | Пробелы названы | ground truth | known_unknowns не пуст вне boundary | машинно |
 | E06 | Runner sandbox safe | — | Escape attempts blocked | машинно |
 

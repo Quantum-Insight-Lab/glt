@@ -144,6 +144,10 @@ jobs:
       - name: drift and incidents
         run: pnpm test:drift
 
+      # DEV-27: observe this repo via registry/glt-controlplane.yaml. Seeded drift is timed. No self-approve.
+      - name: self topology dogfood
+        run: pnpm test:dogfood
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode
