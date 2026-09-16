@@ -160,6 +160,13 @@ emits `glt.action.completed`. No workspace write. No new `glt` verb.
 See [`runner.md`](runner.md) and
 [`../SECURITY/sandbox.md`](../SECURITY/sandbox.md).
 
+## Receipts (DEV-33)
+
+The attempt is recorded before an external effect. Lost contact without
+a receipt is `unknown_outcome`, not a retry. Reconciliation writes a new
+audit record. `unknown_outcome` is not success. See
+[`runner.md`](runner.md) and [`audit.md`](audit.md).
+
 ## Witness (DEV-28)
 
 The audit head is anchored outside the control plane. `assessWitnessFreshness`

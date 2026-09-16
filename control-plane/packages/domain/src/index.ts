@@ -97,6 +97,24 @@ export {
   type ShadowRunInput,
 } from "./shadow.ts";
 export {
+  RECEIPT_STEP,
+  UNKNOWN_OUTCOME_METRIC,
+  assertNotSuccess,
+  attemptAuditRecord,
+  classifyLostReceipt,
+  denyBlindRetry,
+  reconcileAuditRecord,
+  reconcileOutcome,
+  reconciledPlan,
+  recordAttempt,
+  requireAttemptBeforeEffect,
+  type AttemptOutcome,
+  type AttemptRecord,
+  type ExternalReceipt,
+  type ReconcileReport,
+  type TargetObservation,
+} from "./receipt.ts";
+export {
   ESCAPE_SCENARIOS,
   EscapeScenario,
   SANDBOX_STEP,

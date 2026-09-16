@@ -19,7 +19,7 @@ source_refs: []
 | Registry conflict | `source_conflict`, block > read |
 | CP component down | CLI static fallback if snapshots local |
 | Classifier low confidence | Gate pending, not pass |
-| unknown_outcome | Reconcile runbook, no auto-retry |
+| unknown_outcome | `classifyLostReceipt` / `denyBlindRetry`; reconcile runbook, no auto-retry |
 
 ## Freshness and conflicts (DEV-17)
 

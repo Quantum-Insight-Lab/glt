@@ -125,7 +125,17 @@ admission. Host effects stay empty. Timeout is P04. `sandboxAuditRecord`
 seals the report (`hashAuditRecord`, S-4). `packages/runner` emits
 `glt.action.completed` (already in the registry). No `glt run` (S-10).
 Escape scenarios E06.1–6 are denied. Seeded failures S4–S6 are
-automated. Receipts / PROTO-16 remain DEV-33.
+automated. Receipts are DEV-33.
+
+## Receipts (DEV-33)
+
+`recordAttempt` seals the attempt before any external effect (PROTO-16).
+Lost contact after the effect without a receipt is `unknown_outcome`.
+There is no blind retry. `reconcileOutcome` sets succeeded or failed
+only from a target observation of the same attempt key; otherwise the
+state stays `unknown_outcome` and is not success. `packages/runner`
+emits `glt.action.completed` through `actionCompletedEvent` (S-4).
+No `glt reconcile` (S-10).
 
 ## Schemas
 

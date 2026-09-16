@@ -66,6 +66,20 @@ A receipt without a third-party signature is not an anchor. The
 projection emits `glt.witness.anchored` (`EventType.WitnessAnchored`).
 See [external-witness.md](../SECURITY/external-witness.md).
 
+## Receipts (DEV-33)
+
+`recordAttempt` is the write-ahead mark (PROTO-16). Domain stays pure
+(S-1). An external effect without that mark is denied. Lost contact
+after the effect, with no target receipt, is `unknown_outcome`.
+`denyBlindRetry` forbids an automatic second effect on the same
+attempt. `reconcileOutcome` asks the target by the attempt idempotency
+key and writes a **new** AuditRecord (`hashAuditRecord`, S-4). The
+previous record is not rewritten (INV-07).
+
+`unknown_outcome` is a legal terminal state. It is not success. The
+events are `glt.action.started` (attempt) and `glt.action.completed`
+(reconcile) — already in the registry. No `glt reconcile` (S-10).
+
 ## Schema
 
 [`../../contracts/schemas/audit-record.schema.json`](../../contracts/schemas/audit-record.schema.json)

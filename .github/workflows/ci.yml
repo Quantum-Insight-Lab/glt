@@ -168,6 +168,10 @@ jobs:
       - name: sandboxed runner
         run: pnpm test:sandbox
 
+      # DEV-33: write-ahead attempt; lost receipt is unknown_outcome; no blind retry.
+      - name: receipts
+        run: pnpm test:receipts
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

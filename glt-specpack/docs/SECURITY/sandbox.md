@@ -91,7 +91,7 @@ of the live environment stays on the isolation checklist above.
 | T3 Circular validation | Anti-cycle tests; not a sandbox hole |
 | T4 Runner escape | E06.1–6 + no socket |
 | T5 Stale witness | P06 / DEV-28; not bypassed here |
-| T6 unknown_outcome retry | Deferred to DEV-33 (PROTO-16) |
+| T6 unknown_outcome retry | `denyBlindRetry` (DEV-33, PROTO-16) |
 | T7 PII in topology | `scrubTelemetry` on persist (E06.5) |
 | T8 Tampered audit | S5 / `verifyAuditChain` |
 | T9 LLM gate bypass | Catalog + PROTO-13; no new action id |

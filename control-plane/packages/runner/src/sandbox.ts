@@ -61,9 +61,10 @@ export function runSandbox(
   };
 }
 
-export function actionCompletedEvent(
-  action: SandboxReport["actions"][number],
-): ActionCompletedEvent {
+export function actionCompletedEvent(action: {
+  readonly attempt_id: string;
+  readonly outcome: string;
+}): ActionCompletedEvent {
   return {
     event_type: EventType.ActionCompleted,
     schema_version: EVENT_SCHEMA_VERSION[EventType.ActionCompleted],

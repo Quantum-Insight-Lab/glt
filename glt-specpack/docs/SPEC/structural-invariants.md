@@ -144,7 +144,8 @@ source_refs:
 
 | ID | until |
 |---|---|
-| PROTO-16 | glt.dev.33 |
+
+Пусто. PROTO-16 закрыт на DEV-33.
 
 Исходный разрыв на момент 0.3.0: **8 из 18** PROTO имеют sheet, **0 из 40** ID имеют тест, потому что кода нет. Это база, к которой возвращаются.
 
@@ -246,6 +247,8 @@ source_refs:
 **DEV-31 — сделано.** `shadowRun` — dry-run без внешнего эффекта. Write без dry-run того же envelope отвергается. Результат — AuditRecord. `glt.action.started` уже в реестре. `glt shadow` нет.
 
 **DEV-32 — сделано.** `admitSandbox` / `sandboxRun` — deny by default. Сеть выключена; egress только с grant брокера. Ветка недоверена. Нет Docker socket и host credentials. Образ — digest конверта. E06.1–6 отвергаются. S4–S6 автоматизированы. `glt.action.completed` уже в реестре. `glt run` нет.
+
+**DEV-33 — сделано.** Попытка пишется до эффекта (`recordAttempt`, PROTO-16). Потеря связи без receipt — `unknown_outcome`, не retry. Сверка пишет новую audit-запись (INV-07). `unknown_outcome` не выдаётся за успех. `glt reconcile` нет.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

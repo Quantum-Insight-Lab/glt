@@ -24,17 +24,27 @@ describe("S-7 every invariant id has a named test or a visible deferral", () => 
   });
 
   it("S-7 an invariant without a test is reported, not dropped", () => {
-    expect(report.uncovered.length).toBeGreaterThan(0);
-    expect(report.uncovered).toContain("PROTO-16");
+    const stripped = reconcileCoverage({
+      registry,
+      testIds: registry.filter((id) => id !== "INV-10"),
+      deferrals: [],
+    });
+    expect(stripped.uncovered).toContain("INV-10");
+    expect(stripped.missingTests).toContain("INV-10");
     expect(report.total).toBe(registry.length);
   });
 
   it("S-7 a deferred invariant is marked with a DEV step and counts as uncovered", () => {
-    const proto16 = deferrals.find((d) => d.id === "PROTO-16");
-    expect(proto16?.until).toBe("glt.dev.33");
-    expect(report.uncovered).toContain("PROTO-16");
-    expect(report.deferred.map((d) => d.id)).toContain("PROTO-16");
-    expect(report.covered).toBeLessThan(report.total);
+    expect(deferrals).toEqual([]);
+    const deferred = reconcileCoverage({
+      registry,
+      testIds: registry.filter((id) => id !== "PROTO-16"),
+      deferrals: [{ id: "PROTO-16", until: "glt.dev.33" }],
+    });
+    expect(deferred.uncovered).toContain("PROTO-16");
+    expect(deferred.deferred.map((d) => d.id)).toContain("PROTO-16");
+    expect(deferred.missingTests).not.toContain("PROTO-16");
+    expect(deferred.covered).toBeLessThan(deferred.total);
   });
 
   it("S-7 glt_structural_coverage is a number", () => {
@@ -58,5 +68,8 @@ describe("S-7 every invariant id has a named test or a visible deferral", () => 
   it("S-7 no undeferred invariant is missing a test", () => {
     expect(report.missingTests).toEqual([]);
     expect(report.unknownDeferrals).toEqual([]);
+    expect(report.uncovered).toEqual([]);
+    expect(report.deferred).toEqual([]);
+    expect(report.covered).toBe(report.total);
   });
 });

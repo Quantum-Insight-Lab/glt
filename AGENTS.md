@@ -12,7 +12,7 @@ GLT Control Plane: наблюдаемая архитектура, анализ �
 
 Методология — Possibility-Driven Architecture v1.2. Нормативные контракты живут в `glt-specpack/`, код в `control-plane/`.
 
-Статус: волна 4. DEV-01…32 сделаны. DEV-33 следующий.
+Статус: волна 4. DEV-01…33 сделаны. DEV-34 следующий.
 
 ---
 
@@ -83,6 +83,7 @@ control-plane/packages/
 | Approval broker | `approvePlan`, `admitApprovedPlan` | `packages/domain/src/approve.ts`, `packages/runner/src/approve.ts` |
 | Shadow runner | `shadowRun`, `requireDryRunBeforeWrite` | `packages/domain/src/shadow.ts`, `packages/runner/src/shadow.ts` |
 | Sandboxed runner | `admitSandbox`, `sandboxRun` | `packages/domain/src/sandbox.ts`, `packages/runner/src/sandbox.ts` |
+| Receipts | `recordAttempt`, `reconcileOutcome` | `packages/domain/src/receipt.ts`, `packages/runner/src/receipt.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |

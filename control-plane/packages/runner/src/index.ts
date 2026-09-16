@@ -1,6 +1,6 @@
 /**
  * Runner — planner (DEV-29), approval (DEV-30), shadow (DEV-31),
- * sandbox (DEV-32). Receipts are DEV-33.
+ * sandbox (DEV-32), receipts (DEV-33).
  *
  * Contract: glt-specpack/docs/SPEC/runner.md
  */
@@ -45,3 +45,11 @@ export type {
   SandboxRunInput,
   SandboxedRun,
 } from "./sandbox.ts";
+export {
+  RUNNER_RECEIPT_STEP,
+  completedOutcomeEvent,
+  runReconcile,
+  attemptAuditRecord,
+  reconcileAuditRecord,
+} from "./receipt.ts";
+export type { ReconcileInput, ReconcileReport, ReconciledRun } from "./receipt.ts";

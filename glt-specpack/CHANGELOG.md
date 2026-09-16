@@ -2,6 +2,20 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.39.0] — 2026-09-16
+
+DEV-33: receipts и reconciliation — `unknown_outcome`.
+
+### Added
+
+- Контракт в `docs/SPEC/audit.md`, `docs/SPEC/runner.md` и `docs/SPEC/degradation.md`. Попытка пишется до эффекта (`recordAttempt`, PROTO-16). Потеря связи без receipt — `unknown_outcome`, не retry. Сверка пишет новую audit-запись (INV-07). `unknown_outcome` не выдаётся за успех.
+- `recordAttempt` / `reconcileOutcome` в `packages/domain`. События `glt.action.started` и `glt.action.completed` уже в реестре; враппер — `packages/runner` через `actionCompletedEvent` (S-4). Схемы и реестр не менялись. Команды `glt` не расширяются. Шаг CI `receipts`.
+
+### Notes
+
+- Новых имён событий нет. Golden digest и `impact-bootstrap.json` не менялись.
+- PROTO-16 снят с отложения. Покрытие `glt_structural_coverage`: **1.0 (40/40)**.
+
 ## [0.38.0] — 2026-09-16
 
 DEV-32: sandboxed read/build runner — deny by default.
