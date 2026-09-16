@@ -15,6 +15,7 @@ DEV-33: receipts и reconciliation — `unknown_outcome`.
 
 - Новых имён событий нет. Golden digest и `impact-bootstrap.json` не менялись.
 - PROTO-16 снят с отложения. Покрытие `glt_structural_coverage`: **1.0 (40/40)**.
+- Шаг принят: `docs/DEV/33-receipts-and-reconciliation.md` — `status: accepted`.
 
 ## [0.38.0] — 2026-09-16
 
