@@ -17,6 +17,7 @@ DEV-27: контрол-плейн наблюдает свой репозитор
 - Реестр, схемы и trust не менялись: новые узлы `glt.controlplane.*` по-прежнему зона архитектора.
 - События не эмитятся. Golden digest и `impact-bootstrap.json` не менялись.
 - Покрытие `glt_structural_coverage` без изменения: **0.825 (33/40)**.
+- Шаг принят: `docs/DEV/27-self-topology-dogfood.md` — `status: accepted`.
 
 ## [0.32.0] — 2026-09-14
 

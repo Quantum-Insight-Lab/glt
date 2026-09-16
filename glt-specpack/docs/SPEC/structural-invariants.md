@@ -241,7 +241,7 @@ source_refs:
 
 **DEV-26 — сделано.** Incident-обход по отдельным строкам матрицы. Materialized — candidate; confirmed только observed + trace-parentage (INV-04). Deploy/build hash mismatch — `drift` (PROTO-12).
 
-**DEV-27 — в работе.** Самонаблюдение через `registry/glt-controlplane.yaml`. Seeded drift называется и засекается (E05, PROTO-12). Наблюдение своего графа не одобряет релиз (INV-09).
+**DEV-27 — сделано.** Самонаблюдение через `registry/glt-controlplane.yaml`. Seeded drift называется и засекается (E05, PROTO-12). Наблюдение своего графа не одобряет релиз (INV-09).
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 
