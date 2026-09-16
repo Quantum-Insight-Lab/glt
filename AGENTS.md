@@ -12,7 +12,7 @@ GLT Control Plane: наблюдаемая архитектура, анализ �
 
 Методология — Possibility-Driven Architecture v1.2. Нормативные контракты живут в `glt-specpack/`, код в `control-plane/`.
 
-Статус: волна 3. DEV-01…27 сделаны. DEV-28 следующий.
+Статус: волна 3. DEV-01…27 сделаны. DEV-28 в работе.
 
 ---
 
@@ -78,6 +78,7 @@ control-plane/packages/
 | Развёртывание self-host | Docker Compose | `deploy/compose.yaml` |
 | Drift и инциденты | `classifyIncidentPath`, `classifyDeployDrift` | `packages/domain/src/drift.ts` |
 | Самонаблюдение топологии | `observeSelfTopology` | `packages/domain/src/self-topology.ts` |
+| Внешний witness | `assessWitnessFreshness`, `anchorHead` | `packages/domain/src/witness.ts`, `packages/audit/src/witness.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |

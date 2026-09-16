@@ -8,9 +8,53 @@ depends_on:
   - glt.dev.27
 spec_refs:
   - ../SECURITY/external-witness.md
+  - ../SPEC/self-hosting.md
+  - ../SPEC/degradation.md
+  - ../SPEC/audit.md
+  - ../SPEC/architecture.md
+  - ../SPEC/cli.md
+  - ../SPEC/structural-invariants.md
+  - ../PDA/04-invariants.md
+  - ../OBSERVABILITY/runbooks/witness-stale.md
 risk: high
 gate: anti-cycle
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SECURITY/external-witness.md
+    authority: bootstrap-trust
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/self-hosting.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/degradation.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/audit.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/architecture.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/structural-invariants.md
+    authority: structural-invariants
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/04-invariants.md
+    authority: methodology-pda
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/OBSERVABILITY/runbooks/witness-stale.md
+    authority: engineering-contract
+    role: derived-from
 ---
 
 # 28 — Интеграция внешнего witness
@@ -19,7 +63,9 @@ source_refs: []
 
 ## Что делаем
 
-- Клиент внешнего witness
+- Клиент внешнего witness: POST head-hash, сохранить receipt
+- P06 → read-only; `example.invalid` отвергается
+- Anti-cycle: локальная verify цепочки не является анкором
 
 ## Чеклист приёмки
 
@@ -45,6 +91,10 @@ source_refs: []
 
 - [external-witness.md](../SECURITY/external-witness.md)
 
+`assessWitnessFreshness` зовёт `snapshotIsStale`. `anchorHead` ходит в
+сеть. `WITNESS_ENDPOINT` снаружи Compose. `trust/` не правится.
+Команды `glt` не добавляются.
+
 ## Статус
 
-запланирован
+в работе — ветка `wave3`. Чеклист пуст до живой проверки и зелёного CI.

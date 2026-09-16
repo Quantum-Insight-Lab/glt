@@ -20,7 +20,7 @@ source_refs: []
 - `glt_witness_staleness_seconds` превысил P06.
 - Последний `glt.witness.anchored` старше порога.
 - Endpoint недоступен или отдаёт ошибку.
-- Endpoint всё ещё `witness.example.invalid` — это не инцидент, а незакрытый пробел: реальный адрес требуется с DEV-27.
+- Endpoint всё ещё `witness.example.invalid` — это не инцидент, а незакрытый пробел: клиент DEV-28 такой адрес отвергает.
 
 ## Mitigate
 

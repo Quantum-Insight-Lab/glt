@@ -123,9 +123,16 @@ cannot approve. External identity is still required for a
 
 Anchor of the audit head is DEV-28, not this step.
 
-## External witness
+## External witness (DEV-28)
 
-Independent service anchors audit chain head. Staleness: param P06.
+The audit head is anchored by a **third party**. The client is
+`anchorHead` in `packages/audit`. The receipt is saved. Staleness is
+P06 through `snapshotIsStale` (S-4). Past P06, or no external receipt,
+is read-only.
+
+The URL is `WITNESS_ENDPOINT` on the machine. It is not a service in
+`deploy/compose.yaml`. `example.invalid` is rejected. Local chain
+verify is not a witness (INV-09).
 
 See [`../SECURITY/external-witness.md`](../SECURITY/external-witness.md).
 

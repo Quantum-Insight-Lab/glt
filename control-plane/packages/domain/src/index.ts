@@ -150,6 +150,17 @@ export {
   type SelfObservationInput,
 } from "./self-topology.ts";
 export {
+  PLACEHOLDER_WITNESS_HOST,
+  WITNESS_STEP,
+  acceptWitnessReceipt,
+  assessWitnessFreshness,
+  receiptIsExternal,
+  requireWitnessEndpoint,
+  type WitnessAssessment,
+  type WitnessFreshnessInput,
+  type WitnessReceiptView,
+} from "./witness.ts";
+export {
   CLASSIFIER_VERSION,
   classifyChange,
   computeImpact,

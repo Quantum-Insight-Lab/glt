@@ -55,6 +55,8 @@
     "test:drift": "vitest run control-plane/packages/domain/src/drift.test.ts control-plane/packages/domain/src/impact.test.ts control-plane/tests/drift-incidents.test.ts",
     "pretest:dogfood": "pnpm gen",
     "test:dogfood": "vitest run control-plane/packages/domain/src/self-topology.test.ts control-plane/tests/self-topology-dogfood.test.ts",
+    "pretest:witness": "pnpm gen",
+    "test:witness": "vitest run control-plane/packages/domain/src/witness.test.ts control-plane/tests/external-witness.test.ts",
     "collect:git": "tsx control-plane/packages/collectors/src/bin.ts",
     "pretest:collect": "pnpm gen",
     "test:collect": "vitest run control-plane/packages/collectors/src/git.test.ts control-plane/packages/collectors/src/ci.test.ts control-plane/tests/git-collector.test.ts control-plane/tests/ci-collector.test.ts",

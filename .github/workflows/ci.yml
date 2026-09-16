@@ -148,6 +148,10 @@ jobs:
       - name: self topology dogfood
         run: pnpm test:dogfood
 
+      # DEV-28: third-party anchor; P06 is read-only; example.invalid rejected; local verify is not a witness.
+      - name: external witness
+        run: pnpm test:witness
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

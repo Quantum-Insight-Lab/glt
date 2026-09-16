@@ -58,9 +58,13 @@ The store is `packages/audit`.
 
 Daily job: full chain verify. Failure → runner stop (degradation).
 
-## Witness anchor
+## Witness anchor (DEV-28)
 
-External witness signs `head_hash` periodically. See SECURITY docs.
+External witness signs `head_hash`. The client posts to
+`WITNESS_ENDPOINT`, rejects `example.invalid`, and saves the receipt.
+A receipt without a third-party signature is not an anchor. The
+projection emits `glt.witness.anchored` (`EventType.WitnessAnchored`).
+See [external-witness.md](../SECURITY/external-witness.md).
 
 ## Schema
 

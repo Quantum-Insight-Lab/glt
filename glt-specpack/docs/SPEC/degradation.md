@@ -73,6 +73,22 @@ A candidate is a path of possible spread. It is not a causal claim (INV-04).
 Silence (implicit aligned) is forbidden (PROTO-12). `classifyDeployDrift`
 names the class. It does not pick which hash is true.
 
+## Witness (DEV-28)
+
+P06 is `glt.param.witness.max_staleness_seconds`. The number does not
+live in `domain` (S-8). Age vs limit uses `snapshotIsStale` (S-4).
+
+| Input | Read | Write | Runner |
+|---|---|---|---|
+| External receipt, age ≤ P06 | allowed | allowed | allowed |
+| No receipt, self-signed receipt, or age > P06 | allowed | blocked | blocked |
+
+A green `verifyAuditChain` without a third-party receipt stays
+`write_blocked`. Self-report is not an anchor (INV-09, PROTO-12).
+
+`assessWitnessFreshness` names the class. It does not talk to the
+network.
+
 ## Graceful UI
 
 Always show: snapshot age, boundary id, classifier version, known_unknowns count.

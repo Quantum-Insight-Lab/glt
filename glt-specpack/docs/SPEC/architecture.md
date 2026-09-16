@@ -125,6 +125,14 @@ deploy/build pin. Intended and materialized stay two lists
 (`comparePlanes`). The observation does not approve a control-plane
 release (INV-09). See [`self-hosting.md`](self-hosting.md).
 
+## Witness (DEV-28)
+
+The audit head is anchored outside the control plane. `assessWitnessFreshness`
+is pure. The HTTP client lives in `packages/audit`. A local chain verify
+is not a witness. `example.invalid` is rejected. See
+[`self-hosting.md`](self-hosting.md) and
+[`../SECURITY/external-witness.md`](../SECURITY/external-witness.md).
+
 ## Diagram
 
 См. [`../PDA/06-architectural-blueprint.md`](../PDA/06-architectural-blueprint.md).

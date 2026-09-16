@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.34.0] — 2026-09-16
+
+DEV-28: клиент внешнего witness. Head-hash анкорится третьей стороной; receipt сохраняется.
+
+### Added
+
+- Контракт в `docs/SECURITY/external-witness.md`, `docs/SPEC/degradation.md` и `docs/SPEC/audit.md`. `example.invalid` отвергается. P06 через `snapshotIsStale` (S-4). Локальный `verifyAuditChain` не является witness (INV-09).
+- `assessWitnessFreshness` / `acceptWitnessReceipt` в `packages/domain`. HTTP-клиент и сохранение receipt — `packages/audit`. Событие `glt.witness.anchored` уже в реестре. Команды `glt` не расширяются. Шаг CI `external witness`.
+
+### Notes
+
+- Witness не добавляется в Compose: независимый домен снаружи стека. `trust/bootstrap-manifest.yaml` не менялся.
+- Новых имён событий нет. Golden digest и `impact-bootstrap.json` не менялись.
+- Покрытие `glt_structural_coverage` без изменения: **0.825 (33/40)**.
+
 ## [0.33.0] — 2026-09-14
 
 DEV-27: контрол-плейн наблюдает свой репозиторий через `registry/glt-controlplane.yaml`.
