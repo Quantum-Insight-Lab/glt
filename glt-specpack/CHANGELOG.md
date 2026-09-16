@@ -16,6 +16,7 @@ DEV-32: sandboxed read/build runner — deny by default.
 - Контейнер не порождается: домен без I/O (S-1), Docker не добавляется. Receipts / PROTO-16 — DEV-33. Новых имён событий нет.
 - Golden digest и `impact-bootstrap.json` не менялись.
 - Покрытие `glt_structural_coverage` без изменения: **0.975 (39/40)**.
+- Шаг принят: `docs/DEV/32-sandboxed-read-build-runner.md` — `status: accepted`.
 
 ## [0.37.0] — 2026-09-16
 
