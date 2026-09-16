@@ -16,6 +16,7 @@ DEV-31: shadow runner — только dry-run.
 - Исполнение с эффектом — DEV-32. Receipts / PROTO-16 — DEV-33. Новых имён событий нет.
 - Golden digest и `impact-bootstrap.json` не менялись.
 - Покрытие `glt_structural_coverage` без изменения: **0.975 (39/40)**.
+- Шаг принят: `docs/DEV/31-shadow-runner.md` — `status: accepted`.
 
 ## [0.36.0] — 2026-09-16
 

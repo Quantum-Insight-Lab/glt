@@ -94,7 +94,7 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | 28 | [Интеграция внешнего witness](28-external-witness-integration.md) | 3 | высокий | **сделано** |
 | 29 | [ActionSpec и planner](29-actionspec-and-planner.md) | 4 | высокий | **сделано** |
 | 30 | [Брокер политики и подтверждений](30-policy-and-approval-broker.md) | 4 | высокий | **сделано** |
-| 31 | [Shadow runner](31-shadow-runner.md) | 4 | средний | запланирован |
+| 31 | [Shadow runner](31-shadow-runner.md) | 4 | средний | **сделано** |
 | 32 | [Sandboxed read/build runner](32-sandboxed-read-build-runner.md) | 4 | критический | запланирован |
 | 33 | [Receipts и reconciliation](33-receipts-and-reconciliation.md) | 4 | высокий | запланирован |
 | 34 | [Supply chain и релиз](34-supply-chain-release.md) | 4 | высокий | запланирован |

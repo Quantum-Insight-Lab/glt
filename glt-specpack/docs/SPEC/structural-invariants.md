@@ -243,7 +243,7 @@ source_refs:
 
 **DEV-30 — сделано.** `approvePlan` вяжет approver к approval envelope (Ed25519). `admitApprovedPlan` пересобирает envelope и снова вызывает `authorize`. Смена поля — PROTO-15 / INV-08. Риск из capabilities. `glt approve` нет.
 
-**DEV-31.** `shadowRun` — dry-run без внешнего эффекта. Write без dry-run того же envelope отвергается. Результат — AuditRecord. `glt.action.started` уже в реестре. `glt shadow` нет.
+**DEV-31 — сделано.** `shadowRun` — dry-run без внешнего эффекта. Write без dry-run того же envelope отвергается. Результат — AuditRecord. `glt.action.started` уже в реестре. `glt shadow` нет.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 
