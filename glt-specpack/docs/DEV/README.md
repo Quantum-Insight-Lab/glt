@@ -97,7 +97,7 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | 31 | [Shadow runner](31-shadow-runner.md) | 4 | средний | **сделано** |
 | 32 | [Sandboxed read/build runner](32-sandboxed-read-build-runner.md) | 4 | критический | **сделано** |
 | 33 | [Receipts и reconciliation](33-receipts-and-reconciliation.md) | 4 | высокий | **сделано** |
-| 34 | [Supply chain и релиз](34-supply-chain-release.md) | 4 | высокий | запланирован |
+| 34 | [Supply chain и релиз](34-supply-chain-release.md) | 4 | высокий | **сделано** |
 | 35 | [Sealed acceptance и DR](35-sealed-acceptance-dr-doc.md) | 4 | средний | запланирован |
 
 ## Dogfooding

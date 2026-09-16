@@ -16,6 +16,7 @@ DEV-34: supply chain и релиз — подписанный pin, воспро�
 - Контейнер не собирается и не подписывается Cosign: домен без I/O (S-1). `release_trust_roots.allowed` остаётся пустым до DEV-35. Новых имён событий нет.
 - Golden digest и `impact-bootstrap.json` не менялись.
 - Покрытие `glt_structural_coverage` без изменения: **1.0 (40/40)**.
+- Шаг принят: `docs/DEV/34-supply-chain-release.md` — `status: accepted`.
 
 ## [0.39.0] — 2026-09-16
 
