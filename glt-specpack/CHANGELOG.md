@@ -16,6 +16,7 @@ DEV-30: брокер политики и подтверждений.
 - OIDC не добавляется. `/v1/actions` нет. Исполнение — DEV-31/32. Новых имён событий нет.
 - Golden digest и `impact-bootstrap.json` не менялись.
 - PROTO-15 и INV-08 сняты с отложения. Покрытие `glt_structural_coverage`: **0.975 (39/40)**.
+- Шаг принят: `docs/DEV/30-policy-and-approval-broker.md` — `status: accepted`.
 
 ## [0.35.0] — 2026-09-16
 

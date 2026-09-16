@@ -241,7 +241,7 @@ source_refs:
 
 **DEV-29 — сделано.** `buildPlan` собирает draft только из каталога ActionSpec. Цикл — `findCycles`. Envelope — четыре digest через `digestOf`. `glt plan` нет.
 
-**DEV-30.** `approvePlan` вяжет approver к approval envelope (Ed25519). `admitApprovedPlan` пересобирает envelope и снова вызывает `authorize`. Смена поля — PROTO-15 / INV-08. Риск из capabilities. `glt approve` нет.
+**DEV-30 — сделано.** `approvePlan` вяжет approver к approval envelope (Ed25519). `admitApprovedPlan` пересобирает envelope и снова вызывает `authorize`. Смена поля — PROTO-15 / INV-08. Риск из capabilities. `glt approve` нет.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 
