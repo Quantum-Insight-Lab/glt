@@ -75,8 +75,7 @@ the one cycle detector (S-4).
 The envelope is sealed by `digestOf` (S-4, PROTO-14). It always carries
 four digests: **plan**, **policy**, **executor image**, **snapshot**.
 Missing or non-digest values are not a seal. `envelope_digest` is the
-digest of that four-field object. Ed25519 actor binding and approval
-invalidation are DEV-30.
+digest of that four-field object.
 
 The created plan is `state: draft`. The event is `glt.plan.created`
 (already in the registry). No `glt plan` command (S-10). `glt typecheck`
@@ -84,6 +83,18 @@ and `glt test` stay declared; execution is DEV-31/32.
 
 `buildPlan` lives in `packages/domain`. The event wrapper lives in
 `packages/runner`.
+
+## Approval broker (DEV-30)
+
+`approvePlan` binds an external approver to the **approval** envelope
+(the nine fields in [policy.md](policy.md)) with Ed25519. Risk is
+`riskFromCapabilities`, not the action display name. `admitApprovedPlan`
+re-seals the current inputs, verifies the signature, and calls
+`authorize` again (PROTO-15, INV-08, INV-09). The runner identity
+cannot approve.
+
+The event is `glt.plan.approved` (already in the registry). No
+`glt approve` command (S-10). Execution remains DEV-31/32.
 
 ## Schemas
 

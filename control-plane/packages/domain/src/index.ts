@@ -70,6 +70,20 @@ export {
   type Principal,
 } from "./policy.ts";
 export {
+  APPROVE_STEP,
+  admitApprovedPlan,
+  approvalBindingDigest,
+  approvalEnvelope,
+  approvePlan,
+  riskFromCapabilities,
+  type AdmitPlanInput,
+  type ApprovalDigestInput,
+  type ApprovalEnvelope,
+  type ApprovePlanInput,
+  type ApprovedPlan,
+  type CapabilityRisk,
+} from "./approve.ts";
+export {
   BUILD_METRIC_NAMES,
   BuildMetric,
   DLP_CANARY,

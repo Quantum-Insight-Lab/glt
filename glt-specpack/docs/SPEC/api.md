@@ -87,7 +87,7 @@ artifact body is not wrapped. `request_action` and `approve` are not `read`.
 
 The process defaults to `127.0.0.1`. Compose sets `HOST=0.0.0.0` inside the
 container and publishes only `127.0.0.1:4174` on the host. No new dependency.
-Actor binding by signature is DEV-30.
+Approver binding is `approvePlan` (Ed25519). GET still uses headers.
 
 ## Errors
 
@@ -109,4 +109,4 @@ Failure bodies are the CLI stderr object: `code`, `message`, optional
 - Persistence write routes (DEV-22 store is a library; GET still compiles)
 - Event emit (names stay in the event registry; this step does not emit)
 - New CLI verbs, workspace writes, action POST
-- OIDC / signed actor binding (DEV-30)
+- OIDC. Approver binding is the domain broker, not an HTTP plugin

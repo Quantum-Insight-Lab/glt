@@ -156,6 +156,10 @@ jobs:
       - name: action planner
         run: pnpm test:planner
 
+      # DEV-30: envelope change invalidates approval; policy re-checked at admit; no self-approve.
+      - name: policy and approval broker
+        run: pnpm test:approve
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

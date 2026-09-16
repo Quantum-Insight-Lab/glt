@@ -144,9 +144,7 @@ source_refs:
 
 | ID | until |
 |---|---|
-| PROTO-15 | glt.dev.30 |
 | PROTO-16 | glt.dev.33 |
-| INV-08 | glt.dev.30 |
 
 Исходный разрыв на момент 0.3.0: **8 из 18** PROTO имеют sheet, **0 из 40** ID имеют тест, потому что кода нет. Это база, к которой возвращаются.
 
@@ -242,6 +240,8 @@ source_refs:
 **DEV-28 — сделано.** Внешний witness анкорит head-hash. `example.invalid` отвергается. P06 через `snapshotIsStale`. Локальная verify цепочки не заменяет receipt (INV-09).
 
 **DEV-29 — сделано.** `buildPlan` собирает draft только из каталога ActionSpec. Цикл — `findCycles`. Envelope — четыре digest через `digestOf`. `glt plan` нет.
+
+**DEV-30.** `approvePlan` вяжет approver к approval envelope (Ed25519). `admitApprovedPlan` пересобирает envelope и снова вызывает `authorize`. Смена поля — PROTO-15 / INV-08. Риск из capabilities. `glt approve` нет.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

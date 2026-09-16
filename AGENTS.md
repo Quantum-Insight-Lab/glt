@@ -80,6 +80,7 @@ control-plane/packages/
 | Самонаблюдение топологии | `observeSelfTopology` | `packages/domain/src/self-topology.ts` |
 | Внешний witness | `assessWitnessFreshness`, `anchorHead` | `packages/domain/src/witness.ts`, `packages/audit/src/witness.ts` |
 | Action plan | `buildPlan` | `packages/domain/src/plan.ts`, `packages/runner/src/plan.ts` |
+| Approval broker | `approvePlan`, `admitApprovedPlan` | `packages/domain/src/approve.ts`, `packages/runner/src/approve.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |

@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.36.0] — 2026-09-16
+
+DEV-30: брокер политики и подтверждений.
+
+### Added
+
+- Контракт в `docs/SPEC/policy.md`, `docs/SECURITY/approvals.md` и `docs/SPEC/runner.md`. Approval envelope — девять полей; смена любого, включая байты ActionSpec, аннулирует approval (PROTO-15, INV-08). `admitApprovedPlan` перепроверяет `authorize` непосредственно перед запуском. Риск — `riskFromCapabilities`, не имя действия. Runner не одобряет себя (INV-09).
+- `approvePlan` / `admitApprovedPlan` в `packages/domain`. Событие `glt.plan.approved` — `packages/runner`. Подпись — Ed25519 через `verifyBytes`. Схемы и реестр не менялись. Команды `glt` не расширяются. Шаг CI `policy and approval broker`.
+
+### Notes
+
+- OIDC не добавляется. `/v1/actions` нет. Исполнение — DEV-31/32. Новых имён событий нет.
+- Golden digest и `impact-bootstrap.json` не менялись.
+- PROTO-15 и INV-08 сняты с отложения. Покрытие `glt_structural_coverage`: **0.975 (39/40)**.
+
 ## [0.35.0] — 2026-09-16
 
 DEV-29: immutable plan из зарегистрированных ActionSpec.

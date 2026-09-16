@@ -54,12 +54,13 @@ Roles and the capabilities they hold:
 table. A caller cannot pass extra capabilities into `authorize`.
 
 The HTTP API presents the principal in headers (`GLT-Actor`, `GLT-Role`).
-The body stays the CLI artifact. Cryptographic binding of the actor is
-DEV-30. Bind remains `127.0.0.1`. No `glt` command is added.
+The body stays the CLI artifact. Cryptographic binding of the **approver**
+is `approvePlan` (Ed25519 over the approval envelope). Bind remains
+`127.0.0.1`. No `glt` command is added.
 
 GET/HEAD require `read`. `request_action` exists so it cannot be smuggled
 in as read. Plan assembly is `buildPlan` (DEV-29). Action POST waits for
-a CLI artifact; there is no `glt plan` verb (S-10). Approval is DEV-30.
+a CLI artifact; there is no `glt plan` or `glt approve` verb (S-10).
 
 ## Self-approval (INV-09)
 
@@ -84,7 +85,25 @@ Must include:
 - input digest
 - credential scope digest
 
-Any change → `approval invalidated`. Envelope re-check at run is DEV-30.
+Any change → `approval invalidated`.
+
+## Approval broker (DEV-30)
+
+`approvePlan` seals the nine fields above with `digestOf` (S-4)
+and binds the approver with Ed25519 (`verifyBytes`). The ActionSpec
+bytes are inside the seal: a capability edit after approve is the same
+as any other field change (PROTO-15, INV-08).
+
+`admitApprovedPlan` is the run gate. It rebuilds the envelope from
+**current** inputs, verifies the signature, and calls `authorize` again.
+An approval recorded earlier is not enough. `glt-cp-runtime@internal`
+still cannot approve (INV-09).
+
+Risk is `riskFromCapabilities`. The action id is not an input. A label
+`inventory` that holds a write capability is write.
+
+No OIDC dependency. No `/v1/actions`. HTTP still presents headers;
+the signature binds the approval, not GET.
 
 ## Self-hosting
 

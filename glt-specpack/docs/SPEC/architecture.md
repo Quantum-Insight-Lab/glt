@@ -134,6 +134,15 @@ carries plan, policy, executor-image and snapshot digests (PROTO-14).
 `packages/runner` emits `glt.plan.created`. No new `glt` verb. See
 [`runner.md`](runner.md).
 
+## Approval (DEV-30)
+
+`approvePlan` binds the approver to the approval envelope (Ed25519).
+`admitApprovedPlan` rebuilds that envelope from current inputs and
+calls `authorize` again. A digest change invalidates the approval
+(PROTO-15). Risk comes from the capability set, not the action name.
+`packages/runner` emits `glt.plan.approved`. No `glt approve`. See
+[`policy.md`](policy.md) and [`../SECURITY/approvals.md`](../SECURITY/approvals.md).
+
 ## Witness (DEV-28)
 
 The audit head is anchored outside the control plane. `assessWitnessFreshness`
