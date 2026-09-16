@@ -16,6 +16,7 @@ DEV-29: immutable plan из зарегистрированных ActionSpec.
 - Approval и перепроверка envelope — DEV-30. Исполнение — DEV-31/32. Новых имён событий нет.
 - Golden digest и `impact-bootstrap.json` не менялись.
 - PROTO-13, PROTO-14, PROTO-17 и INV-06 сняты с отложения. Покрытие `glt_structural_coverage`: **0.925 (37/40)**.
+- Шаг принят: `docs/DEV/29-actionspec-and-planner.md` — `status: accepted`.
 
 ## [0.34.0] — 2026-09-16
 

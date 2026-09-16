@@ -241,7 +241,7 @@ source_refs:
 
 **DEV-28 — сделано.** Внешний witness анкорит head-hash. `example.invalid` отвергается. P06 через `snapshotIsStale`. Локальная verify цепочки не заменяет receipt (INV-09).
 
-**DEV-29 — в работе.** `buildPlan` собирает draft только из каталога ActionSpec. Цикл — `findCycles`. Envelope — четыре digest через `digestOf`. `glt plan` нет.
+**DEV-29 — сделано.** `buildPlan` собирает draft только из каталога ActionSpec. Цикл — `findCycles`. Envelope — четыре digest через `digestOf`. `glt plan` нет.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

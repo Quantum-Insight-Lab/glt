@@ -2,7 +2,7 @@
 id: glt.dev.29
 owner: engineering
 normativity: normative
-status: planned
+status: accepted
 wave: 4
 depends_on:
   - glt.dev.28
@@ -68,16 +68,16 @@ source_refs:
 
 ### По шагу
 
-- [ ] Plan собирается только из зарегистрированных ActionSpec, произвольная строка невозможна
-- [ ] Execution DAG ацикличен (PROTO-07)
-- [ ] Envelope содержит все digests: plan, policy, executor image, snapshot (PROTO-14)
+- [x] Plan собирается только из зарегистрированных ActionSpec, произвольная строка невозможна
+- [x] Execution DAG ацикличен (PROTO-07)
+- [x] Envelope содержит все digests: plan, policy, executor image, snapshot (PROTO-14)
 
 ### Общее
 
-- [ ] CI зелёный на всех шагах, от которых зависит этот
-- [ ] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
-- [ ] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
-- [ ] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
+- [x] CI зелёный на всех шагах, от которых зависит этот
+- [x] Тесты на затронутые инварианты есть, и ID инварианта стоит **в имени теста**
+- [x] Изменение контракта записано в `glt-specpack/CHANGELOG.md`
+- [x] Механизм проверен негативно: нарушение внесено намеренно и прогон упал
 
 ## Спецификация
 
@@ -91,4 +91,4 @@ id или capability — PROTO-13 / INV-06. Цикл `depends_on` — `findCycle
 
 ## Статус
 
-в работе — ветка `wave4`. Чеклист пуст до живой проверки и зелёного CI.
+**сделано** — ветка `wave4`. Plan только из каталога ActionSpec; цикл `depends_on` отвергается; envelope — четыре digest. CI: [run](https://github.com/Quantum-Insight-Lab/glt/actions/runs/35055745065).
