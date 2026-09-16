@@ -97,6 +97,24 @@ export {
   type ShadowRunInput,
 } from "./shadow.ts";
 export {
+  ESCAPE_SCENARIOS,
+  EscapeScenario,
+  SANDBOX_STEP,
+  admitSandbox,
+  assertSandboxed,
+  classifySandboxDenial,
+  sandboxAuditRecord,
+  sandboxProfileFor,
+  sandboxRun,
+  sandboxedPlan,
+  type SandboxAction,
+  type SandboxIsolation,
+  type SandboxMount,
+  type SandboxProfile,
+  type SandboxReport,
+  type SandboxRunInput,
+} from "./sandbox.ts";
+export {
   BUILD_METRIC_NAMES,
   BuildMetric,
   DLP_CANARY,

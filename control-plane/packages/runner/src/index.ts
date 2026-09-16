@@ -1,6 +1,6 @@
 /**
- * Runner — planner (DEV-29), approval (DEV-30), shadow (DEV-31).
- * Side-effecting execution is DEV-32.
+ * Runner — planner (DEV-29), approval (DEV-30), shadow (DEV-31),
+ * sandbox (DEV-32). Receipts are DEV-33.
  *
  * Contract: glt-specpack/docs/SPEC/runner.md
  */
@@ -32,3 +32,16 @@ export type {
   ShadowRunInput,
   ShadowedRun,
 } from "./shadow.ts";
+export {
+  RUNNER_SANDBOX_STEP,
+  actionCompletedEvent,
+  runSandbox,
+  runnerTimeoutSeconds,
+  sandboxAuditRecord,
+} from "./sandbox.ts";
+export type {
+  ActionCompletedEvent,
+  SandboxReport,
+  SandboxRunInput,
+  SandboxedRun,
+} from "./sandbox.ts";

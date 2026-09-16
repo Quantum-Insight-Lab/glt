@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.38.0] — 2026-09-16
+
+DEV-32: sandboxed read/build runner — deny by default.
+
+### Added
+
+- Контракт в `docs/SECURITY/sandbox.md`, `docs/SPEC/runner.md` и `docs/SPEC/architecture.md`. `admitSandbox` отвергает host mount, docker socket, host credentials, metadata egress и запись вне scratch (E06, INV-06). Сеть выключена, пока брокер не дал grant. Ветка недоверена. Образ — digest конверта (PROTO-14). Таймаут — P04.
+- `sandboxRun` в `packages/domain`. Событие `glt.action.completed` — `packages/runner`. Схемы и реестр не менялись. Команды `glt` не расширяются. Инъекции S4–S6 в `test:seeded`. Шаг CI `sandboxed runner`.
+
+### Notes
+
+- Контейнер не порождается: домен без I/O (S-1), Docker не добавляется. Receipts / PROTO-16 — DEV-33. Новых имён событий нет.
+- Golden digest и `impact-bootstrap.json` не менялись.
+- Покрытие `glt_structural_coverage` без изменения: **0.975 (39/40)**.
+
 ## [0.37.0] — 2026-09-16
 
 DEV-31: shadow runner — только dry-run.

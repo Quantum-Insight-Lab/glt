@@ -1,9 +1,17 @@
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { PACK, loadJson } from "@glt/contracts";
+import { PACK, loadJson, loadParameterCards } from "@glt/contracts";
 import {
   ExitCode,
+  GltError,
+  admitSandbox,
   computeImpact,
+  hashAuditRecord,
+  parameterSpecFromCard,
+  parameterValue,
+  sandboxProfileFor,
+  snapshotIsStale,
+  verifyAuditChain,
   type CompiledSnapshot,
   type ComputeImpactInput,
   type ImpactEdgeView,
@@ -120,3 +128,83 @@ describe("DEV-11 seeded failures S1-S3", () => {
     expect(report.conflict).toBe("source_conflict");
   });
 });
+
+describe("DEV-32 seeded failures S4-S6", () => {
+  it("S4 PROTO-12 backdating the snapshot timestamp is stale", () => {
+    const snapshot = loadJson<CompiledSnapshot>(GOLDEN_SNAPSHOT);
+    const limit = p01();
+    const now = snapshot.as_of;
+    expect(snapshotIsStale(ageSeconds(snapshot.as_of, now) ?? 0, limit)).toBe(false);
+    const backdated = { ...snapshot, as_of: "2020-01-01T00:00:00Z" };
+    const age = ageSeconds(backdated.as_of, now);
+    expect(age).toBeGreaterThan(limit);
+    expect(snapshotIsStale(age ?? 0, limit)).toBe(true);
+  });
+
+  it("S5 INV-07 flipping audit prev_hash fails verification", () => {
+    const first = {
+      record_id: "aud-s5-1",
+      prev_hash: hashAuditRecord({ record_id: "genesis", prev_hash: "" }),
+      record_hash: "",
+    };
+    first.record_hash = hashAuditRecord({ record_id: first.record_id, prev_hash: first.prev_hash });
+    const second = {
+      record_id: "aud-s5-2",
+      prev_hash: first.record_hash,
+      record_hash: "",
+    };
+    second.record_hash = hashAuditRecord({ record_id: second.record_id, prev_hash: second.prev_hash });
+    expect(verifyAuditChain([first, second]).ok).toBe(true);
+    const flipped = { ...second, prev_hash: first.prev_hash };
+    expect(verifyAuditChain([first, flipped]).ok).toBe(false);
+    expect(verifyAuditChain([first, flipped]).refs).toContain("aud-s5-2");
+  });
+
+  it("S6 INV-06 runner bind mount /etc is sandbox deny", () => {
+    const timeout = p04();
+    const image = "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+    const legal = sandboxProfileFor(image, timeout);
+    admitSandbox({ profile: legal, executor_image: image, timeout_limit_seconds: timeout });
+    let caught: unknown;
+    try {
+      admitSandbox({
+        profile: {
+          ...legal,
+          mounts: [...legal.mounts, { source: "/etc", target: "/mnt/etc", writable: false }],
+        },
+        executor_image: image,
+        timeout_limit_seconds: timeout,
+      });
+    } catch (error) {
+      caught = error;
+    }
+    expect(caught).toBeInstanceOf(GltError);
+    expect((caught as GltError).invariant).toBe("INV-06");
+  });
+});
+
+const STALE_PARAM = "glt.param.snapshot.stale_after_seconds";
+const TIMEOUT_PARAM = "glt.param.runner.default_timeout_seconds";
+
+function p01(): number {
+  return parameter(STALE_PARAM);
+}
+
+function p04(): number {
+  return parameter(TIMEOUT_PARAM);
+}
+
+function parameter(id: string): number {
+  for (const card of loadParameterCards()) {
+    const spec = parameterSpecFromCard(card);
+    if (spec.id === id) return parameterValue(spec);
+  }
+  throw new Error(`missing parameter ${id}`);
+}
+
+function ageSeconds(producedAt: string, asOf: string): number | undefined {
+  const start = Date.parse(producedAt);
+  const end = Date.parse(asOf);
+  if (!Number.isFinite(start) || !Number.isFinite(end)) return undefined;
+  return Math.floor((end - start) / 1000);
+}

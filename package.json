@@ -63,6 +63,8 @@
     "test:approve": "vitest run control-plane/packages/domain/src/approve.test.ts control-plane/tests/approval-broker.test.ts",
     "pretest:shadow": "pnpm gen",
     "test:shadow": "vitest run control-plane/packages/domain/src/shadow.test.ts control-plane/tests/shadow-runner.test.ts",
+    "pretest:sandbox": "pnpm gen",
+    "test:sandbox": "vitest run control-plane/packages/domain/src/sandbox.test.ts control-plane/tests/sandboxed-runner.test.ts",
     "collect:git": "tsx control-plane/packages/collectors/src/bin.ts",
     "pretest:collect": "pnpm gen",
     "test:collect": "vitest run control-plane/packages/collectors/src/git.test.ts control-plane/packages/collectors/src/ci.test.ts control-plane/tests/git-collector.test.ts control-plane/tests/ci-collector.test.ts",

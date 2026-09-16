@@ -151,6 +151,15 @@ The report is sealed as an audit record. `packages/runner` emits
 `glt.action.started`. No workspace write. No new `glt` verb. See
 [`runner.md`](runner.md).
 
+## Sandboxed runner (DEV-32)
+
+`admitSandbox` denies host mounts, docker socket, host credentials,
+metadata egress, and writes outside scratch. Network is off by
+default. The executor image is the envelope digest. `packages/runner`
+emits `glt.action.completed`. No workspace write. No new `glt` verb.
+See [`runner.md`](runner.md) and
+[`../SECURITY/sandbox.md`](../SECURITY/sandbox.md).
+
 ## Witness (DEV-28)
 
 The audit head is anchored outside the control plane. `assessWitnessFreshness`

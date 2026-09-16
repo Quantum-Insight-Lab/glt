@@ -94,7 +94,7 @@ re-seals the current inputs, verifies the signature, and calls
 cannot approve.
 
 The event is `glt.plan.approved` (already in the registry). No
-`glt approve` command (S-10). Shadow is DEV-31. Real execution is DEV-32.
+`glt approve` command (S-10). Shadow is DEV-31. Sandboxed execution is DEV-32.
 
 ## Shadow runner (DEV-31)
 
@@ -110,6 +110,22 @@ denied. A label cannot skip the gate: risk is `riskFromCapabilities`.
 S-4). `packages/runner` emits `glt.action.started` (already in the
 registry). No `glt shadow` or `glt run` command (S-10). Side-effecting
 execution is DEV-32. Receipts are DEV-33.
+
+## Sandboxed runner (DEV-32)
+
+`admitSandbox` is deny-by-default isolation. Domain stays pure (S-1):
+no filesystem, network, or subprocess. The profile is admitted or the
+run is denied (INV-06). Network is off unless the policy broker
+granted egress. The branch under test is untrusted. There is no Docker
+socket and no host credential. The executor image is the envelope
+digest (PROTO-14).
+
+`sandboxRun` records a completed read/build attempt only after
+admission. Host effects stay empty. Timeout is P04. `sandboxAuditRecord`
+seals the report (`hashAuditRecord`, S-4). `packages/runner` emits
+`glt.action.completed` (already in the registry). No `glt run` (S-10).
+Escape scenarios E06.1–6 are denied. Seeded failures S4–S6 are
+automated. Receipts / PROTO-16 remain DEV-33.
 
 ## Schemas
 

@@ -80,7 +80,7 @@ jobs:
       - name: impact
         run: pnpm impact -- --snapshot glt-specpack/contracts/examples/golden/bootstrap-snapshot.json
 
-      # DEV-11: S1–S3 injections and the open seeded change set. Not holdout.
+      # DEV-11/32: S1–S6 injections and the open seeded change set. Not holdout.
       - name: seeded failures
         run: pnpm test:seeded
 
@@ -163,6 +163,10 @@ jobs:
       # DEV-31: dry-run only; no external effect; write requires dry-run; result goes to audit.
       - name: shadow runner
         run: pnpm test:shadow
+
+      # DEV-32: deny-by-default sandbox; E06 blocked; network off; no socket/host creds; S4–S6.
+      - name: sandboxed runner
+        run: pnpm test:sandbox
 
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
