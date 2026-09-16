@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.41.0] — 2026-09-16
+
+DEV-35: sealed acceptance и DR.
+
+### Added
+
+- Контракт в `docs/EXPERIMENTS/safety-gate.md`, `docs/SECURITY/supply-chain.md` и `docs/SPEC/self-hosting.md`. `admitSealedRelease` вызывает `admitRelease`, затем отвергает пустой или dev-only trust root (INV-10) и leftover placeholder (PROTO-10, INV-03). Holdout H01–H05 не калибрует параметры. `trust/` не заполняется здесь.
+- `admitSealedRelease` в `packages/domain`. DR — `docs/OBSERVABILITY/runbooks/disaster-recovery.md`. Схемы и реестр не менялись. Команды `glt` не расширяются. Шаг CI `sealed acceptance`.
+
+### Notes
+
+- Живой `release_trust_roots.allowed` остаётся пустым: печать на pack падает, пока оператор не добавит T0. `glt-dev-only-2026` не становится корнем. Новых имён событий нет.
+- Golden digest и `impact-bootstrap.json` не менялись.
+- Покрытие `glt_structural_coverage` без изменения: **1.0 (40/40)**.
+
 ## [0.40.0] — 2026-09-16
 
 DEV-34: supply chain и релиз — подписанный pin, воспроизводимые входы.

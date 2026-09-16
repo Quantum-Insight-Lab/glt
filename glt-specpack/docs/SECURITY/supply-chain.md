@@ -72,9 +72,10 @@ Three checks, all required:
    `affects_control_plane_release: true`. Self-observation is not an
    approval. There is no second ACL.
 
-`release_trust_roots.allowed` stays empty until DEV-35. An empty
-allow-list does not admit a sealed release; this step does not fill it
-and does not accept the published dev-only key as a T0 root.
+`admitSealedRelease` (DEV-35) wraps this gate. An empty
+`release_trust_roots.allowed` is not a seal (INV-10). The published
+dev-only key is never a T0 root. Placeholders are not a seal
+(PROTO-10). The gate does not write `trust/`.
 
 No Cosign, no SLSA encoder, no new event, no `glt release` (S-10).
 SBOM and provenance remain wave-4 targets, not a second pin mechanism.
@@ -85,7 +86,9 @@ SBOM and provenance remain wave-4 targets, not a second pin mechanism.
 - Signed SBOM for runner image
 - Dependency lockfile in repo root
 
-## DR gap (conditional pre-code)
+## Disaster recovery (DEV-35)
 
-Multi-region witness and audit replica — documented, not v1 blocker.
-Sealed release and the non-empty trust-root allow-list are DEV-35.
+v1 restore is a single-region Compose stack plus the audit hash
+chain and an external witness receipt. Multi-region replica remains
+a documented gap, not a second store. The procedure is
+[`../OBSERVABILITY/runbooks/disaster-recovery.md`](../OBSERVABILITY/runbooks/disaster-recovery.md).

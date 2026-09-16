@@ -175,6 +175,14 @@ digest-pinned and signed, the build inputs reproduce the same
 `glt-cp-runtime@internal` is forbidden (INV-09). No new `glt` verb.
 See [`../SECURITY/supply-chain.md`](../SECURITY/supply-chain.md).
 
+## Sealed acceptance (DEV-35)
+
+`admitSealedRelease` seals a release only after `admitRelease` and
+only when the trust root is a real allowed key and no placeholder
+remains. Empty `allowed` or `glt-dev-only-2026` is INV-10. DR is a
+runbook, not a second store. No new `glt` verb. See
+[`../EXPERIMENTS/safety-gate.md`](../EXPERIMENTS/safety-gate.md).
+
 ## Witness (DEV-28)
 
 The audit head is anchored outside the control plane. `assessWitnessFreshness`

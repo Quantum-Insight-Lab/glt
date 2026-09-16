@@ -35,7 +35,7 @@ Enforced by S-3 in [`structural-invariants.md`](structural-invariants.md), measu
 
 ## Catalog v1 (projection)
 
-Ten events, grouped by bounded context. `expected_from_step` says when each one starts being emitted; nothing before DEV-08 emits anything. DEV-24 emits `glt.audit.appended` from the audit export. DEV-29 emits `glt.plan.created` from the planner. DEV-30 emits `glt.plan.approved` from the approval broker. DEV-31 emits `glt.action.started` from the shadow runner. DEV-32 emits `glt.action.completed` from the sandboxed runner. DEV-33 reuses `glt.action.started` as the write-ahead attempt and `glt.action.completed` as the reconcile outcome. DEV-34 emits nothing: `admitRelease` is an admission, not an event. Names stay in the registry.
+Ten events, grouped by bounded context. `expected_from_step` says when each one starts being emitted; nothing before DEV-08 emits anything. DEV-24 emits `glt.audit.appended` from the audit export. DEV-29 emits `glt.plan.created` from the planner. DEV-30 emits `glt.plan.approved` from the approval broker. DEV-31 emits `glt.action.started` from the shadow runner. DEV-32 emits `glt.action.completed` from the sandboxed runner. DEV-33 reuses `glt.action.started` as the write-ahead attempt and `glt.action.completed` as the reconcile outcome. DEV-34 emits nothing: `admitRelease` is an admission, not an event. DEV-35 emits nothing: `admitSealedRelease` is an admission, not an event. Names stay in the registry.
 
 | Event | Context | Actor | From step |
 |---|---|---|---|

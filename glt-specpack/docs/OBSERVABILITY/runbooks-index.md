@@ -19,5 +19,6 @@ source_refs: []
 | [witness-stale.md](runbooks/witness-stale.md) | staleness > P06 |
 | [bootstrap-trust-fail.md](runbooks/bootstrap-trust-fail.md) | verifier fail at start |
 | [telemetry-leak.md](runbooks/telemetry-leak.md) | dlp_canary_leak |
+| [disaster-recovery.md](runbooks/disaster-recovery.md) | loss of host, volume, or T0 |
 
 Each runbook: detect → mitigate → escalate → postmortem template.

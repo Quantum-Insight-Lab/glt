@@ -8,9 +8,68 @@ depends_on:
   - glt.dev.34
 spec_refs:
   - ../EXPERIMENTS/safety-gate.md
+  - ../EXPERIMENTS/holdout-cases.yaml
+  - ../SECURITY/supply-chain.md
+  - ../SECURITY/threat-model.md
+  - ../SECURITY/sandbox.md
+  - ../SPEC/self-hosting.md
+  - ../SPEC/architecture.md
+  - ../SPEC/cli.md
+  - ../SPEC/events.md
+  - ../SPEC/structural-invariants.md
+  - ../OBSERVABILITY/runbooks/disaster-recovery.md
+  - ../PDA/04-invariants.md
 risk: medium
 gate: safety
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/EXPERIMENTS/safety-gate.md
+    authority: experiment-rubric
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/EXPERIMENTS/holdout-cases.yaml
+    authority: experiment-rubric
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SECURITY/supply-chain.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SECURITY/threat-model.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SECURITY/sandbox.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/self-hosting.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/architecture.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/events.md
+    authority: event-registry
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/structural-invariants.md
+    authority: structural-invariants
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/OBSERVABILITY/runbooks/disaster-recovery.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/04-invariants.md
+    authority: methodology-pda
+    role: derived-from
 ---
 
 # 35 — Sealed acceptance и DR
@@ -45,6 +104,14 @@ source_refs: []
 ## Спецификация
 
 - [safety-gate.md](../EXPERIMENTS/safety-gate.md)
+
+`admitSealedRelease` вызывает `admitRelease`, затем отвергает пустой
+или запрещённый trust root (INV-10) и leftover placeholder
+(PROTO-10). `glt-dev-only-2026` не корень. Живой `allowed` может
+остаться пустым: тогда печать падает. `trust/` и схемы не правятся.
+Holdout H01–H05 не калибрует параметры. DR —
+[disaster-recovery.md](../OBSERVABILITY/runbooks/disaster-recovery.md).
+Команды `glt` не добавляются.
 
 ## Статус
 

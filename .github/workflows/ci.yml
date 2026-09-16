@@ -176,6 +176,10 @@ jobs:
       - name: supply chain
         run: pnpm test:release
 
+      # DEV-35: sealed admission; empty/dev-only root denied; placeholders fail; DR runbook.
+      - name: sealed acceptance
+        run: pnpm test:seal
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

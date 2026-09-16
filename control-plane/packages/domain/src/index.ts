@@ -111,6 +111,17 @@ export {
   type SignedImage,
 } from "./release.ts";
 export {
+  DEV_ONLY_KEY_ID,
+  SEAL_STEP,
+  admitSealedRelease,
+  admitTrustRoots,
+  rejectReleasePlaceholders,
+  type AdmitSealedReleaseInput,
+  type SealArtifacts,
+  type SealedAdmission,
+  type TrustRootsView,
+} from "./seal.ts";
+export {
   RECEIPT_STEP,
   UNKNOWN_OUTCOME_METRIC,
   assertNotSuccess,

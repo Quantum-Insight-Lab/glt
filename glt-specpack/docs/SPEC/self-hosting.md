@@ -143,11 +143,21 @@ Compose coming up and not by self-observation. Images are pinned by
 digest and signed (`verifyBytes`). The same pinned inputs yield the
 same input digest (`digestOf`, PROTO-03). External approval is
 required; `glt-cp-runtime@internal` cannot approve (INV-09). The
-policy file is `trust/release-policy.yaml`. Filling
-`release_trust_roots.allowed` is DEV-35. No `glt release` (S-10).
+policy file is `trust/release-policy.yaml`. No `glt release` (S-10).
 
 See [`../SECURITY/supply-chain.md`](../SECURITY/supply-chain.md).
 
+## Sealed acceptance (DEV-35)
+
+`admitSealedRelease` calls `admitRelease`, then rejects an empty or
+forbidden trust root (INV-10) and any leftover placeholder
+(PROTO-10). `glt-dev-only-2026` cannot terminate a sealed chain.
+The operator adds a real T0 key to `allowed`; this step does not
+invent one and does not edit `trust/`. Restore after loss is
+[`../OBSERVABILITY/runbooks/disaster-recovery.md`](../OBSERVABILITY/runbooks/disaster-recovery.md).
+No `glt seal` (S-10).
+
 ## Acceptance
 
-DEV-28: anti-cycle acceptance test suite.
+DEV-28: anti-cycle acceptance test suite. DEV-35: sealed admission
+and the DR runbook.
