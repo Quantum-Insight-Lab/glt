@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.35.0] — 2026-09-16
+
+DEV-29: immutable plan из зарегистрированных ActionSpec.
+
+### Added
+
+- Контракт планировщика в `docs/SPEC/runner.md` и `docs/SPEC/architecture.md`. Каталог — вход. Произвольный id или capability отвергается (PROTO-13, INV-06). Цикл `depends_on` — `findCycles` (PROTO-07). Envelope — plan, policy, executor image, snapshot через `digestOf` (PROTO-14). `commit` / `push` / `deploy` / `shell` не становятся действием (PROTO-17).
+- `buildPlan` в `packages/domain`. Событие `glt.plan.created` — `packages/runner`. Схемы и реестр не менялись. Команды `glt` не расширяются. Шаг CI `action planner`.
+
+### Notes
+
+- Approval и перепроверка envelope — DEV-30. Исполнение — DEV-31/32. Новых имён событий нет.
+- Golden digest и `impact-bootstrap.json` не менялись.
+- PROTO-13, PROTO-14, PROTO-17 и INV-06 сняты с отложения. Покрытие `glt_structural_coverage`: **0.925 (37/40)**.
+
 ## [0.34.0] — 2026-09-16
 
 DEV-28: клиент внешнего witness. Head-hash анкорится третьей стороной; receipt сохраняется.

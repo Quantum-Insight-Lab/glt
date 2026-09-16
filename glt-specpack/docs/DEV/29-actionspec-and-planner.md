@@ -8,9 +8,48 @@ depends_on:
   - glt.dev.28
 spec_refs:
   - ../SPEC/runner.md
+  - ../SPEC/policy.md
+  - ../SPEC/architecture.md
+  - ../SPEC/cli.md
+  - ../SPEC/api.md
+  - ../SPEC/events.md
+  - ../SPEC/structural-invariants.md
+  - ../PDA/04-invariants.md
 risk: high
 gate: none
-source_refs: []
+source_refs:
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/runner.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/policy.md
+    authority: policy-approval
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/architecture.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/cli.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/api.md
+    authority: engineering-contract
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/events.md
+    authority: event-registry
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/SPEC/structural-invariants.md
+    authority: structural-invariants
+    role: derived-from
+  - repository: glt-controlplane
+    path: glt-specpack/docs/PDA/04-invariants.md
+    authority: methodology-pda
+    role: derived-from
 ---
 
 # 29 — ActionSpec и planner
@@ -44,6 +83,12 @@ source_refs: []
 
 - [runner.md](../SPEC/runner.md)
 
+`buildPlan` принимает каталог ActionSpec уже разобранным. Неизвестный
+id или capability — PROTO-13 / INV-06. Цикл `depends_on` — `findCycles`
+(PROTO-07, S-4). Envelope — четыре digest через `digestOf` (PROTO-14).
+Событие `glt.plan.created` уже в реестре. `registry/` и схемы не
+правятся. Команды `glt` не добавляются.
+
 ## Статус
 
-запланирован
+в работе — ветка `wave4`. Чеклист пуст до живой проверки и зелёного CI.

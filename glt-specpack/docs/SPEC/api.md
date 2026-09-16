@@ -48,8 +48,9 @@ composition root: it wires compilers and does not grow domain rules.
 | `GET` | `/v1/resolve` | `glt resolve <ref>` |
 
 `HEAD` is allowed on the same paths. `POST`, `PUT`, `PATCH` and `DELETE`
-return 405. No route writes the workspace (S-5). Action requests wait for
-ActionSpec (DEV-29); there is no `/v1/actions` in this step.
+return 405. No route writes the workspace (S-5). The planner is
+`buildPlan` (DEV-29). There is no `/v1/actions`: no `glt plan` command,
+so there is no CLI artifact to return (S-10).
 
 Query names match CLI flags: `registry`, `boundary`, `matrix`, `snapshot`,
 `as-of`, `max-depth`. `resolve` takes `ref`.

@@ -156,6 +156,15 @@ importers:
         specifier: workspace:*
         version: link:../domain
 
+  control-plane/packages/runner:
+    dependencies:
+      '@glt/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@glt/domain':
+        specifier: workspace:*
+        version: link:../domain
+
   control-plane/packages/snapshot:
     dependencies:
       '@glt/contracts':

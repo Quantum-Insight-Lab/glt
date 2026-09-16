@@ -161,6 +161,22 @@ export {
   type WitnessReceiptView,
 } from "./witness.ts";
 export {
+  PLAN_STEP,
+  V1_ACTION_IDS,
+  actionLeaf,
+  actionSpecFromUnknown,
+  buildPlan,
+  catalogFromRegistryEntries,
+  isForbiddenActionId,
+  isV1ActionId,
+  type BuildPlanInput,
+  type BuiltPlan,
+  type PlanEnvelope,
+  type PlanEnvelopeInput,
+  type PlanRequestAction,
+  type V1ActionId,
+} from "./plan.ts";
+export {
   CLASSIFIER_VERSION,
   classifyChange,
   computeImpact,

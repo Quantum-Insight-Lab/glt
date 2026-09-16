@@ -57,6 +57,8 @@
     "test:dogfood": "vitest run control-plane/packages/domain/src/self-topology.test.ts control-plane/tests/self-topology-dogfood.test.ts",
     "pretest:witness": "pnpm gen",
     "test:witness": "vitest run control-plane/packages/domain/src/witness.test.ts control-plane/tests/external-witness.test.ts",
+    "pretest:planner": "pnpm gen",
+    "test:planner": "vitest run control-plane/packages/domain/src/plan.test.ts control-plane/tests/action-planner.test.ts",
     "collect:git": "tsx control-plane/packages/collectors/src/bin.ts",
     "pretest:collect": "pnpm gen",
     "test:collect": "vitest run control-plane/packages/collectors/src/git.test.ts control-plane/packages/collectors/src/ci.test.ts control-plane/tests/git-collector.test.ts control-plane/tests/ci-collector.test.ts",

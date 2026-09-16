@@ -125,6 +125,15 @@ deploy/build pin. Intended and materialized stay two lists
 (`comparePlanes`). The observation does not approve a control-plane
 release (INV-09). See [`self-hosting.md`](self-hosting.md).
 
+## Planner (DEV-29)
+
+`buildPlan` turns registered ActionSpecs into an immutable draft plan.
+The catalog is an input. An unknown action id or capability is denied
+(PROTO-13). The execution DAG is acyclic (PROTO-07). The envelope
+carries plan, policy, executor-image and snapshot digests (PROTO-14).
+`packages/runner` emits `glt.plan.created`. No new `glt` verb. See
+[`runner.md`](runner.md).
+
 ## Witness (DEV-28)
 
 The audit head is anchored outside the control plane. `assessWitnessFreshness`

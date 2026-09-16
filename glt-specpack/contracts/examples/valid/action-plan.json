@@ -1,0 +1,16 @@
+{
+  "plan_id": "plan-example-001",
+  "envelope_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "state": "draft",
+  "actions": [
+    {
+      "action_id": "typecheck",
+      "depends_on": []
+    }
+  ],
+  "digests": {
+    "topology_snapshot": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "policy": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "executor_image": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  }
+}

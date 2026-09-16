@@ -56,6 +56,35 @@ If connection lost after external effect without receipt → `unknown_outcome`, 
 
 Based on **capabilities**, not action display name.
 
+## Planner (DEV-29)
+
+`buildPlan` assembles an immutable draft from a **catalog** of ActionSpecs.
+The catalog arrives already parsed (registry `kind: action` entries, or a
+fixture). The planner does not invent an ActionSpec and does not write the
+registry (S-5).
+
+An action id that is not in the catalog is denied (PROTO-13, INV-06).
+`commit`, `push`, `deploy`, `migration`, `self_upgrade`, `self_write` and
+`shell` are denied even if someone puts them in the catalog (PROTO-17).
+A capability outside the v1 allowlist above is an unknown capability
+(PROTO-13). v1 plans accept only `risk_class` `read` or `read_build`.
+
+`depends_on` is an execution DAG. Cycles are PROTO-07. `findCycles` is
+the one cycle detector (S-4).
+
+The envelope is sealed by `digestOf` (S-4, PROTO-14). It always carries
+four digests: **plan**, **policy**, **executor image**, **snapshot**.
+Missing or non-digest values are not a seal. `envelope_digest` is the
+digest of that four-field object. Ed25519 actor binding and approval
+invalidation are DEV-30.
+
+The created plan is `state: draft`. The event is `glt.plan.created`
+(already in the registry). No `glt plan` command (S-10). `glt typecheck`
+and `glt test` stay declared; execution is DEV-31/32.
+
+`buildPlan` lives in `packages/domain`. The event wrapper lives in
+`packages/runner`.
+
 ## Schemas
 
 - [`../../contracts/schemas/action-spec.schema.json`](../../contracts/schemas/action-spec.schema.json)

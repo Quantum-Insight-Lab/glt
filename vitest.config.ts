@@ -14,6 +14,7 @@ export default defineConfig({
       "@glt/audit": pkg("audit"),
       "@glt/collectors": pkg("collectors"),
       "@glt/impact": pkg("impact"),
+      "@glt/runner": pkg("runner"),
       "@glt/dashboard": pkg("dashboard"),
       "@glt/api": pkg("api"),
       "@glt/cli": pkg("cli"),

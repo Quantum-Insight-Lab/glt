@@ -152,6 +152,10 @@ jobs:
       - name: external witness
         run: pnpm test:witness
 
+      # DEV-29: plan from registered ActionSpec only; DAG acyclic; envelope has all digests.
+      - name: action planner
+        run: pnpm test:planner
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

@@ -144,13 +144,9 @@ source_refs:
 
 | ID | until |
 |---|---|
-| PROTO-13 | glt.dev.29 |
-| PROTO-14 | glt.dev.29 |
-| PROTO-15 | glt.dev.29 |
+| PROTO-15 | glt.dev.30 |
 | PROTO-16 | glt.dev.33 |
-| PROTO-17 | glt.dev.29 |
-| INV-06 | glt.dev.29 |
-| INV-08 | glt.dev.29 |
+| INV-08 | glt.dev.30 |
 
 Исходный разрыв на момент 0.3.0: **8 из 18** PROTO имеют sheet, **0 из 40** ID имеют тест, потому что кода нет. Это база, к которой возвращаются.
 
@@ -244,6 +240,8 @@ source_refs:
 **DEV-27 — сделано.** Самонаблюдение через `registry/glt-controlplane.yaml`. Seeded drift называется и засекается (E05, PROTO-12). Наблюдение своего графа не одобряет релиз (INV-09).
 
 **DEV-28 — сделано.** Внешний witness анкорит head-hash. `example.invalid` отвергается. P06 через `snapshotIsStale`. Локальная verify цепочки не заменяет receipt (INV-09).
+
+**DEV-29 — в работе.** `buildPlan` собирает draft только из каталога ActionSpec. Цикл — `findCycles`. Envelope — четыре digest через `digestOf`. `glt plan` нет.
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

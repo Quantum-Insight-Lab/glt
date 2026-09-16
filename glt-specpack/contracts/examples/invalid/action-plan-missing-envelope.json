@@ -1,0 +1,10 @@
+{
+  "plan_id": "plan-invalid",
+  "state": "draft",
+  "actions": [
+    {
+      "action_id": "typecheck",
+      "depends_on": []
+    }
+  ]
+}

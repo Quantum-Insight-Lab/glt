@@ -58,7 +58,8 @@ The body stays the CLI artifact. Cryptographic binding of the actor is
 DEV-30. Bind remains `127.0.0.1`. No `glt` command is added.
 
 GET/HEAD require `read`. `request_action` exists so it cannot be smuggled
-in as read; action POST waits for DEV-29.
+in as read. Plan assembly is `buildPlan` (DEV-29). Action POST waits for
+a CLI artifact; there is no `glt plan` verb (S-10). Approval is DEV-30.
 
 ## Self-approval (INV-09)
 

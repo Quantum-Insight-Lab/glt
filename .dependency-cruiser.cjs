@@ -82,6 +82,13 @@ module.exports = {
       to: { path: `${P}/(?!(impact|contracts|domain|registry|snapshot|collectors)/)` },
     },
     {
+      name: "s2-runner-direction",
+      comment: "S-2: runner may reach contracts and domain only. Registry write is S-5.",
+      severity: "error",
+      from: { path: `${P}/runner` },
+      to: { path: `${P}/(?!(runner|contracts|domain)/)` },
+    },
+    {
       name: "s2-dashboard-reads-only",
       comment:
         "S-2 and S-5: dashboard is a read-only projection. It talks to the API and " +

@@ -1,0 +1,7 @@
+{
+  "id": "typecheck",
+  "revision": 1,
+  "capabilities": ["typecheck"],
+  "risk_class": "read",
+  "executor": "builtin:typecheck"
+}
