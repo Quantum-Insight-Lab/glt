@@ -91,7 +91,7 @@ Usefulness gate (E01, E04) не привязан к шагу: он требуе�
 | 25 | [Развёртывание через Compose](25-compose-deployment.md) | 3 | средний | **сделано** |
 | 26 | [Drift и инциденты](26-drift-and-incidents.md) | 3 | средний | **сделано** |
 | 27 | [Dogfood собственной топологии](27-self-topology-dogfood.md) | 3 | высокий | **сделано** |
-| 28 | [Интеграция внешнего witness](28-external-witness-integration.md) | 3 | высокий | запланирован |
+| 28 | [Интеграция внешнего witness](28-external-witness-integration.md) | 3 | высокий | **сделано** |
 | 29 | [ActionSpec и planner](29-actionspec-and-planner.md) | 4 | высокий | запланирован |
 | 30 | [Брокер политики и подтверждений](30-policy-and-approval-broker.md) | 4 | высокий | запланирован |
 | 31 | [Shadow runner](31-shadow-runner.md) | 4 | средний | запланирован |

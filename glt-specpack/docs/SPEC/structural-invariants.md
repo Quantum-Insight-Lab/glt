@@ -243,7 +243,7 @@ source_refs:
 
 **DEV-27 — сделано.** Самонаблюдение через `registry/glt-controlplane.yaml`. Seeded drift называется и засекается (E05, PROTO-12). Наблюдение своего графа не одобряет релиз (INV-09).
 
-**DEV-28 — в работе.** Внешний witness анкорит head-hash. `example.invalid` отвергается. P06 через `snapshotIsStale`. Локальная verify цепочки не заменяет receipt (INV-09).
+**DEV-28 — сделано.** Внешний witness анкорит head-hash. `example.invalid` отвергается. P06 через `snapshotIsStale`. Локальная verify цепочки не заменяет receipt (INV-09).
 
 **Дальше, по мере появления боли:** S-5 с DEV-06, S-9, метрики слоя «Сборка» на дашборд устойчивости.
 

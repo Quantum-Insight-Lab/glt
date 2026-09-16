@@ -16,6 +16,7 @@ DEV-28: клиент внешнего witness. Head-hash анкорится тр
 - Witness не добавляется в Compose: независимый домен снаружи стека. `trust/bootstrap-manifest.yaml` не менялся.
 - Новых имён событий нет. Golden digest и `impact-bootstrap.json` не менялись.
 - Покрытие `glt_structural_coverage` без изменения: **0.825 (33/40)**.
+- Шаг принят: `docs/DEV/28-external-witness-integration.md` — `status: accepted`.
 
 ## [0.33.0] — 2026-09-14
 
