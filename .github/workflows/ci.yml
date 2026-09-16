@@ -160,6 +160,10 @@ jobs:
       - name: policy and approval broker
         run: pnpm test:approve
 
+      # DEV-31: dry-run only; no external effect; write requires dry-run; result goes to audit.
+      - name: shadow runner
+        run: pnpm test:shadow
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

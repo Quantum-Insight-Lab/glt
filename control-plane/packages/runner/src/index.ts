@@ -1,6 +1,6 @@
 /**
- * Runner — planner (DEV-29) and approval broker (DEV-30).
- * Execution is DEV-31/32.
+ * Runner — planner (DEV-29), approval (DEV-30), shadow (DEV-31).
+ * Side-effecting execution is DEV-32.
  *
  * Contract: glt-specpack/docs/SPEC/runner.md
  */
@@ -20,3 +20,15 @@ export type {
   BoundApproval,
   PlanApprovedEvent,
 } from "./approve.ts";
+export {
+  RUNNER_SHADOW_STEP,
+  actionStartedEvent,
+  runShadow,
+  shadowAuditRecord,
+} from "./shadow.ts";
+export type {
+  ActionStartedEvent,
+  ShadowReport,
+  ShadowRunInput,
+  ShadowedRun,
+} from "./shadow.ts";

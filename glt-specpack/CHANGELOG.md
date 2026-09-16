@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.37.0] — 2026-09-16
+
+DEV-31: shadow runner — только dry-run.
+
+### Added
+
+- Контракт в `docs/SPEC/runner.md` и `docs/SPEC/architecture.md`. `shadowRun` не производит внешнего эффекта: `effects` пуст (INV-06). Write/external без dry-run того же envelope отвергается. Результат печатается `shadowAuditRecord` (`hashAuditRecord`, S-4).
+- `shadowRun` в `packages/domain`. Событие `glt.action.started` — `packages/runner`. Схемы и реестр не менялись. Команды `glt` не расширяются. Шаг CI `shadow runner`.
+
+### Notes
+
+- Исполнение с эффектом — DEV-32. Receipts / PROTO-16 — DEV-33. Новых имён событий нет.
+- Golden digest и `impact-bootstrap.json` не менялись.
+- Покрытие `glt_structural_coverage` без изменения: **0.975 (39/40)**.
+
 ## [0.36.0] — 2026-09-16
 
 DEV-30: брокер политики и подтверждений.

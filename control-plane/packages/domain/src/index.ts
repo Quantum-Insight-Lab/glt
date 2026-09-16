@@ -84,6 +84,19 @@ export {
   type CapabilityRisk,
 } from "./approve.ts";
 export {
+  SHADOW_STEP,
+  assertNoExternalEffect,
+  requireDryRunBeforeWrite,
+  shadowAuditRecord,
+  shadowRun,
+  shadowedPlan,
+  type DryRunEvidence,
+  type ExternalEffect,
+  type ShadowAction,
+  type ShadowReport,
+  type ShadowRunInput,
+} from "./shadow.ts";
+export {
   BUILD_METRIC_NAMES,
   BuildMetric,
   DLP_CANARY,

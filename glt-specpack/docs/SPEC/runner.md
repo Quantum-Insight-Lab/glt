@@ -79,7 +79,7 @@ digest of that four-field object.
 
 The created plan is `state: draft`. The event is `glt.plan.created`
 (already in the registry). No `glt plan` command (S-10). `glt typecheck`
-and `glt test` stay declared; execution is DEV-31/32.
+and `glt test` stay declared; real execution is DEV-32.
 
 `buildPlan` lives in `packages/domain`. The event wrapper lives in
 `packages/runner`.
@@ -94,7 +94,22 @@ re-seals the current inputs, verifies the signature, and calls
 cannot approve.
 
 The event is `glt.plan.approved` (already in the registry). No
-`glt approve` command (S-10). Execution remains DEV-31/32.
+`glt approve` command (S-10). Shadow is DEV-31. Real execution is DEV-32.
+
+## Shadow runner (DEV-31)
+
+`shadowRun` is a dry-run. It does not perform an external effect:
+the report `effects` list is empty, or the run is denied (INV-06).
+Domain stays pure (S-1). There is no filesystem, network, or subprocess.
+
+`requireDryRunBeforeWrite` is the write gate. A `write` or `external`
+risk without a `state: dry_run` report for the **same** envelope is
+denied. A label cannot skip the gate: risk is `riskFromCapabilities`.
+
+`shadowAuditRecord` seals the report as an AuditRecord (`hashAuditRecord`,
+S-4). `packages/runner` emits `glt.action.started` (already in the
+registry). No `glt shadow` or `glt run` command (S-10). Side-effecting
+execution is DEV-32. Receipts are DEV-33.
 
 ## Schemas
 

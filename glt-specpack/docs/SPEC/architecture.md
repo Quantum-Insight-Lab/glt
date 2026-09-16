@@ -143,6 +143,14 @@ calls `authorize` again. A digest change invalidates the approval
 `packages/runner` emits `glt.plan.approved`. No `glt approve`. See
 [`policy.md`](policy.md) and [`../SECURITY/approvals.md`](../SECURITY/approvals.md).
 
+## Shadow runner (DEV-31)
+
+`shadowRun` is a dry-run with an empty effect list. Write/external
+requires that dry-run on the same envelope (`requireDryRunBeforeWrite`).
+The report is sealed as an audit record. `packages/runner` emits
+`glt.action.started`. No workspace write. No new `glt` verb. See
+[`runner.md`](runner.md).
+
 ## Witness (DEV-28)
 
 The audit head is anchored outside the control plane. `assessWitnessFreshness`

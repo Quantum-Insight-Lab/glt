@@ -81,6 +81,7 @@ control-plane/packages/
 | Внешний witness | `assessWitnessFreshness`, `anchorHead` | `packages/domain/src/witness.ts`, `packages/audit/src/witness.ts` |
 | Action plan | `buildPlan` | `packages/domain/src/plan.ts`, `packages/runner/src/plan.ts` |
 | Approval broker | `approvePlan`, `admitApprovedPlan` | `packages/domain/src/approve.ts`, `packages/runner/src/approve.ts` |
+| Shadow runner | `shadowRun`, `requireDryRunBeforeWrite` | `packages/domain/src/shadow.ts`, `packages/runner/src/shadow.ts` |
 | Ошибки | один тип с полями `code`, `invariant`, `message`, `refs` | `packages/domain/src/errors.ts` |
 | Вывод CLI | один писатель: артефакт в stdout, диагностика в stderr | `packages/cli/src/output.ts` |
 | CLI-парсер | `commander` | `packages/cli` |
