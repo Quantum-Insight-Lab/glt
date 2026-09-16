@@ -38,7 +38,7 @@ describe("DEV-20 B1 Change dashboard", () => {
     expect(html).toContain('data-glyph-layer="blocked"');
     expect(html).toContain("E04 не измерен");
     expect(html).not.toContain("data-layer=\"glyph\"");
-    expect(html).toContain("plane drift");
+    expect(html).toContain('data-class-label="expected"');
     expect(html).toContain("expected");
     expect(html).toContain('role="radiogroup"');
     expect(html).toContain('aria-label="Evidence"');

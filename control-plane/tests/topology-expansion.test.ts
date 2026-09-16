@@ -69,8 +69,15 @@ describe("DEV-18 intended vs materialized on this repository", () => {
     }
 
     const runner = report.rows.find((row) => row.id === "glt.controlplane.runner");
-    expect(runner?.class).toBe("plane_drift");
-    expect(runner?.presence).toBe("intended");
+    const materializedRunner = report.materialized_ids.includes("control-plane/packages/runner");
+    expect(runner).toBeDefined();
+    if (materializedRunner) {
+      expect(runner?.presence).toBe("both");
+      expect(runner?.class).toBe("aligned");
+    } else {
+      expect(runner?.presence).toBe("intended");
+      expect(runner?.class).toBe("plane_drift");
+    }
 
     expect(report.rows.some((row) => (row.class as string) === "broken")).toBe(false);
     expect(git.plane).toBe("materialized");
