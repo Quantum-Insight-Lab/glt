@@ -95,4 +95,4 @@ of the live environment stays on the isolation checklist above.
 | T7 PII in topology | `scrubTelemetry` on persist (E06.5) |
 | T8 Tampered audit | S5 / `verifyAuditChain` |
 | T9 LLM gate bypass | Catalog + PROTO-13; no new action id |
-| T10 Bad executor image | Image = envelope digest (PROTO-14) |
+| T10 Bad executor image | Envelope digest (PROTO-14); signed pin is `admitRelease` (DEV-34) |

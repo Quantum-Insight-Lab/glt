@@ -97,6 +97,20 @@ export {
   type ShadowRunInput,
 } from "./shadow.ts";
 export {
+  RELEASE_STEP,
+  admitRelease,
+  imageBindingDigest,
+  imageDigestFromRef,
+  isPinnedImageRef,
+  releaseInputDigest,
+  requirePinnedImageRef,
+  type AdmitReleaseInput,
+  type PinnedInputs,
+  type ReleaseAdmission,
+  type ReleasePolicyView,
+  type SignedImage,
+} from "./release.ts";
+export {
   RECEIPT_STEP,
   UNKNOWN_OUTCOME_METRIC,
   assertNotSuccess,

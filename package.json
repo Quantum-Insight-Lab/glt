@@ -67,6 +67,8 @@
     "test:sandbox": "vitest run control-plane/packages/domain/src/sandbox.test.ts control-plane/tests/sandboxed-runner.test.ts",
     "pretest:receipts": "pnpm gen",
     "test:receipts": "vitest run control-plane/packages/domain/src/receipt.test.ts control-plane/tests/receipts.test.ts",
+    "pretest:release": "pnpm gen",
+    "test:release": "vitest run control-plane/packages/domain/src/release.test.ts control-plane/tests/supply-chain.test.ts",
     "collect:git": "tsx control-plane/packages/collectors/src/bin.ts",
     "pretest:collect": "pnpm gen",
     "test:collect": "vitest run control-plane/packages/collectors/src/git.test.ts control-plane/packages/collectors/src/ci.test.ts control-plane/tests/git-collector.test.ts control-plane/tests/ci-collector.test.ts",

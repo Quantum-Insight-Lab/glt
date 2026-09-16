@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { apiBind } from "@glt/api";
 import { COMMANDS, FORBIDDEN_COMMANDS } from "@glt/cli";
 import { PACK, REPO_ROOT, loadYaml, readText } from "@glt/contracts";
+import { isPinnedImageRef } from "@glt/domain";
 
 const COMPOSE_STEP = "glt.dev.25" as const;
 
@@ -11,7 +12,6 @@ const DEPLOY = join(REPO_ROOT, "deploy");
 const COMPOSE_PATH = join(DEPLOY, "compose.yaml");
 const DOCKERFILE_PATH = join(DEPLOY, "Dockerfile");
 const EXAMPLE_PATH = join(DEPLOY, ".env.example");
-const DIGEST_PIN = /@sha256:[0-9a-f]{64}$/;
 const SECRET_ASSIGN =
   /(?:PASSWORD|SECRET|TOKEN|API[_-]?KEY)\s*[:=]\s*(["']?)(?!\$\{)([^"'#\s]+)\1/gi;
 const REQUIRED_SERVICES = ["api", "postgres", "redis", "otel-collector"] as const;
@@ -45,7 +45,7 @@ function fromRefs(dockerfile: string): string[] {
 }
 
 function unpinned(refs: readonly string[]): string[] {
-  return refs.filter((ref) => !DIGEST_PIN.test(ref));
+  return refs.filter((ref) => !isPinnedImageRef(ref));
 }
 
 function publishedPorts(doc: ComposeFile): string[] {

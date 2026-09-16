@@ -33,7 +33,7 @@ source_refs: []
 | T7 | PII in topology | DLP + allowlist schema |
 | T8 | Tampered audit chain | Hash verify job |
 | T9 | LLM gate bypass | Deterministic classifier only |
-| T10 | Supply-chain bad executor image | Pinned signed image digest |
+| T10 | Supply-chain bad executor image | `admitRelease` pinned signed image digest |
 
 ## Trust boundaries
 

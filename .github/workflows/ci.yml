@@ -172,6 +172,10 @@ jobs:
       - name: receipts
         run: pnpm test:receipts
 
+      # DEV-34: signed digest-pinned images; reproducible inputs; external release approval.
+      - name: supply chain
+        run: pnpm test:release
+
       # S-9 is warning severity: dead code is reported, not blocking.
       - name: dead code
         run: pnpm deadcode

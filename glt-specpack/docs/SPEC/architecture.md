@@ -167,6 +167,14 @@ a receipt is `unknown_outcome`, not a retry. Reconciliation writes a new
 audit record. `unknown_outcome` is not success. See
 [`runner.md`](runner.md) and [`audit.md`](audit.md).
 
+## Supply chain (DEV-34)
+
+`admitRelease` admits a control-plane release only when images are
+digest-pinned and signed, the build inputs reproduce the same
+`digestOf`, and an identity outside the runtime approved.
+`glt-cp-runtime@internal` is forbidden (INV-09). No new `glt` verb.
+See [`../SECURITY/supply-chain.md`](../SECURITY/supply-chain.md).
+
 ## Witness (DEV-28)
 
 The audit head is anchored outside the control plane. `assessWitnessFreshness`

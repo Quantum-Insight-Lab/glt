@@ -136,6 +136,18 @@ verify is not a witness (INV-09).
 
 See [`../SECURITY/external-witness.md`](../SECURITY/external-witness.md).
 
+## Supply chain (DEV-34)
+
+A control-plane release is admitted by `admitRelease`, not by
+Compose coming up and not by self-observation. Images are pinned by
+digest and signed (`verifyBytes`). The same pinned inputs yield the
+same input digest (`digestOf`, PROTO-03). External approval is
+required; `glt-cp-runtime@internal` cannot approve (INV-09). The
+policy file is `trust/release-policy.yaml`. Filling
+`release_trust_roots.allowed` is DEV-35. No `glt release` (S-10).
+
+See [`../SECURITY/supply-chain.md`](../SECURITY/supply-chain.md).
+
 ## Acceptance
 
 DEV-28: anti-cycle acceptance test suite.

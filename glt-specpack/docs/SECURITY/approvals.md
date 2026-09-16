@@ -33,4 +33,5 @@ DEV-23 `authorize` denies the author of a plan and `glt-cp-runtime@internal`
 (INV-09). DEV-27 self-observation does not grant `approve`. DEV-30
 `admitApprovedPlan` rebuilds the envelope and calls `authorize` again
 immediately before run. A field change invalidates the approval
-(PROTO-15, INV-08).
+(PROTO-15, INV-08). DEV-34 `admitRelease` calls `authorize` for a
+control-plane release; the runtime identity remains forbidden.

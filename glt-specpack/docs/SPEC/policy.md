@@ -113,6 +113,15 @@ Plans affecting `glt.controlplane.*` release require **external** approver ident
 
 Cannot approve. Cannot expand allowlist.
 
+## Supply chain release (DEV-34)
+
+`admitRelease` is the release gate. It calls `authorize` with
+`approve` and `affects_control_plane_release`. The parsed
+`trust/release-policy.yaml` must require external approval.
+`glt-cp-runtime@internal` stays forbidden (INV-09). Image pins and
+signatures are not a second ACL: they are inputs to the same gate.
+See [`../SECURITY/supply-chain.md`](../SECURITY/supply-chain.md).
+
 ## Schema
 
 Policy documents YAML in `trust/release-policy.yaml` (wave 4).

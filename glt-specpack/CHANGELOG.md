@@ -2,6 +2,21 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.40.0] — 2026-09-16
+
+DEV-34: supply chain и релиз — подписанный pin, воспроизводимые входы.
+
+### Added
+
+- Контракт в `docs/SECURITY/supply-chain.md`, `docs/SPEC/self-hosting.md`, `docs/SPEC/policy.md` и `docs/SPEC/architecture.md`. `admitRelease` требует digest-pin и Ed25519-подпись образа (PROTO-10, PROTO-14, T10). Те же закреплённые входы дают тот же `digestOf` (PROTO-03). Релиз только с внешним approval; `glt-cp-runtime@internal` запрещён (INV-09). `authorize` — единственный ACL (S-4).
+- `admitRelease` в `packages/domain`. Схемы и реестр не менялись. Команды `glt` не расширяются. Шаг CI `supply chain`.
+
+### Notes
+
+- Контейнер не собирается и не подписывается Cosign: домен без I/O (S-1). `release_trust_roots.allowed` остаётся пустым до DEV-35. Новых имён событий нет.
+- Golden digest и `impact-bootstrap.json` не менялись.
+- Покрытие `glt_structural_coverage` без изменения: **1.0 (40/40)**.
+
 ## [0.39.0] — 2026-09-16
 
 DEV-33: receipts и reconciliation — `unknown_outcome`.

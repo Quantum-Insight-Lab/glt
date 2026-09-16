@@ -137,6 +137,13 @@ state stays `unknown_outcome` and is not success. `packages/runner`
 emits `glt.action.completed` through `actionCompletedEvent` (S-4).
 No `glt reconcile` (S-10).
 
+## Supply chain (DEV-34)
+
+The executor image in the envelope is still a digest (PROTO-14).
+Signing that pin and admitting a control-plane release is
+`admitRelease`, not a runner verb. See
+[`../SECURITY/supply-chain.md`](../SECURITY/supply-chain.md).
+
 ## Schemas
 
 - [`../../contracts/schemas/action-spec.schema.json`](../../contracts/schemas/action-spec.schema.json)
