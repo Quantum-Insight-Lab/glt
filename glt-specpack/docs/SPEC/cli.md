@@ -24,7 +24,7 @@ Pretty-printed text output is a non-normative projection. The **JSON output is t
 |---|---|---|---|
 | `glt verify` | validate | DEV-02 | Bootstrap trust: T0 keys, manifest signature, schemas, golden fixtures, invariant suite |
 | `glt validate [path...]` | validate | DEV-04 | Schema-validate registry, boundary, matrix and fixtures |
-| `glt lint docs` | validate | DEV-03 | Frontmatter contract and `depends_on` DAG acyclicity |
+| `glt lint docs` | validate | DEV-03 | Frontmatter contract, `depends_on` DAG, SourceRef existence in docs and pack data |
 | `glt lint authority` | validate | DEV-05 | Authority map enforcement, one owner per fact class |
 | `glt compile registry` | compile | DEV-06 | Resolve aliases, emit compiled registry |
 | `glt compile snapshot` | compile | DEV-08 | Emit an immutable topology snapshot |

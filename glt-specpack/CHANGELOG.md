@@ -2,6 +2,20 @@
 
 Формат основан на [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.41.1] — 2026-09-17
+
+DEV-03: SourceRef внутри данных пакета и ID в именах тестов линтера.
+
+### Changed
+
+- `glt lint docs` проверяет SourceRef не только во frontmatter, но и в бандле, golden, `intended-components` и остальных путях `defaultValidatePaths()`. Один проверщик `lintSourceRef` (S-4).
+- Чеклист `docs/DEV/03-metadata-i-dag-linter.md` закрыт: данные + `INV-01` в `lint-docs.test.ts`.
+
+### Notes
+
+- DEV-35 по-прежнему с двумя пустыми галочками: живой `allowed` пуст, verifier/witness на диске placeholder. `trust/` не заполняли.
+- Покрытие `glt_structural_coverage` без изменения: **1.0 (40/40)**.
+
 ## [0.41.0] — 2026-09-16
 
 DEV-35: sealed acceptance и DR.

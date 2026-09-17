@@ -48,7 +48,7 @@ export const COMMANDS: readonly CommandSpec[] = [
     name: "lint docs",
     capability: "validate",
     availableFrom: "glt.dev.03",
-    summary: "Frontmatter contract, depends_on acyclicity, source_refs existence",
+    summary: "Frontmatter contract, depends_on acyclicity, source_refs existence in docs and pack data",
   },
   {
     name: "lint authority",

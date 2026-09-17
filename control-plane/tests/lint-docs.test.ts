@@ -1,13 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { bodyLinkTargets, parseFrontmatter } from "@glt/contracts";
+import { bodyLinkTargets, createValidator, parseFrontmatter } from "@glt/contracts";
 import { findCycles, findDanglingDependencies, findDuplicateIds } from "@glt/domain";
-import { lintDocs, renderLintReport, run } from "@glt/cli";
+import { collectSourceRefShapes, lintDocs, lintSourceRef, renderLintReport, run } from "@glt/cli";
 
 describe("glt lint docs on the pack", () => {
   const report = lintDocs();
 
   it("reports no findings", () => {
     expect(report.findings.map((f) => `${f.kind} ${f.doc}: ${f.detail}`)).toEqual([]);
+  });
+
+  it("INV-01 the live pack has no unknown normative owner", () => {
+    expect(report.findings.filter((finding) => finding.kind === "owner-unknown")).toEqual([]);
   });
 
   it("actually reads documents rather than finding none", () => {
@@ -18,6 +22,54 @@ describe("glt lint docs on the pack", () => {
     const result = await run(["lint", "docs", "-o", "json"]);
     expect(result.code).toBe(0);
     expect(JSON.parse(result.stdout).findings).toEqual([]);
+  });
+});
+
+describe("SourceRef inside pack data", () => {
+  const ajv = createValidator();
+
+  it("collects SourceRef objects from a bundle-shaped tree and ignores the rest", () => {
+    const refs = collectSourceRefShapes({
+      spec: {
+        entries: [
+          {
+            sources: [
+              {
+                repository: "glt-controlplane",
+                path: "glt-specpack/docs/SPEC/registry.md",
+                authority: "engineering-contract",
+              },
+            ],
+          },
+        ],
+        other: { id: "not-a-ref" },
+      },
+    });
+    expect(refs).toHaveLength(1);
+    expect(refs[0]).toMatchObject({ path: "glt-specpack/docs/SPEC/registry.md" });
+  });
+
+  it("a missing SourceRef target in pack data is source-ref-missing", () => {
+    const findings = lintSourceRef(ajv, "registry/glt-controlplane.yaml", {
+      repository: "glt-controlplane",
+      path: "GLT-2.0.md",
+      authority: "engineering-contract",
+    });
+    expect(findings).toEqual([
+      {
+        kind: "source-ref-missing",
+        doc: "registry/glt-controlplane.yaml",
+        detail: "GLT-2.0.md",
+      },
+    ]);
+  });
+
+  it("a schema-invalid SourceRef in pack data is source-ref-invalid", () => {
+    const findings = lintSourceRef(ajv, "contracts/examples/golden/bootstrap-snapshot.json", {
+      repository: "glt-controlplane",
+      path: "glt-specpack/docs/SPEC/registry.md",
+    });
+    expect(findings[0]?.kind).toBe("source-ref-invalid");
   });
 });
 

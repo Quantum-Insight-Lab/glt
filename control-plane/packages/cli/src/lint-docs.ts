@@ -1,10 +1,13 @@
 import { existsSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import {
   PACK,
+  PACK_ROOT,
   REPO_ROOT,
   bodyLinkTargets,
   createValidator,
+  defaultValidatePaths,
+  loadDocument,
   loadPackDocs,
   loadYaml,
   validateAgainst,
@@ -118,20 +121,7 @@ export function lintDocs(): LintReport {
     }
 
     for (const ref of fm.source_refs ?? []) {
-      const problems = validateAgainst(ajv, "source-ref", ref);
-      if (problems.length > 0) {
-        findings.push({
-          kind: "source-ref-invalid",
-          doc: doc.path,
-          detail: `${JSON.stringify(ref)} → ${problems.map((p) => `${p.path} ${p.message}`).join("; ")}`,
-        });
-        continue;
-      }
-      // SourceRef.path is relative to the root of the repository it names.
-      const { repository, path } = ref as { repository: string; path: string };
-      if (repository === "glt-controlplane" && !existsSync(join(REPO_ROOT, path))) {
-        findings.push({ kind: "source-ref-missing", doc: doc.path, detail: path });
-      }
+      findings.push(...lintSourceRef(ajv, doc.path, ref));
     }
 
     for (const target of bodyLinkTargets(doc.body)) {
@@ -163,7 +153,63 @@ export function lintDocs(): LintReport {
     });
   }
 
+  for (const abs of packDataFiles()) {
+    const doc = relative(PACK_ROOT, abs).replaceAll("\\", "/");
+    for (const ref of collectSourceRefShapes(loadDocument(abs))) {
+      findings.push(...lintSourceRef(ajv, doc, ref));
+    }
+  }
+
   return { checked: docs.length, cycles: cycles.length, findings };
+}
+
+/** Same checker for frontmatter `source_refs` and SourceRef objects inside pack data. */
+export function lintSourceRef(
+  ajv: ReturnType<typeof createValidator>,
+  doc: string,
+  ref: unknown,
+): Finding[] {
+  const problems = validateAgainst(ajv, "source-ref", ref);
+  if (problems.length > 0) {
+    return [
+      {
+        kind: "source-ref-invalid",
+        doc,
+        detail: `${JSON.stringify(ref)} → ${problems.map((p) => `${p.path} ${p.message}`).join("; ")}`,
+      },
+    ];
+  }
+  const { repository, path } = ref as { repository: string; path: string };
+  if (repository === "glt-controlplane" && !existsSync(join(REPO_ROOT, path))) {
+    return [{ kind: "source-ref-missing", doc, detail: path }];
+  }
+  return [];
+}
+
+/** Walk a parsed bundle, golden or other pack artifact for SourceRef-shaped objects. */
+export function collectSourceRefShapes(value: unknown): unknown[] {
+  if (Array.isArray(value)) return value.flatMap(collectSourceRefShapes);
+  if (value === null || typeof value !== "object") return [];
+  const record = value as Record<string, unknown>;
+  if (
+    typeof record.repository === "string" &&
+    typeof record.path === "string" &&
+    typeof record.authority === "string"
+  ) {
+    return [record];
+  }
+  return Object.values(record).flatMap(collectSourceRefShapes);
+}
+
+function packDataFiles(): string[] {
+  const seen = new Set<string>();
+  const files: string[] = [];
+  for (const abs of [PACK.intendedComponents, ...defaultValidatePaths()]) {
+    if (seen.has(abs)) continue;
+    seen.add(abs);
+    files.push(abs);
+  }
+  return files;
 }
 
 export function renderLintReport(report: LintReport): string {

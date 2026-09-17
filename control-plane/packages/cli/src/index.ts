@@ -14,7 +14,7 @@ import { runHealth } from "./health.ts";
 
 export { COMMANDS, ALLOWED_CAPABILITIES, FORBIDDEN_COMMANDS } from "./commands.ts";
 export type { CommandSpec, Capability } from "./commands.ts";
-export { lintDocs, renderLintReport } from "./lint-docs.ts";
+export { collectSourceRefShapes, lintDocs, lintSourceRef, renderLintReport } from "./lint-docs.ts";
 export type { Finding, FindingKind, LintReport } from "./lint-docs.ts";
 export { lintAuthority, runLintAuthority, renderAuthorityReport } from "./lint-authority.ts";
 export { runCompileRegistry, renderCompiledRegistry } from "./compile-registry.ts";

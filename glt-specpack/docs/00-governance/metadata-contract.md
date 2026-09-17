@@ -61,7 +61,7 @@ source_refs:
 
 При выносе пакета в отдельный репозиторий, где `glt-specpack/` становится корнем, префикс `glt-specpack/` из всех `path` удаляется. Забыть об этом нельзя молча: проверка существования `source_refs` падает.
 
-Схема: [`../../contracts/schemas/source-ref.schema.json`](../../contracts/schemas/source-ref.schema.json). Frontmatter `source_refs[]` валидируется ею же — второго определения SourceRef нет.
+Схема: [`../../contracts/schemas/source-ref.schema.json`](../../contracts/schemas/source-ref.schema.json). Frontmatter `source_refs[]` валидируется ею же — второго определения SourceRef нет. То же правило существования действует для SourceRef внутри данных пакета (бандл реестра, golden, intended-components): `glt lint docs` использует один проверщик.
 
 ---
 
